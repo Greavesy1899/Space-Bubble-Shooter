@@ -21,21 +21,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-void setColor(glm::vec3 vec) {
-	glClearColor(vec[0], vec[1], vec[2], 1);
-	glClear(GL_COLOR_BUFFER_BIT);
-}
-void overTimeColor() {
-	//glClearColor(r, g, b, 1);
-	//glClear(GL_COLOR_BUFFER_BIT);
-}
-void changeColor() {
-	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	float b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	glClearColor(r, g, b, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
-}
+#include "ShaderProgram.h"
 
 int main(int argc, char *argv[]) {
 	//SDL Initialise
@@ -62,15 +48,41 @@ int main(int argc, char *argv[]) {
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
 
-	//****************************
-	// OpenGL calls.
-	glm::vec3 colour;
-	colour[0] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	colour[1] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	colour[2] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	setColor(colour);
-	SDL_GL_SwapWindow(win);
+	GLfloat verts[] = {
+		-0.9f, -0.5f, 0.0f,
+		0.0f, -0.5f, 0.0f,
+		0.45f, 0.5f, 0.0f,
 
+		0.0f, -0.5f, 0.0f,
+		0.9f, -0.5f, 0.0f,
+		0.7f, 0.5f, 0.0f
+	};
+
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+	ShaderProgram* baseShaderProgram = new ShaderProgram();
+	baseShaderProgram->ReadShaderFromPath("Shaders/BaseVert.hlsl", 0);
+	baseShaderProgram->ReadShaderFromPath("Shaders/BaseFrag.hlsl", 1);
+	baseShaderProgram->Init();
+	baseShaderProgram->Compile();
+	baseShaderProgram->Attach();
+	baseShaderProgram->Link();
+
+	GLuint VBO;
+	glGenBuffers(1, &VBO);
+	// Initialization code using Vertex Array Object (VAO) (done once (unless the object frequently changes))
+	GLuint VAO;
+	glGenVertexArrays(1, &VAO);
+	//bind the Vertex Array Object (VAO)
+	glBindVertexArray(VAO);
+	//copy the vertices array into a buffer (VBO)
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+	//set the vertex attributes pointers
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+	//Unbind the VAO
+	glBindVertexArray(0);
 
 	//*****************************
 	//SDL handled input
@@ -79,39 +91,15 @@ int main(int argc, char *argv[]) {
 	SDL_Event event;
 	bool windowOpen = true;
 
-	bool switcherooR = false;
-	bool switcherooG = false;
-	bool switcherooB = false;
-
 	while (windowOpen)
 	{
-		if (colour[0] <= 0.0f)
-			switcherooR = true;
-		else if (colour[0] >= 1.0f)
-			switcherooR = false;
-		if (colour[1] <= 0.0f)
-			switcherooG = true;
-		else if (colour[1] >= 1.0f)
-			switcherooG = false;
-		if (colour[2] <= 0.0f)
-			switcherooB = true;
-		else if (colour[2] >= 1.0f)
-			switcherooB = false;
-
-		if (switcherooR)
-			colour[0] += 0.01f;
-		else
-			colour[0] -= 0.01;
-		if (switcherooG)
-			colour[1] += 0.01f;
-		else
-			colour[1] -= 0.01;
-		if (switcherooB)
-			colour[2] += 0.01f;
-		else
-			colour[2] -= 0.01;
-
-		setColor(colour);
+		glClearColor(1.0f, 0.0f, 0.0f, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+		glUseProgram(baseShaderProgram->GetProgramID());
+		glBindVertexArray(VAO);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
 		SDL_GL_SwapWindow(win);
 
 		if (SDL_PollEvent(&event))
