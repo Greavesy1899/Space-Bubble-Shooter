@@ -22,6 +22,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "ShaderProgram.h"
+#include "Model.h"
 
 int main(int argc, char *argv[]) {
 	//SDL Initialise
@@ -44,19 +45,11 @@ int main(int argc, char *argv[]) {
 	// Create an OpenGL context associated with the window.
 	SDL_GLContext glcontext = SDL_GL_CreateContext(win);
 
+	Model* model = new Model();
+
 	//GLEW initialise
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
-
-	GLfloat verts[] = {
-		-0.9f, -0.5f, 0.0f,
-		0.0f, -0.5f, 0.0f,
-		0.45f, 0.5f, 0.0f,
-
-		0.0f, -0.5f, 0.0f,
-		0.9f, -0.5f, 0.0f,
-		0.7f, 0.5f, 0.0f
-	};
 
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -68,21 +61,10 @@ int main(int argc, char *argv[]) {
 	baseShaderProgram->Attach();
 	baseShaderProgram->Link();
 
-	GLuint VBO;
-	glGenBuffers(1, &VBO);
-	// Initialization code using Vertex Array Object (VAO) (done once (unless the object frequently changes))
-	GLuint VAO;
-	glGenVertexArrays(1, &VAO);
-	//bind the Vertex Array Object (VAO)
-	glBindVertexArray(VAO);
-	//copy the vertices array into a buffer (VBO)
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-	//set the vertex attributes pointers
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-	//Unbind the VAO
-	glBindVertexArray(0);
+	model->Init();
+	model->Bind();
+	model->Build();
+	model->Unbind();
 
 	//*****************************
 	//SDL handled input
@@ -96,10 +78,9 @@ int main(int argc, char *argv[]) {
 		glClearColor(1.0f, 0.0f, 0.0f, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glUseProgram(baseShaderProgram->GetProgramID());
-		glBindVertexArray(VAO);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glBindVertexArray(0);
+		model->Bind();
+		model->Render();
+		model->Unbind();
 		SDL_GL_SwapWindow(win);
 
 		if (SDL_PollEvent(&event))
@@ -117,6 +98,10 @@ int main(int argc, char *argv[]) {
 	SDL_GL_DeleteContext(glcontext);
 
 	SDL_Quit();
+
+	delete baseShaderProgram;
+	delete model;
+
 	return 0;
 
 
