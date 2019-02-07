@@ -28,6 +28,8 @@ bool ShaderProgram::Init()
 	glShaderSource(this->vertexShader, 1,  &temp1, NULL);
 	glShaderSource(this->fragmentShader, 1, &temp2, NULL);
 	
+	delete temp1;
+	delete temp2;
 
 	return true;
 }

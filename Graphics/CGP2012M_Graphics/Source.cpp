@@ -45,13 +45,36 @@ int main(int argc, char *argv[]) {
 	// Create an OpenGL context associated with the window.
 	SDL_GLContext glcontext = SDL_GL_CreateContext(win);
 
-	Model* model = new Model();
+	GLushort* inds = new GLushort();
+	inds[0] = 0;
+	inds[1] = 1;
+	inds[2] = 2;
+	inds[3] = 3;
+	inds[4] = 4;
+	inds[5] = 5;
+
+	Model::VertexLayout* vertices1 = new Model::VertexLayout[3];
+	vertices1[0] = Model::VertexLayout(-0.9f, -0.5f, 0.0f, 1.0f, 0, 0);
+	vertices1[1] = Model::VertexLayout(-0.0f, -0.5f, 0.0f, 0, 1.0f, 0);
+	vertices1[2] = Model::VertexLayout(0.45f, 0.5f, 0.0f, 0, 0, 1.0f);
+
+	Model::VertexLayout* vertices2 = new Model::VertexLayout[3];
+	vertices2[3] = Model::VertexLayout(0.0f, -0.5f, 0.0f, 1.0f, 0, 0);
+	vertices2[4] = Model::VertexLayout(0.9f, -0.5f, 0.0f, 0, 1.0f, 0);
+	vertices2[5] = Model::VertexLayout(0.7f, 0.5f, 0.0f, 0, 0, 1.0f);
+
+	Model* model1 = new Model();
+	model1->SetVertices(vertices1, 3);
+	model1->SetIndices(inds, 2);
+	Model* model2 = new Model();
+	model2->SetVertices(vertices2, 3);
+	model2->SetIndices(inds, 2);
 
 	//GLEW initialise
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
 
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	ShaderProgram* baseShaderProgram = new ShaderProgram();
 	baseShaderProgram->ReadShaderFromPath("Shaders/BaseVert.hlsl", 0);
@@ -59,12 +82,17 @@ int main(int argc, char *argv[]) {
 	baseShaderProgram->Init();
 	baseShaderProgram->Compile();
 	baseShaderProgram->Attach();
+
 	baseShaderProgram->Link();
 
-	model->Init();
-	model->Bind();
-	model->Build();
-	model->Unbind();
+	model1->Init();
+	model1->Bind();
+	model1->Build();
+	model1->Unbind();
+	model2->Init();
+	model2->Bind();
+	model2->Build();
+	model2->Unbind();
 
 	//*****************************
 	//SDL handled input
@@ -75,12 +103,15 @@ int main(int argc, char *argv[]) {
 
 	while (windowOpen)
 	{
-		glClearColor(1.0f, 0.0f, 0.0f, 1);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glUseProgram(baseShaderProgram->GetProgramID());
-		model->Bind();
-		model->Render();
-		model->Unbind();
+		model1->Bind();
+		model1->Render();
+		model1->Unbind();
+		model2->Bind();
+		model2->Render();
+		model2->Unbind();
 		SDL_GL_SwapWindow(win);
 
 		if (SDL_PollEvent(&event))
@@ -100,7 +131,8 @@ int main(int argc, char *argv[]) {
 	SDL_Quit();
 
 	delete baseShaderProgram;
-	delete model;
+	delete model1;
+	delete model2;
 
 	return 0;
 
