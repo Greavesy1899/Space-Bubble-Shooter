@@ -45,13 +45,10 @@ int main(int argc, char *argv[]) {
 	// Create an OpenGL context associated with the window.
 	SDL_GLContext glcontext = SDL_GL_CreateContext(win);
 
-	GLushort* inds = new GLushort();
+	GLushort* inds = new GLushort[3];
 	inds[0] = 0;
 	inds[1] = 1;
 	inds[2] = 2;
-	inds[3] = 3;
-	inds[4] = 4;
-	inds[5] = 5;
 
 	Model::VertexLayout* vertices1 = new Model::VertexLayout[3];
 	vertices1[0] = Model::VertexLayout(-0.9f, -0.5f, 0.0f, 1.0f, 0, 0);
@@ -59,9 +56,9 @@ int main(int argc, char *argv[]) {
 	vertices1[2] = Model::VertexLayout(0.45f, 0.5f, 0.0f, 0, 0, 1.0f);
 
 	Model::VertexLayout* vertices2 = new Model::VertexLayout[3];
-	vertices2[3] = Model::VertexLayout(0.0f, -0.5f, 0.0f, 1.0f, 0, 0);
-	vertices2[4] = Model::VertexLayout(0.9f, -0.5f, 0.0f, 0, 1.0f, 0);
-	vertices2[5] = Model::VertexLayout(0.7f, 0.5f, 0.0f, 0, 0, 1.0f);
+	vertices2[0] = Model::VertexLayout(0.0f, -0.5f, 0.0f, 1.0f, 0, 0);
+	vertices2[1] = Model::VertexLayout(0.9f, -0.5f, 0.0f, 0, 1.0f, 0);
+	vertices2[2] = Model::VertexLayout(0.7f, 0.5f, 0.0f, 0, 0, 1.0f);
 
 	Model* model1 = new Model();
 	model1->SetVertices(vertices1, 3);
@@ -77,12 +74,10 @@ int main(int argc, char *argv[]) {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	ShaderProgram* baseShaderProgram = new ShaderProgram();
+	baseShaderProgram->Init();
 	baseShaderProgram->ReadShaderFromPath("Shaders/BaseVert.hlsl", 0);
 	baseShaderProgram->ReadShaderFromPath("Shaders/BaseFrag.hlsl", 1);
-	baseShaderProgram->Init();
-	baseShaderProgram->Compile();
 	baseShaderProgram->Attach();
-
 	baseShaderProgram->Link();
 
 	model1->Init();

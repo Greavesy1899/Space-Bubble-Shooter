@@ -12,8 +12,8 @@ private:
 	GLuint vertexShader;
 	GLuint fragmentShader;
 
-	std::string tempVertexPath;
-	std::string tempFragPath;
+	const GLchar* vertexPtr;
+	const GLchar* fragmentPtr;
 
 
 public:
@@ -21,7 +21,6 @@ public:
 	~ShaderProgram();
 
 	bool Init();
-	bool Compile();
 	bool Attach();
 	bool Link();
 

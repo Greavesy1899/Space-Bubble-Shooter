@@ -2,6 +2,14 @@
 
 Model::Model()
 {
+	GLushort inds[6];
+	inds[0] = 0;
+	inds[1] = 1;
+	inds[2] = 2;
+	inds[3] = 3;
+	inds[4] = 4;
+	inds[5] = 5;
+	this->numTriangles = 2;
 }
 
 
@@ -10,6 +18,8 @@ Model::~Model()
 	glDeleteBuffers(1, &this->vbo);
 	glDeleteBuffers(1, &this->ibo);
 	glDeleteVertexArrays(1, &this->vao);
+	delete[] this->indices;
+	delete[] this->vertices;
 }
 
 bool Model::SetVertices(VertexLayout* vl, GLuint numVertices)
@@ -52,7 +62,7 @@ bool Model::Build()
 {
 	glBufferData(GL_ARRAY_BUFFER, this->numVertices*sizeof(VertexLayout), this->vertices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->numTriangles, this->indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 24, this->indices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2*sizeof(glm::vec3), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 2*sizeof(glm::vec3), (void*)(sizeof(glm::vec3)));
@@ -63,6 +73,6 @@ bool Model::Build()
 bool Model::Render()
 {
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glDrawElements(GL_TRIANGLES, this->numVertices, GL_UNSIGNED_SHORT, 0);
+	glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_SHORT, 0);
 	return true;
 }
