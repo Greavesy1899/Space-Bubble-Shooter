@@ -2,14 +2,7 @@
 
 Model::Model()
 {
-	GLushort inds[6];
-	inds[0] = 0;
-	inds[1] = 1;
-	inds[2] = 2;
-	inds[3] = 3;
-	inds[4] = 4;
-	inds[5] = 5;
-	this->numTriangles = 2;
+	this->numTriangles = 1;
 }
 
 

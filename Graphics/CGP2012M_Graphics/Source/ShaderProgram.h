@@ -12,10 +12,6 @@ private:
 	GLuint vertexShader;
 	GLuint fragmentShader;
 
-	const GLchar* vertexPtr;
-	const GLchar* fragmentPtr;
-
-
 public:
 	ShaderProgram();
 	~ShaderProgram();

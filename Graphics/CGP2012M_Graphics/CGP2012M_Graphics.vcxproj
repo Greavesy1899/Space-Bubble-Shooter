@@ -148,17 +148,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="ShaderProgram.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Source/GameManager.cpp" />
+    <ClCompile Include="Source/Model.cpp" />
+    <ClCompile Include="Source/ShaderProgram.cpp" />
+    <ClCompile Include="Source/Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\BaseFrag.hlsl" />
     <None Include="Shaders\BaseVert.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Source/Model.h" />
+    <ClInclude Include="Source/ShaderProgram.h" />
+    <ClInclude Include="Source\GameManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
