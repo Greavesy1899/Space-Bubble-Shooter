@@ -11,6 +11,7 @@ class GameManager
 	SDL_GLContext glContext;
 
 	ShaderProgram* baseShaderProgram;
+	ShaderProgram* colorShaderProgram;
 	Model* model1;
 	Model* model2;
 

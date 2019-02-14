@@ -1,6 +1,7 @@
 #include "ShaderProgram.h"
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
 ShaderProgram::ShaderProgram()
 {
@@ -36,6 +37,12 @@ bool ShaderProgram::Link()
 
 bool ShaderProgram::ReadShaderFromPath(const char* fileName, short type)
 {
+	if (!std::experimental::filesystem::exists(fileName))
+	{
+		std::cout << "Failed to locate file: " << fileName << std::endl;
+		return -1;
+	}
+
 	std::ifstream inFile(fileName);
 	std::string text = "";
 	int shaderBuff = -1;

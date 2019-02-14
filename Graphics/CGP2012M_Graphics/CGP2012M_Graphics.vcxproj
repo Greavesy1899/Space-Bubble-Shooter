@@ -94,7 +94,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)..\External Libraries\SDL2-2.0.9\lib\x86;$(SolutionDir)..\External Libraries\glew-2.1.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -152,6 +152,7 @@
     <ClCompile Include="Source/Model.cpp" />
     <ClCompile Include="Source/ShaderProgram.cpp" />
     <ClCompile Include="Source/Main.cpp" />
+    <ClCompile Include="TextureClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\BaseFrag.hlsl" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Source/Model.h" />
     <ClInclude Include="Source/ShaderProgram.h" />
     <ClInclude Include="Source\GameManager.h" />
+    <ClInclude Include="TextureClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

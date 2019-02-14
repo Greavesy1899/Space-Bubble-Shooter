@@ -9,7 +9,6 @@
 
 // SDL - Simple DirectMedia Layer - https://www.libsdl.org/
 #include "SDL.h"
-//#include "SDL_image.h"`
 //#include "SDL_mixer.h"
 // "SDL_ttf.h"
 
