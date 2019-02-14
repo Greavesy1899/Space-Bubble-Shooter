@@ -3,6 +3,7 @@
 
 TextureClass::TextureClass()
 {
+	glGenTextures(1, &this->textureID);
 }
 
 TextureClass::~TextureClass()
@@ -25,15 +26,13 @@ void TextureClass::LoadTexture(const char * file)
 
 void TextureClass::SetBuffers()
 {
-	glGenTextures(1, &this->textureID);
 	glBindTexture(GL_TEXTURE_2D, this->textureID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->surface->w, this->surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, this->surface->pixels);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void TextureClass::Bind()

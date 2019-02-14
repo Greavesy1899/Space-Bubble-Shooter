@@ -13,7 +13,6 @@ class GameManager
 	ShaderProgram* baseShaderProgram;
 	ShaderProgram* colorShaderProgram;
 	Model* model1;
-	Model* model2;
 
 	bool isRunning = false;
 

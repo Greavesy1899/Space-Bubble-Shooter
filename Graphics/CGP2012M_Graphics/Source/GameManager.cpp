@@ -13,7 +13,6 @@ GameManager::~GameManager()
 	delete this->baseShaderProgram;
 	delete this->colorShaderProgram;
 	delete this->model1;
-	delete this->model2;
 	SDL_Quit();
 	IMG_Quit();
 }
@@ -60,36 +59,28 @@ void GameManager::Init()
 	colorShaderProgram->Attach();
 	colorShaderProgram->Link();
 
-	GLushort* inds = new GLushort[3];
-	inds[0] = 0;
-	inds[1] = 1;
+	GLushort* inds = new GLushort[6];
+	inds[0] = 1;
+	inds[1] = 0;
 	inds[2] = 2;
+	inds[3] = 2;
+	inds[4] = 3;
+	inds[5] = 0;
 
-	Model::VertexLayout* vertices1 = new Model::VertexLayout[3];
-	vertices1[0] = Model::VertexLayout(-0.9f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
-	vertices1[1] = Model::VertexLayout(-0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
-	vertices1[2] = Model::VertexLayout(0.45f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f);
-
-	Model::VertexLayout* vertices2 = new Model::VertexLayout[3];
-	vertices2[0] = Model::VertexLayout(0.0f, -0.5f, 0.0f, 1.0f, 0, 0, 1.0f, 1.0f);
-	vertices2[1] = Model::VertexLayout(0.9f, -0.5f, 0.0f, 0, 1.0f, 0, 1.0f, 0.0f);
-	vertices2[2] = Model::VertexLayout(0.7f, 0.5f, 0.0f, 0, 0, 1.0f, 0.5f, 0.5f);
+	Model::VertexLayout* vertices1 = new Model::VertexLayout[4];
+	vertices1[0] = Model::VertexLayout(0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+	vertices1[1] = Model::VertexLayout(0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+	vertices1[2] = Model::VertexLayout(-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	vertices1[3] = Model::VertexLayout(-0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 
 	this->model1 = new Model();
-	model1->SetVertices(vertices1, 3);
+	model1->SetVertices(vertices1, 4);
 	model1->SetIndices(inds, 2);
-	this->model2 = new Model();
-	model2->SetVertices(vertices2, 3);
-	model2->SetIndices(inds, 2);
 
 	model1->Init();
 	model1->Bind();
 	model1->Build();
 	model1->Unbind();
-	model2->Init();
-	model2->Bind();
-	model2->Build();
-	model2->Unbind();
 
 	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 
@@ -108,9 +99,6 @@ void GameManager::Render()
 	model1->Bind();
 	model1->Render();
 	model1->Unbind();
-	model2->Bind();
-	model2->Render();
-	model2->Unbind();
 	SDL_GL_SwapWindow(this->window);
 }
 

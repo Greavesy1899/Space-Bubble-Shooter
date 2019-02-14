@@ -2,7 +2,6 @@
 
 Model::Model()
 {
-	this->numTriangles = 1;
 	this->texture = new TextureClass();
 }
 
@@ -35,12 +34,13 @@ bool Model::Init()
 	glGenBuffers(1, &this->vbo);
 	glGenBuffers(1, &this->ibo);
 	glGenVertexArrays(1, &this->vao);
-	this->texture->LoadTexture("Textures/UK.png");
+	this->texture->LoadTexture("Textures/Test.png");
 	return true;
 }
 
 bool Model::Unbind()
 {
+	this->texture->Unbind();
 	glEnableVertexAttribArray(0);
 	glBindVertexArray(0);
 	return true;
@@ -48,6 +48,7 @@ bool Model::Unbind()
 
 bool Model::Bind()
 {
+	this->texture->Bind();
 	glBindVertexArray(this->vao);
 	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 	return true;
@@ -57,7 +58,7 @@ bool Model::Build()
 {
 	glBufferData(GL_ARRAY_BUFFER, this->numVertices*sizeof(VertexLayout), this->vertices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6, this->indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->numTriangles*6, this->indices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (void*)(sizeof(glm::vec3)));
@@ -70,9 +71,6 @@ bool Model::Build()
 bool Model::Render()
 {
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	this->texture->Bind();
-	glDrawArrays(GL_TRIANGLES, 0, 4);
-	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-	this->texture->Unbind();
+	glDrawElements(GL_TRIANGLES, this->numTriangles*3, GL_UNSIGNED_SHORT, 0);
 	return true;
 }
