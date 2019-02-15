@@ -5,29 +5,31 @@
 #include "ShaderProgram.h"
 #include "Model.h"
 
-class GameManager
+namespace EngineOpenGL
 {
-	SDL_Window* window;
-	SDL_GLContext glContext;
+	class GameManager
+	{
+		SDL_Window* window;
+		SDL_GLContext glContext;
 
-	ShaderProgram* baseShaderProgram;
-	ShaderProgram* colorShaderProgram;
-	Model* model1;
-	TextureClass* texture;
+		ShaderProgram* baseShaderProgram;
+		ShaderProgram* colorShaderProgram;
+		Model* model1;
+		TextureClass* texture;
 
-	bool isRunning = false;
+		bool isRunning = false;
 
-public:
-	GameManager();
-	~GameManager();
+	public:
+		GameManager();
+		~GameManager();
 
-	void PreInitGL();
-	void PreInitSDL();
-	void Init();
-	void Update();
-	void Render();
+		void PreInitGL();
+		void PreInitSDL();
+		void Init();
+		void Update();
+		void Render();
 
-	bool GetIsRunning();
-};
+		bool GetIsRunning();
+	};
+}
 #endif
-

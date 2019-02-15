@@ -5,23 +5,26 @@
 #include <cstdlib>
 #include <string>
 
-class ShaderProgram
+namespace EngineOpenGL
 {
-private:
-	GLuint shaderProgramID;
-	GLuint vertexShader;
-	GLuint fragmentShader;
+	class ShaderProgram
+	{
+	private:
+		GLuint shaderProgramID;
+		GLuint vertexShader;
+		GLuint fragmentShader;
 
-public:
-	ShaderProgram();
-	~ShaderProgram();
+	public:
+		ShaderProgram();
+		~ShaderProgram();
 
-	bool Init();
-	bool Attach();
-	bool Link();
+		bool Init();
+		bool Attach();
+		bool Link();
 
-	bool ReadShaderFromPath(const char* fileName, short type);
+		bool ReadShaderFromPath(const char* fileName, short type);
 
-	GLuint GetProgramID();
-};
+		GLuint GetProgramID();
+	};
+}
 #endif

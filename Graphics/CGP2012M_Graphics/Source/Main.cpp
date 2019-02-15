@@ -22,6 +22,8 @@
 
 #include "GameManager.h"
 
+using namespace EngineOpenGL;
+
 int main(int argc, char *argv[]) {
 	GameManager* gManager = new GameManager();
 	gManager->PreInitSDL();
