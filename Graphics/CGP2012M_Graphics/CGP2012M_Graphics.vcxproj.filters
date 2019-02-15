@@ -32,14 +32,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\BaseVert.hlsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Shaders\BaseFrag.hlsl">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Source/ShaderProgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -52,5 +44,19 @@
     <ClInclude Include="TextureClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\BaseFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\BaseVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\ColourFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\ColourVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

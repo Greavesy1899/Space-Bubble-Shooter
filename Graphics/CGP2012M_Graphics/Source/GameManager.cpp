@@ -47,15 +47,15 @@ void GameManager::Init()
 {
 	this->baseShaderProgram = new ShaderProgram();
 	//baseShaderProgram->Init();
-	//baseShaderProgram->ReadShaderFromPath("Shaders/BaseVert.hlsl", 0);
-	//baseShaderProgram->ReadShaderFromPath("Shaders/BaseFrag.hlsl", 1);
+	//baseShaderProgram->ReadShaderFromPath("Shaders/BaseVert.glsl", 0);
+	//baseShaderProgram->ReadShaderFromPath("Shaders/BaseFrag.glsl", 1);
 	//baseShaderProgram->Attach();
 	//baseShaderProgram->Link();
 
 	this->colorShaderProgram = new ShaderProgram();
 	colorShaderProgram->Init();
-	colorShaderProgram->ReadShaderFromPath("Shaders/ColourVert.hlsl", 0);
-	colorShaderProgram->ReadShaderFromPath("Shaders/ColourFrag.hlsl", 1);
+	colorShaderProgram->ReadShaderFromPath("Shaders/ColourVert.glsl", 0);
+	colorShaderProgram->ReadShaderFromPath("Shaders/ColourFrag.glsl", 1);
 	colorShaderProgram->Attach();
 	colorShaderProgram->Link();
 
@@ -82,6 +82,11 @@ void GameManager::Init()
 	model1->Build();
 	model1->Unbind();
 
+	this->texture = new TextureClass();
+	//this->texture->Bind();
+	this->texture->LoadTexture("Textures/Test.png");
+	this->texture->SetBuffers();
+	//this->texture->Unbind();
 	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 
 	this->isRunning = true;
@@ -95,6 +100,7 @@ void GameManager::Render()
 {
 	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+	this->texture->Bind();
 	glUseProgram(this->colorShaderProgram->GetProgramID());
 	model1->Bind();
 	model1->Render();

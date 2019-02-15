@@ -2,7 +2,7 @@
 
 Model::Model()
 {
-	this->texture = new TextureClass();
+	
 }
 
 
@@ -13,6 +13,7 @@ Model::~Model()
 	glDeleteVertexArrays(1, &this->vao);
 	delete[] this->indices;
 	delete[] this->vertices;
+	delete this->texture;
 }
 
 bool Model::SetVertices(VertexLayout* vl, GLuint numVertices)
@@ -34,13 +35,11 @@ bool Model::Init()
 	glGenBuffers(1, &this->vbo);
 	glGenBuffers(1, &this->ibo);
 	glGenVertexArrays(1, &this->vao);
-	this->texture->LoadTexture("Textures/Test.png");
 	return true;
 }
 
 bool Model::Unbind()
 {
-	this->texture->Unbind();
 	glEnableVertexAttribArray(0);
 	glBindVertexArray(0);
 	return true;
@@ -48,7 +47,6 @@ bool Model::Unbind()
 
 bool Model::Bind()
 {
-	this->texture->Bind();
 	glBindVertexArray(this->vao);
 	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 	return true;
@@ -64,7 +62,6 @@ bool Model::Build()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (void*)(sizeof(glm::vec3)));
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (void*)(2*sizeof(glm::vec3)));
-	this->texture->SetBuffers();
 	return true;
 }
 

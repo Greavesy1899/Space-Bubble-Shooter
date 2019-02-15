@@ -13,6 +13,7 @@ class GameManager
 	ShaderProgram* baseShaderProgram;
 	ShaderProgram* colorShaderProgram;
 	Model* model1;
+	TextureClass* texture;
 
 	bool isRunning = false;
 
