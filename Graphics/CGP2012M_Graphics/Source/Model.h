@@ -6,7 +6,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <glm/glm.hpp>
+
 #include "TextureClass.h"
+#include "SingletonManager.h"
+#include "ShaderProgram.h"
 
 namespace EngineOpenGL
 {
@@ -25,10 +28,11 @@ namespace EngineOpenGL
 
 	private:
 		VertexLayout* vertices;
+		GLushort* indices;
 		TextureClass* texture;
+		ShaderProgram* shader;
 		GLuint numVertices;
 		GLuint numTriangles;
-		GLushort* indices;
 		GLuint vbo;
 		GLuint ibo;
 		GLuint vao;
@@ -40,6 +44,9 @@ namespace EngineOpenGL
 		bool Init();
 		bool SetVertices(VertexLayout* vl, GLuint numVertices);
 		bool SetIndices(GLushort* inds, GLuint numTringles);
+		bool SetModelToSquare(GLfloat widthFactor, GLfloat heightFactor);
+		bool SetModelToCircle(GLfloat radiusFactor);
+		int GetShaderID() const;
 		bool Unbind();
 		bool Bind();
 		bool Build();

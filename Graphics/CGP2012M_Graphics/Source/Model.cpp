@@ -4,7 +4,7 @@ namespace EngineOpenGL
 {
 	Model::Model()
 	{
-
+		this->shader = Singleton::getInstance()->GetSM()->GetShader(1);
 	}
 
 	Model::~Model()
@@ -31,14 +31,60 @@ namespace EngineOpenGL
 		return true;
 	}
 
-	//bool Model::SetByPrimitive(PrimitiveEngine::Primitive primitive)
-	//{
-	//	this->indices = primitive.indices;
-	//	this->vertices = primitive.vertices;
-	//	this->numTriangles = primitive.numIndices;
-	//	this->numVertices = primitive.numVertices;
-	//	return true;
-	//}
+	bool Model::SetModelToSquare(GLfloat widthFactor, GLfloat heightFactor)
+	{
+
+		//indices
+		this->indices = new GLushort[6];
+		this->indices[0] = 1;
+		this->indices[1] = 0;
+		this->indices[2] = 2;
+		this->indices[3] = 2;
+		this->indices[4] = 3;
+		this->indices[5] = 0;
+
+		//vertices
+		this->vertices = new VertexLayout[4];
+		this->vertices[0] = VertexLayout(0.01f*widthFactor, 0.01f*heightFactor, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		this->vertices[1] = VertexLayout(0.01f*widthFactor, -0.01f*heightFactor, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+		this->vertices[2] = VertexLayout(-0.01f*widthFactor, -0.01f*heightFactor, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+		this->vertices[3] = VertexLayout(-0.01f*widthFactor, 0.01f*heightFactor, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+		this->numTriangles = 2;
+		this->numVertices = 4;
+		return true;
+	}
+
+	bool Model::SetModelToCircle(GLfloat radiusFactor)
+	{
+		this->vertices = new VertexLayout[30];
+		this->indices = new GLushort[87];
+		this->numVertices = 30;
+		this->numTriangles = 87;
+
+		GLint ind = 1;
+		for (int i = 0; i != 87; i+=3)
+		{
+			this->indices[i] = 0;
+			this->indices[i + 1] = ind;
+			this->indices[i + 2] = ++ind;
+		}
+
+		this->vertices[0] = VertexLayout(0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		GLfloat angle = 0.0f;
+
+		for (int i = 1; i != 30; i++)
+		{
+			this->vertices[i] = VertexLayout((radiusFactor * cos(angle)), radiusFactor * sin(angle), 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+			angle += (2 * 3.141) / 28.0f;
+		}
+		return true;
+	}
+
+	int Model::GetShaderID() const
+	{
+		return this->shader->GetProgramID();
+	}
 
 	bool Model::Init()
 	{
@@ -79,6 +125,8 @@ namespace EngineOpenGL
 	bool Model::Render()
 	{
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		this->shader->Attach();
+		this->shader->Link();
 		glDrawElements(GL_TRIANGLES, this->numTriangles * 3, GL_UNSIGNED_SHORT, 0);
 		return true;
 	}

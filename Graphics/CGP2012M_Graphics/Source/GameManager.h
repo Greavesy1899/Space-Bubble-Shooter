@@ -11,9 +11,6 @@ namespace EngineOpenGL
 	{
 		SDL_Window* window;
 		SDL_GLContext glContext;
-
-		ShaderProgram* baseShaderProgram;
-		ShaderProgram* colorShaderProgram;
 		Model* model1;
 		TextureClass* texture;
 

@@ -148,14 +148,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\PrimitiveEngine.cpp" />
+    <ClCompile Include="Source/SingletonManager.cpp" />
     <ClCompile Include="Source/GameManager.cpp" />
     <ClCompile Include="Source/Model.cpp" />
     <ClCompile Include="Source/ShaderProgram.cpp" />
     <ClCompile Include="Source/Main.cpp" />
     <ClCompile Include="Source/TextureClass.cpp" />
+    <ClCompile Include="Source\ShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source/ShaderManager.h" />
+    <ClInclude Include="Source/SingletonManager.h" />
     <ClInclude Include="Source/Model.h" />
     <ClInclude Include="Source/ShaderProgram.h" />
     <ClInclude Include="Source\GameManager.h" />
