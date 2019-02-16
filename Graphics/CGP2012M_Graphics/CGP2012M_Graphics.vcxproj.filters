@@ -64,10 +64,10 @@
     <None Include="Shaders\BaseVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Shaders\ColourFrag.glsl">
+    <None Include="Shaders\TextureVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Shaders\ColourVert.glsl">
+    <None Include="Shaders\TextureFrag.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

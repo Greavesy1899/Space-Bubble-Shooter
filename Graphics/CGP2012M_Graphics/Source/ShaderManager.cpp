@@ -9,21 +9,20 @@ namespace EngineOpenGL
 		baseShaderProgram->ReadShaderFromPath("Shaders/BaseVert.glsl", 0);
 		baseShaderProgram->ReadShaderFromPath("Shaders/BaseFrag.glsl", 1);
 
-		ShaderProgram* colorShaderProgram = new ShaderProgram();
-		colorShaderProgram->Init();
-		colorShaderProgram->ReadShaderFromPath("Shaders/ColourVert.glsl", 0);
-		colorShaderProgram->ReadShaderFromPath("Shaders/ColourFrag.glsl", 1);
+		ShaderProgram* textureShaderProgram = new ShaderProgram();
+		textureShaderProgram->Init();
+		textureShaderProgram->ReadShaderFromPath("Shaders/TextureVert.glsl", 0);
+		textureShaderProgram->ReadShaderFromPath("Shaders/TextureFrag.glsl", 1);
 
 		this->shaders[0] = baseShaderProgram;
-		this->shaders[1] = colorShaderProgram;
+		this->shaders[1] = textureShaderProgram;
 	}
 
 	ShaderManager::~ShaderManager()
 	{
 		for (auto& x : this->shaders)
-		{
 			delete x.second;
-		}
+
 		this->shaders.clear();
 	}
 

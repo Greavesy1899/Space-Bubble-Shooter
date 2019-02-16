@@ -167,8 +167,8 @@
   <ItemGroup>
     <None Include="Shaders\BaseFrag.glsl" />
     <None Include="Shaders\BaseVert.glsl" />
-    <None Include="Shaders\ColourFrag.glsl" />
-    <None Include="Shaders\ColourVert.glsl" />
+    <None Include="Shaders\TextureFrag.glsl" />
+    <None Include="Shaders\TextureVert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
