@@ -70,12 +70,12 @@ namespace EngineOpenGL
 			this->indices[i + 2] = ++ind;
 		}
 
-		this->vertices[0] = VertexLayout(0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		this->vertices[0] = VertexLayout(0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
 		GLfloat angle = 0.0f;
 
 		for (int i = 1; i != 30; i++)
 		{
-			this->vertices[i] = VertexLayout((radiusFactor * cos(angle)), radiusFactor * sin(angle), 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+			this->vertices[i] = VertexLayout((radiusFactor * cos(angle)), radiusFactor * sin(angle), 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
 			angle += (2 * 3.141) / 28.0f;
 		}
 		return true;
@@ -117,7 +117,7 @@ namespace EngineOpenGL
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)(sizeof(glm::vec3)));
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)(2 * sizeof(glm::vec3)));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)(2*sizeof(glm::vec3)));
 		glEnableVertexAttribArray(2);
 		return true;
 	}

@@ -77,7 +77,9 @@ namespace EngineOpenGL
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		this->texture->Bind();
-		glUseProgram(model1->GetShaderID());
+		glUseProgram(this->model1->GetShaderID());
+		GLint uniformLoc = glGetUniformLocation(this->model1->GetShaderID(), "enableTex");
+		glProgramUniform1i(this->model1->GetShaderID(), uniformLoc, 0);
 		model1->Bind();
 		model1->Render();
 		model1->Unbind();

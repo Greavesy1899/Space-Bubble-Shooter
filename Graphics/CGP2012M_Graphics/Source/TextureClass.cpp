@@ -10,7 +10,6 @@ namespace EngineOpenGL
 
 	TextureClass::~TextureClass()
 	{
-		SDL_FreeSurface(this->surface);
 	}
 
 	GLuint TextureClass::GetTextureID()
