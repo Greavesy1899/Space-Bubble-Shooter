@@ -78,14 +78,33 @@ namespace EngineOpenGL
 
 	void GameManager::Input()
 	{
+		Singleton::getInstance()->GetIM()->ClearKeyVector();
 		SDL_Event event;
-		if (SDL_PollEvent(&event))
+		while (SDL_PollEvent(&event) == 1)
 		{
-			if (event.type == SDL_QUIT)
+			switch (event.type)
 			{
-				this->isRunning = false;
+			case SDL_KEYDOWN:
+				Singleton::getInstance()->GetIM()->AddKeyToVector(event.key.keysym.scancode);
+				break;
+			case SDL_QUIT:
+				isRunning = false;
+				break;
+			//case SDL_WINDOWEVENT_RESIZED:
+			//	//SDL_LogCritical(SDL_LOG_CATEGORY_RENDER, "Resizing window to %i, %i", event.window.data1, event.window.data2);
+			//	SDL_SetWindowSize(window, event.window.data1, event.window.data2);
+			//	break;
+			//case SDL_MOUSEMOTION:
+			//	pos = Vector(event.motion.x, event.motion.y);
+			//	Singleton::getInstance()->GetIM()->SetMousePos(pos);
+			//	break;
+			default:
+				break;
 			}
 		}
+
+		if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_ESCAPE))
+			isRunning = false;
 	}
 
 	void GameManager::Update()

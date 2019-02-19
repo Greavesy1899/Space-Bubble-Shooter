@@ -1,6 +1,7 @@
 #ifndef SINGLETONMANAGER_H
 #define SINGLETONMANAGER_H
 #include "ShaderManager.h"
+#include "InputManager.h"
 
 namespace EngineOpenGL
 {
@@ -10,6 +11,7 @@ namespace EngineOpenGL
 		static Singleton* instance;
 
 		ShaderManager* sm;
+		InputManager* im;
 	public:
 		static Singleton* getInstance();
 
@@ -17,6 +19,7 @@ namespace EngineOpenGL
 		Singleton& operator=(const Singleton&) = delete;
 
 		ShaderManager* GetSM() const;
+		InputManager* GetIM() const;
 
 	private:
 		Singleton();
