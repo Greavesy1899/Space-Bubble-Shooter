@@ -92,6 +92,7 @@ namespace EngineOpenGL
 		glProgramUniform1i(this->model1->GetShaderID(), uniformLoc, 0);	
 		model1->Render();
 		model1->Unbind();
+		model1->DetachShader();
 		SDL_GL_SwapWindow(this->window);
 	}
 

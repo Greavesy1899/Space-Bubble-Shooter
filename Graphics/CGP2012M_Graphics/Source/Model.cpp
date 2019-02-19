@@ -138,6 +138,12 @@ namespace EngineOpenGL
 		return true;
 	}
 
+	bool Model::DetachShader() const
+	{
+		this->shader->Detach();
+		return true;
+	}
+
 	Model::VertexLayout::VertexLayout()
 	{
 		this->position = glm::vec3();

@@ -20,6 +20,7 @@ namespace EngineOpenGL
 
 		bool Init();
 		bool Attach();
+		bool Detach();
 		bool Link();
 
 		bool ReadShaderFromPath(const char* fileName, short type);

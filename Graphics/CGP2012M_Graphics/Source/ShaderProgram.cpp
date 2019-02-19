@@ -30,6 +30,13 @@ namespace EngineOpenGL
 		return true;
 	}
 
+	bool ShaderProgram::Detach()
+	{
+		glDetachShader(this->shaderProgramID, vertexShader);
+		glDetachShader(this->shaderProgramID, fragmentShader);
+		return true;
+	}
+
 	bool ShaderProgram::Link()
 	{
 		glLinkProgram(this->shaderProgramID);

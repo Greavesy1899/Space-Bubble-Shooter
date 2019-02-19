@@ -52,6 +52,7 @@ namespace EngineOpenGL
 		bool Build();
 		bool Render();
 		bool LinkShader() const;
+		bool DetachShader() const;
 	};
 }
 #endif
