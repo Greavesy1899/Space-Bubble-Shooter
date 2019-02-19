@@ -13,6 +13,13 @@ namespace EngineOpenGL
 	public:
 		ShaderManager();
 		~ShaderManager();
+		ShaderManager(const ShaderManager& sm) = delete;
+		ShaderManager(ShaderManager &&sm) = delete;
+
+		//operators
+		ShaderManager operator=(const ShaderManager& sm) = delete;
+		ShaderManager operator=(ShaderManager& sm) = delete;
+
 		ShaderProgram* GetShader(int key) const;
 	};
 }

@@ -21,8 +21,10 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "GameManager.h"
+#include "SZ_Timer.h"
 
 using namespace EngineOpenGL;
+SZ_Timer aTimer;
 
 int main(int argc, char *argv[]) {
 	GameManager* gManager = new GameManager();
@@ -30,20 +32,18 @@ int main(int argc, char *argv[]) {
 	gManager->PreInitGL();
 	gManager->Init();
 
-	SDL_Event event;
-	bool windowOpen = true;
-
 	//temp fix
-	while (gManager->GetIsRunning() && windowOpen)
+	while (gManager->GetIsRunning())
 	{
+		aTimer.resetTicksTimer();
+		gManager->Input();
+		gManager->Update();
 		gManager->Render();
 
-		if (SDL_PollEvent(&event))
+		const int fps = 1000 / 60;
+		if (aTimer.getTicks() < fps)
 		{
-			if (event.type == SDL_QUIT)
-			{
-				windowOpen = false;
-			}
+			SDL_Delay(fps - aTimer.getTicks());
 		}
 	}
 	delete gManager;

@@ -17,15 +17,26 @@ namespace EngineOpenGL
 		bool isRunning = false;
 
 	public:
+		//constructor/destructor
 		GameManager();
 		~GameManager();
+		GameManager(const GameManager& gm) = delete;
+		GameManager(GameManager &&gm) = delete;
 
+		//operators
+		GameManager operator=(const GameManager& gm) = delete;
+		GameManager operator=(GameManager& gm) = delete;
+
+		//functions.
 		void PreInitGL();
 		void PreInitSDL();
 		void Init();
+		void Input();
 		void Update();
 		void Render();
 
+
+		//accessors.
 		bool GetIsRunning();
 	};
 }

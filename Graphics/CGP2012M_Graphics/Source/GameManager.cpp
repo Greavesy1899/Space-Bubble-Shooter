@@ -58,8 +58,8 @@ namespace EngineOpenGL
 	void GameManager::Init()
 	{
 		this->model1 = new Model();
-		//model1->SetModelToSquare(1.0f, 1.0f);
-		model1->SetModelToCircle(0.5f);
+		model1->SetModelToSquare(1.0f, 1.0f);
+		//model1->SetModelToCircle(0.5f);
 
 		model1->Init();
 		model1->Bind();
@@ -74,6 +74,18 @@ namespace EngineOpenGL
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 
 		this->isRunning = true;
+	}
+
+	void GameManager::Input()
+	{
+		SDL_Event event;
+		if (SDL_PollEvent(&event))
+		{
+			if (event.type == SDL_QUIT)
+			{
+				this->isRunning = false;
+			}
+		}
 	}
 
 	void GameManager::Update()
