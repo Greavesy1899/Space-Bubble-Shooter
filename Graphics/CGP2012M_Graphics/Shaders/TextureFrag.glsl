@@ -9,13 +9,13 @@ uniform sampler2D aTex;		//uniform holding texture info from main programme
 
 void main()
 {
-	if(enableTexture == 1)
+	if(enableTex == 1)
 	{
 		vertColour = texture(aTex, textureCoordinate);
 	}
 	else
 	{
-		vertColour = vec4(Color, 1.0f);
+		vertColour = vec4(Colour, 1.0f);
 	}
 
 

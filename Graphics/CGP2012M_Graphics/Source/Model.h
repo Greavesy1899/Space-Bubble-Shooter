@@ -46,11 +46,12 @@ namespace EngineOpenGL
 		bool SetIndices(GLushort* inds, GLuint numTringles);
 		bool SetModelToSquare(GLfloat widthFactor, GLfloat heightFactor);
 		bool SetModelToCircle(GLfloat radiusFactor);
-		int GetShaderID() const;
+		GLuint GetShaderID() const;
 		bool Unbind();
 		bool Bind();
 		bool Build();
 		bool Render();
+		bool LinkShader() const;
 	};
 }
 #endif

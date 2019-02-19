@@ -70,7 +70,7 @@ namespace EngineOpenGL
 			this->indices[i + 2] = ++ind;
 		}
 
-		this->vertices[0] = VertexLayout(0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+		this->vertices[0] = VertexLayout(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 		GLfloat angle = 0.0f;
 
 		for (int i = 1; i != 30; i++)
@@ -81,7 +81,7 @@ namespace EngineOpenGL
 		return true;
 	}
 
-	int Model::GetShaderID() const
+	GLuint Model::GetShaderID() const
 	{
 		return this->shader->GetProgramID();
 	}
@@ -103,6 +103,8 @@ namespace EngineOpenGL
 
 	bool Model::Bind()
 	{
+		//this->shader->Attach();
+		//this->shader->Link();
 		glBindVertexArray(this->vao);
 		glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 		return true;
@@ -125,9 +127,14 @@ namespace EngineOpenGL
 	bool Model::Render()
 	{
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glDrawElements(GL_TRIANGLES, this->numTriangles * 3, GL_UNSIGNED_SHORT, 0);
+		return true;
+	}
+
+	bool Model::LinkShader() const
+	{
 		this->shader->Attach();
 		this->shader->Link();
-		glDrawElements(GL_TRIANGLES, this->numTriangles * 3, GL_UNSIGNED_SHORT, 0);
 		return true;
 	}
 

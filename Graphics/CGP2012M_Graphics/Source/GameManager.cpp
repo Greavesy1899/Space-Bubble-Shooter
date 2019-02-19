@@ -18,6 +18,11 @@ namespace EngineOpenGL
 		IMG_Quit();
 	}
 
+	void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
+	{
+		fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n", (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""), type, severity, message);
+	}
+
 	void GameManager::PreInitGL()
 	{
 		//set context attributes
@@ -35,6 +40,9 @@ namespace EngineOpenGL
 
 		glewExperimental = GL_TRUE;
 		GLenum err = glewInit();
+
+		glEnable(GL_DEBUG_OUTPUT);
+		glDebugMessageCallback(MessageCallback, 0);
 
 		//should build the manager;
 		Singleton::getInstance();
@@ -76,11 +84,12 @@ namespace EngineOpenGL
 	{
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		model1->LinkShader();
+		model1->Bind();
 		this->texture->Bind();
 		glUseProgram(this->model1->GetShaderID());
 		GLint uniformLoc = glGetUniformLocation(this->model1->GetShaderID(), "enableTex");
-		glProgramUniform1i(this->model1->GetShaderID(), uniformLoc, 0);
-		model1->Bind();
+		glProgramUniform1i(this->model1->GetShaderID(), uniformLoc, 0);	
 		model1->Render();
 		model1->Unbind();
 		SDL_GL_SwapWindow(this->window);
