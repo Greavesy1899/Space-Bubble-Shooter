@@ -45,10 +45,10 @@ namespace EngineOpenGL
 
 		//vertices
 		this->vertices = new VertexLayout[4];
-		this->vertices[0] = VertexLayout(0.01f*widthFactor, 0.01f*heightFactor, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-		this->vertices[1] = VertexLayout(0.01f*widthFactor, -0.01f*heightFactor, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f);
-		this->vertices[2] = VertexLayout(-0.01f*widthFactor, -0.01f*heightFactor, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-		this->vertices[3] = VertexLayout(-0.01f*widthFactor, 0.01f*heightFactor, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+		this->vertices[0] = VertexLayout(widthFactor, heightFactor, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		this->vertices[1] = VertexLayout(widthFactor, -heightFactor, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+		this->vertices[2] = VertexLayout(-widthFactor, -heightFactor, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+		this->vertices[3] = VertexLayout(-widthFactor, heightFactor, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 
 		this->numTriangles = 2;
 		this->numVertices = 4;
@@ -103,8 +103,6 @@ namespace EngineOpenGL
 
 	bool Model::Bind()
 	{
-		//this->shader->Attach();
-		//this->shader->Link();
 		glBindVertexArray(this->vao);
 		glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 		return true;
@@ -126,7 +124,7 @@ namespace EngineOpenGL
 
 	bool Model::Render()
 	{
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glDrawElements(GL_TRIANGLES, this->numTriangles * 3, GL_UNSIGNED_SHORT, 0);
 		return true;
 	}

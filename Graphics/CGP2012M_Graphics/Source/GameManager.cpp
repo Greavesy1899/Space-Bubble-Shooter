@@ -58,7 +58,7 @@ namespace EngineOpenGL
 	void GameManager::Init()
 	{
 		this->model1 = new Model();
-		//model1->SetModelToSquare(0.3f, 0.7f);
+		//model1->SetModelToSquare(1.0f, 1.0f);
 		model1->SetModelToCircle(0.5f);
 
 		model1->Init();
