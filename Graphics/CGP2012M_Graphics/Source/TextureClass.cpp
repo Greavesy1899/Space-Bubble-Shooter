@@ -10,8 +10,9 @@ namespace EngineOpenGL
 
 	TextureClass::~TextureClass()
 	{
+		glDeleteTextures(1, &this->textureID);
 	}
-
+	
 	GLuint TextureClass::GetTextureID()
 	{
 		return this->textureID;
@@ -33,7 +34,7 @@ namespace EngineOpenGL
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->surface->w, this->surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, this->surface->pixels);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		//glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
 	void TextureClass::Bind()

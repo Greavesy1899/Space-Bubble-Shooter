@@ -4,6 +4,11 @@
 
 namespace EngineOpenGL
 {
+	void GameManager::updateScreen(int width, int height)
+	{
+		//todo
+	}
+
 	GameManager::GameManager()
 	{
 	}
@@ -90,10 +95,10 @@ namespace EngineOpenGL
 			case SDL_QUIT:
 				isRunning = false;
 				break;
-			//case SDL_WINDOWEVENT_RESIZED:
-			//	//SDL_LogCritical(SDL_LOG_CATEGORY_RENDER, "Resizing window to %i, %i", event.window.data1, event.window.data2);
-			//	SDL_SetWindowSize(window, event.window.data1, event.window.data2);
-			//	break;
+			case SDL_WINDOWEVENT_RESIZED:
+				SDL_SetWindowSize(window, event.window.data1, event.window.data2);
+				this->updateScreen(event.window.data1, event.window.data2);
+				break;
 			//case SDL_MOUSEMOTION:
 			//	pos = Vector(event.motion.x, event.motion.y);
 			//	Singleton::getInstance()->GetIM()->SetMousePos(pos);

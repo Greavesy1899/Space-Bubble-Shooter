@@ -14,7 +14,6 @@ namespace EngineOpenGL
 		glDeleteVertexArrays(1, &this->vao);
 		delete[] this->indices;
 		delete[] this->vertices;
-		delete this->texture;
 	}
 
 	bool Model::SetVertices(VertexLayout* vl, GLuint numVertices)

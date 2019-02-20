@@ -15,6 +15,7 @@ namespace EngineOpenGL
 		TextureClass* texture;
 
 		bool isRunning = false;
+		void updateScreen(int width, int height);
 
 	public:
 		//constructor/destructor
