@@ -1,11 +1,11 @@
 #version 440 core
-out vec4 vertColour;	//output colour of vertex
-in vec3 Colour;			//input the Colour values from Vertex shader
-in vec2 textureCoordinate; //tex coords from vertex shader
+out vec4 vertColour;
+in vec3 Colour;
+in vec2 textureCoordinate;
 
 uniform int enableTex;
 
-uniform sampler2D aTex;		//uniform holding texture info from main programme
+uniform sampler2D aTex;
 
 void main()
 {

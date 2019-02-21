@@ -5,6 +5,7 @@ namespace EngineOpenGL
 	Model::Model()
 	{
 		this->shader = Singleton::getInstance()->GetSM()->GetShader(1);
+		this->transform = glm::mat4(1.0f);
 	}
 
 	Model::~Model()
@@ -78,6 +79,19 @@ namespace EngineOpenGL
 			angle += (2 * 3.141) / 28.0f;
 		}
 		return true;
+	}
+
+	bool Model::SetTransform(glm::vec3 translate, glm::vec3 scale, glm::vec3 rotation)
+	{
+		this->transform = glm::translate(this->transform, translate);
+		this->transform = glm::scale(this->transform, scale);
+		this->transform = glm::rotate(this->transform, 0.0f, rotation);
+		return true;
+	}
+
+	glm::mat4 Model::GetTransform() const
+	{
+		return this->transform;
 	}
 
 	GLuint Model::GetShaderID() const

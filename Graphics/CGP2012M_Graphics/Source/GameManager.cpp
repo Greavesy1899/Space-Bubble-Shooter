@@ -6,7 +6,12 @@ namespace EngineOpenGL
 {
 	void GameManager::updateScreen(int width, int height)
 	{
-		//todo
+		//bugged as shit.
+		//glm::mat4 proj = glm::perspective(45.0f, (float)width / height, 0.1f, 1000.0f);
+		//glViewport(0, 0, width, height);
+		//glMatrixMode(GL_PROJECTION);
+		//glLoadMatrixf(glm::value_ptr(proj));
+		//glMatrixMode(GL_MODELVIEW);
 	}
 
 	GameManager::GameManager()
@@ -19,6 +24,7 @@ namespace EngineOpenGL
 		SDL_DestroyWindow(this->window);
 		SDL_GL_DeleteContext(this->window);
 		delete this->model1;
+		delete this->texture;
 		SDL_Quit();
 		IMG_Quit();
 	}
@@ -57,14 +63,14 @@ namespace EngineOpenGL
 	{
 		SDL_Init(SDL_INIT_EVERYTHING);
 		IMG_Init(SDL_INIT_EVERYTHING);
-		this->window = SDL_CreateWindow("OpenGL Window", 100, 100, 800, 600, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+		this->window = SDL_CreateWindow("OpenGL Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	}
 
 	void GameManager::Init()
 	{
 		this->model1 = new Model();
-		model1->SetModelToSquare(1.0f, 1.0f);
-		//model1->SetModelToCircle(0.5f);
+		//model1->SetModelToSquare(1.0f, 1.0f);
+		model1->SetModelToCircle(0.5f);
 
 		model1->Init();
 		model1->Bind();
@@ -77,6 +83,9 @@ namespace EngineOpenGL
 		this->texture->SetBuffers();
 		this->texture->Unbind();
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+
+		model1->SetTransform(glm::vec3(0.5f, 0.0f, 0.0f));
+		
 
 		this->isRunning = true;
 	}
@@ -125,7 +134,9 @@ namespace EngineOpenGL
 		this->texture->Bind();
 		glUseProgram(this->model1->GetShaderID());
 		GLint uniformLoc = glGetUniformLocation(this->model1->GetShaderID(), "enableTex");
+		GLint worldMatrixLoc = glGetUniformLocation(this->model1->GetShaderID(), "WorldMatrix");
 		glProgramUniform1i(this->model1->GetShaderID(), uniformLoc, 0);	
+		glUniformMatrix4fv(worldMatrixLoc, 1, GL_FALSE, glm::value_ptr(this->model1->GetTransform()));
 		model1->Render();
 		model1->Unbind();
 		model1->DetachShader();
