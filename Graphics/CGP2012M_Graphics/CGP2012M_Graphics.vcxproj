@@ -114,7 +114,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source/BoundingBox.cpp" />
     <ClCompile Include="Source/SingletonManager.cpp" />
     <ClCompile Include="Source/GameManager.cpp" />
     <ClCompile Include="Source/Model.cpp" />
@@ -157,8 +158,10 @@
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\ShaderManager.cpp" />
     <ClCompile Include="Source\SZ_Timer.cpp" />
+    <ClCompile Include="source\TransformMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source/BoundingBox.h" />
     <ClInclude Include="Source/ShaderManager.h" />
     <ClInclude Include="Source/SingletonManager.h" />
     <ClInclude Include="Source/Model.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="Source/TextureClass.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\SZ_Timer.h" />
+    <ClInclude Include="source\TransformMatrix.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\BaseFrag.glsl" />

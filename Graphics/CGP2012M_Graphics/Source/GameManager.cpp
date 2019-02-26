@@ -16,6 +16,7 @@ namespace EngineOpenGL
 
 	GameManager::GameManager()
 	{
+		this->models = std::vector<Model*>();
 	}
 
 
@@ -23,7 +24,11 @@ namespace EngineOpenGL
 	{
 		SDL_DestroyWindow(this->window);
 		SDL_GL_DeleteContext(this->window);
-		delete this->model1;
+
+		for (int i = 0; i != this->models.size(); i++)
+			delete this->models[i];
+		this->models.clear();
+
 		delete this->texture;
 		SDL_Quit();
 		IMG_Quit();
@@ -68,14 +73,23 @@ namespace EngineOpenGL
 
 	void GameManager::Init()
 	{
-		this->model1 = new Model();
-		//model1->SetModelToSquare(1.0f, 1.0f);
-		model1->SetModelToCircle(0.5f);
+		Model* model = new Model();
+		model->SetModelToCircle(0.25f);
+		model->Init();
+		model->Bind();
+		model->Build();
+		model->Unbind();
+		model->Transform.SetPosition(glm::vec3(-0.5f, 0.5f, 0.0f));
 
+		Model* model1 = new Model();
+		model1->SetModelToCircle(0.25f);
 		model1->Init();
 		model1->Bind();
 		model1->Build();
 		model1->Unbind();
+		model1->Transform.SetPosition(glm::vec3(0.5f, -0.5f, 0.0f));
+		this->models.push_back(model);
+		this->models.push_back(model1);
 
 		this->texture = new TextureClass();
 		this->texture->Bind();
@@ -84,7 +98,7 @@ namespace EngineOpenGL
 		this->texture->Unbind();
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 
-		model1->SetTransform(glm::vec3(0.5f, 0.0f, 0.0f));
+
 		
 
 		this->isRunning = true;
@@ -123,23 +137,31 @@ namespace EngineOpenGL
 
 	void GameManager::Update()
 	{
+		for (Model* model : this->models)
+		{
+			model->Transform.Translate(glm::vec3(0.0f, -0.01f, 0.0f));
+		}
 	}
 
 	void GameManager::Render()
 	{
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		model1->LinkShader();
-		model1->Bind();
-		this->texture->Bind();
-		glUseProgram(this->model1->GetShaderID());
-		GLint uniformLoc = glGetUniformLocation(this->model1->GetShaderID(), "enableTex");
-		GLint worldMatrixLoc = glGetUniformLocation(this->model1->GetShaderID(), "WorldMatrix");
-		glProgramUniform1i(this->model1->GetShaderID(), uniformLoc, 0);	
-		glUniformMatrix4fv(worldMatrixLoc, 1, GL_FALSE, glm::value_ptr(this->model1->GetTransform()));
-		model1->Render();
-		model1->Unbind();
-		model1->DetachShader();
+
+		for (Model* model : this->models)
+		{      
+			model->LinkShader();
+			model->Bind();
+			model->Bind();
+			glUseProgram(model->GetShaderID());
+			GLint uniformLoc = glGetUniformLocation(model->GetShaderID(), "enableTex");
+			GLint worldMatrixLoc = glGetUniformLocation(model->GetShaderID(), "WorldMatrix");
+			glProgramUniform1i(model->GetShaderID(), uniformLoc, 0);
+			glUniformMatrix4fv(worldMatrixLoc, 1, GL_FALSE, glm::value_ptr(model->Transform.GetMatrix()));
+			model->Render();
+			model->Unbind();
+			model->DetachShader();
+		}
 		SDL_GL_SwapWindow(this->window);
 	}
 

@@ -12,6 +12,8 @@
 #include "TextureClass.h"
 #include "SingletonManager.h"
 #include "ShaderProgram.h"
+#include "BoundingBox.h"
+#include "TransformMatrix.h"
 
 namespace EngineOpenGL
 {
@@ -33,12 +35,12 @@ namespace EngineOpenGL
 		GLushort* indices;
 		TextureClass* texture;
 		ShaderProgram* shader;
-		glm::mat4 transform;
 		GLuint numVertices;
 		GLuint numTriangles;
 		GLuint vbo;
 		GLuint ibo;
 		GLuint vao;
+		BoundingBox bbox;
 
 	public:
 		Model();
@@ -49,8 +51,7 @@ namespace EngineOpenGL
 		bool SetIndices(GLushort* inds, GLuint numTringles);
 		bool SetModelToSquare(GLfloat widthFactor, GLfloat heightFactor);
 		bool SetModelToCircle(GLfloat radiusFactor);
-		bool SetTransform(glm::vec3 translate = glm::vec3(1.0f), glm::vec3 scale = glm::vec3(1.0f), glm::vec3 rotation = glm::vec3(1.0f));
-		glm::mat4 GetTransform() const;
+		void UpdateBoundingBox();
 		GLuint GetShaderID() const;
 		bool Unbind();
 		bool Bind();
@@ -58,6 +59,8 @@ namespace EngineOpenGL
 		bool Render();
 		bool LinkShader() const;
 		bool DetachShader() const;
+
+		TransformMatrix Transform;
 	};
 }
 #endif

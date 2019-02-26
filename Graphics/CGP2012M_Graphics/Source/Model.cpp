@@ -5,7 +5,7 @@ namespace EngineOpenGL
 	Model::Model()
 	{
 		this->shader = Singleton::getInstance()->GetSM()->GetShader(1);
-		this->transform = glm::mat4(1.0f);
+		this->Transform = TransformMatrix();
 	}
 
 	Model::~Model()
@@ -21,6 +21,7 @@ namespace EngineOpenGL
 	{
 		this->vertices = vl;
 		this->numVertices = numVertices;
+		UpdateBoundingBox();
 		return true;
 	}
 
@@ -52,6 +53,7 @@ namespace EngineOpenGL
 
 		this->numTriangles = 2;
 		this->numVertices = 4;
+		UpdateBoundingBox();
 		return true;
 	}
 
@@ -78,20 +80,39 @@ namespace EngineOpenGL
 			this->vertices[i] = VertexLayout((radiusFactor * cos(angle)), radiusFactor * sin(angle), 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
 			angle += (2 * 3.141) / 28.0f;
 		}
+		UpdateBoundingBox();
 		return true;
 	}
 
-	bool Model::SetTransform(glm::vec3 translate, glm::vec3 scale, glm::vec3 rotation)
+	void Model::UpdateBoundingBox()
 	{
-		this->transform = glm::translate(this->transform, translate);
-		this->transform = glm::scale(this->transform, scale);
-		this->transform = glm::rotate(this->transform, 0.0f, rotation);
-		return true;
-	}
+		glm::vec3 min(0);
+		glm::vec3 max(0);
 
-	glm::mat4 Model::GetTransform() const
-	{
-		return this->transform;
+		for (int i = 0; i != this->numVertices; i++)
+		{
+			glm::vec3 pos = this->vertices[i].position;
+
+			if (pos.x < min.x)
+				min.x = pos.x;
+
+			if (pos.x > max.x)
+				max.x = pos.x;
+
+			if (pos.y < min.y)
+				min.y = pos.y;
+
+			if (pos.y > max.y)
+				max.y = pos.y;
+
+			if (pos.z < min.z)
+				min.z = pos.z;
+
+			if (pos.z > max.z)
+				max.z = pos.z;
+		}
+
+		this->bbox = BoundingBox(min, max);
 	}
 
 	GLuint Model::GetShaderID() const
@@ -125,7 +146,7 @@ namespace EngineOpenGL
 	{
 		glBufferData(GL_ARRAY_BUFFER, this->numVertices * sizeof(VertexLayout), this->vertices, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->numTriangles * 6, this->indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->numTriangles*2, this->indices, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)0);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)(sizeof(glm::vec3)));

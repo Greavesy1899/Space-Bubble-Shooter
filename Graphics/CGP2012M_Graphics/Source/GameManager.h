@@ -1,7 +1,9 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
-#include "SDL.h"
+#include <vector>
 #include <GL/glew.h>
+
+#include "SDL.h"
 #include "ShaderProgram.h"
 #include "Model.h"
 
@@ -11,7 +13,7 @@ namespace EngineOpenGL
 	{
 		SDL_Window* window;
 		SDL_GLContext glContext;
-		Model* model1;
+		std::vector<Model*> models;
 		TextureClass* texture;
 
 		bool isRunning = false;
