@@ -12,6 +12,8 @@ namespace EngineOpenGL
 		~BubbleObject();
 		void Update();
 		void Render();
+
+		Model* GetModel();
 	};
 }
 

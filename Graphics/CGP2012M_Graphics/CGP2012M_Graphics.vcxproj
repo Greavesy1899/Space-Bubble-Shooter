@@ -148,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BubbleObject.cpp" />
+    <ClCompile Include="Source/BubbleObject.cpp" />
     <ClCompile Include="Source/BoundingBox.cpp" />
     <ClCompile Include="Source/SingletonManager.cpp" />
     <ClCompile Include="Source/GameManager.cpp" />

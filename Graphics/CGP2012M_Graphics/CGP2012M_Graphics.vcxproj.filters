@@ -48,7 +48,7 @@
     <ClCompile Include="source\TransformMatrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BubbleObject.cpp">
+    <ClCompile Include="Source/BubbleObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

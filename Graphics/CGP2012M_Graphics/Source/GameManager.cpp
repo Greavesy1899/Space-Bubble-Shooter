@@ -74,8 +74,11 @@ namespace EngineOpenGL
 	void GameManager::Init()
 	{
 		BubbleObject* bubObj = new BubbleObject();
+		bubObj->GetModel()->Transform.SetPosition(glm::vec3(-0.5f, 0.5f, 0.0f));
+		BubbleObject* bubObj1 = new BubbleObject();
+		bubObj1->GetModel()->Transform.SetPosition(glm::vec3(0.5f, -0.5f, 0.0f));
 		this->models.push_back(bubObj);
-		//this->models.push_back(model1);
+		this->models.push_back(bubObj1);
 
 		this->texture = new TextureClass();
 		this->texture->Bind();
