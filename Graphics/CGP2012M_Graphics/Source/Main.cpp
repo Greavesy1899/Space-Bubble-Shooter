@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <ctime>
 
 // // GLEW - OpenGL Extension Wrangler - http://glew.sourceforge.net/
 // // NOTE: include before SDL.h
@@ -27,6 +28,7 @@ using namespace EngineOpenGL;
 SZ_Timer aTimer;
 
 int main(int argc, char *argv[]) {
+	srand(time(NULL));
 	GameManager* gManager = new GameManager();
 	gManager->PreInitSDL();
 	gManager->PreInitGL();

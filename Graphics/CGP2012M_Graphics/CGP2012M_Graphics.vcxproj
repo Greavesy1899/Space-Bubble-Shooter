@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BubbleObject.cpp" />
     <ClCompile Include="Source/BoundingBox.cpp" />
     <ClCompile Include="Source/SingletonManager.cpp" />
     <ClCompile Include="Source/GameManager.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Source/SingletonManager.h" />
     <ClInclude Include="Source/Model.h" />
     <ClInclude Include="Source/ShaderProgram.h" />
+    <ClInclude Include="Source\BubbleObject.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source/TextureClass.h" />
     <ClInclude Include="Source\InputManager.h" />

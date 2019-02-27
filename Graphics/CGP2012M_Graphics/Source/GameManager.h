@@ -5,7 +5,7 @@
 
 #include "SDL.h"
 #include "ShaderProgram.h"
-#include "Model.h"
+#include "BubbleObject.h"
 
 namespace EngineOpenGL
 {
@@ -13,7 +13,7 @@ namespace EngineOpenGL
 	{
 		SDL_Window* window;
 		SDL_GLContext glContext;
-		std::vector<Model*> models;
+		std::vector<BubbleObject*> models;
 		TextureClass* texture;
 
 		bool isRunning = false;

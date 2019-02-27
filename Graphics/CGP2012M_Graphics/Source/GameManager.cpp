@@ -16,7 +16,7 @@ namespace EngineOpenGL
 
 	GameManager::GameManager()
 	{
-		this->models = std::vector<Model*>();
+		this->models = std::vector<BubbleObject*>();
 	}
 
 
@@ -73,23 +73,9 @@ namespace EngineOpenGL
 
 	void GameManager::Init()
 	{
-		Model* model = new Model();
-		model->SetModelToCircle(0.25f);
-		model->Init();
-		model->Bind();
-		model->Build();
-		model->Unbind();
-		model->Transform.SetPosition(glm::vec3(-0.5f, 0.5f, 0.0f));
-
-		Model* model1 = new Model();
-		model1->SetModelToCircle(0.25f);
-		model1->Init();
-		model1->Bind();
-		model1->Build();
-		model1->Unbind();
-		model1->Transform.SetPosition(glm::vec3(0.5f, -0.5f, 0.0f));
-		this->models.push_back(model);
-		this->models.push_back(model1);
+		BubbleObject* bubObj = new BubbleObject();
+		this->models.push_back(bubObj);
+		//this->models.push_back(model1);
 
 		this->texture = new TextureClass();
 		this->texture->Bind();
@@ -137,9 +123,9 @@ namespace EngineOpenGL
 
 	void GameManager::Update()
 	{
-		for (Model* model : this->models)
+		for (BubbleObject* model : this->models)
 		{
-			model->Transform.Translate(glm::vec3(0.0f, -0.01f, 0.0f));
+			model->Update();
 		}
 	}
 
@@ -148,19 +134,9 @@ namespace EngineOpenGL
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		for (Model* model : this->models)
+		for (BubbleObject* model : this->models)
 		{      
-			model->LinkShader();
-			model->Bind();
-			model->Bind();
-			glUseProgram(model->GetShaderID());
-			GLint uniformLoc = glGetUniformLocation(model->GetShaderID(), "enableTex");
-			GLint worldMatrixLoc = glGetUniformLocation(model->GetShaderID(), "WorldMatrix");
-			glProgramUniform1i(model->GetShaderID(), uniformLoc, 0);
-			glUniformMatrix4fv(worldMatrixLoc, 1, GL_FALSE, glm::value_ptr(model->Transform.GetMatrix()));
 			model->Render();
-			model->Unbind();
-			model->DetachShader();
 		}
 		SDL_GL_SwapWindow(this->window);
 	}
