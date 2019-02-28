@@ -7,9 +7,11 @@ namespace EngineOpenGL
 {
 	class BubbleObject
 	{
-		int direction;
 		bool CheckBounds();
 		Model* model;
+		int xDirection;
+		int yDirection;
+		glm::vec3 shapeColour;
 
 	public:
 		BubbleObject();

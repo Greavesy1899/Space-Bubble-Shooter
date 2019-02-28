@@ -77,8 +77,11 @@ namespace EngineOpenGL
 		bubObj->Transform.SetPosition(glm::vec3(-0.5f, 0.5f, 0.0f));
 		BubbleObject* bubObj1 = new BubbleObject();
 		bubObj1->Transform.SetPosition(glm::vec3(0.5f, -0.5f, 0.0f));
+		BubbleObject* bubObj2 = new BubbleObject();
+		bubObj2->Transform.SetPosition(glm::vec3(-0.5f, 0.5f, 0.0f));
 		this->models.push_back(bubObj);
 		this->models.push_back(bubObj1);
+		this->models.push_back(bubObj2);
 
 		this->texture = new TextureClass();
 		this->texture->Bind();
@@ -86,9 +89,6 @@ namespace EngineOpenGL
 		this->texture->SetBuffers();
 		this->texture->Unbind();
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-
-
-		
 
 		this->isRunning = true;
 	}
