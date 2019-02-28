@@ -53,14 +53,13 @@ namespace EngineOpenGL
 		bool SetModelToCircle(GLfloat radiusFactor);
 		void UpdateBoundingBox();
 		GLuint GetShaderID() const;
+		BoundingBox GetBBox() const;
 		bool Unbind();
 		bool Bind();
 		bool Build();
 		bool Render();
 		bool LinkShader() const;
 		bool DetachShader() const;
-
-		TransformMatrix Transform;
 	};
 }
 #endif

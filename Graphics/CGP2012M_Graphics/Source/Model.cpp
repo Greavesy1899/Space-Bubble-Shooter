@@ -5,7 +5,6 @@ namespace EngineOpenGL
 	Model::Model()
 	{
 		this->shader = Singleton::getInstance()->GetSM()->GetShader(1);
-		this->Transform = TransformMatrix();
 	}
 
 	Model::~Model()
@@ -118,6 +117,11 @@ namespace EngineOpenGL
 	GLuint Model::GetShaderID() const
 	{
 		return this->shader->GetProgramID();
+	}
+
+	BoundingBox Model::GetBBox() const
+	{
+		return this->bbox;
 	}
 
 	bool Model::Init()

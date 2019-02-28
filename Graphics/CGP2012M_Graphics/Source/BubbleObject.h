@@ -1,10 +1,14 @@
 #ifndef BUBBLEOBJECT_H
 #define BUBBLEOBJECT_H
 #include "Model.h"
+#include "TransformMatrix.h"
+
 namespace EngineOpenGL
 {
 	class BubbleObject
 	{
+		int direction;
+		bool CheckBounds();
 		Model* model;
 
 	public:
@@ -14,6 +18,7 @@ namespace EngineOpenGL
 		void Render();
 
 		Model* GetModel();
+		TransformMatrix Transform;
 	};
 }
 
