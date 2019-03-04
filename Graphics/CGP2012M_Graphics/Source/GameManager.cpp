@@ -6,9 +6,11 @@ namespace EngineOpenGL
 {
 	void GameManager::updateScreen(int width, int height)
 	{
+		glViewport(0, 0, width, height);
+		this->camera.SetOrthographic(width, height);
 		//bugged as shit.
 		//glm::mat4 proj = glm::perspective(45.0f, (float)width / height, 0.1f, 1000.0f);
-		//glViewport(0, 0, width, height);
+
 		//glMatrixMode(GL_PROJECTION);
 		//glLoadMatrixf(glm::value_ptr(proj));
 		//glMatrixMode(GL_MODELVIEW);
@@ -16,7 +18,7 @@ namespace EngineOpenGL
 
 	GameManager::GameManager()
 	{
-		this->models = std::vector<BubbleObject*>();
+		this->bubbles = std::vector<BubbleObject*>();
 	}
 
 
@@ -25,10 +27,10 @@ namespace EngineOpenGL
 		SDL_DestroyWindow(this->window);
 		SDL_GL_DeleteContext(this->window);
 
-		for (int i = 0; i != this->models.size(); i++)
-			delete this->models[i];
-		this->models.clear();
-
+		for (int i = 0; i != this->bubbles.size(); i++)
+			delete this->bubbles[i];
+		this->bubbles.clear();
+		delete this->ship;
 		delete this->texture;
 		SDL_Quit();
 		IMG_Quit();
@@ -64,11 +66,11 @@ namespace EngineOpenGL
 		Singleton::getInstance();
 	}
 
-	void GameManager::PreInitSDL()
+	void GameManager::PreInitSDL(int width, int height)
 	{
 		SDL_Init(SDL_INIT_EVERYTHING);
 		IMG_Init(SDL_INIT_EVERYTHING);
-		this->window = SDL_CreateWindow("OpenGL Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+		this->window = SDL_CreateWindow("OpenGL Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width/2, height/2, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	}
 
 	void GameManager::Init()
@@ -79,17 +81,22 @@ namespace EngineOpenGL
 		bubObj1->Transform.SetPosition(glm::vec3(0.5f, -0.5f, 0.0f));
 		BubbleObject* bubObj2 = new BubbleObject();
 		bubObj2->Transform.SetPosition(glm::vec3(-0.5f, 0.5f, 0.0f));
-		this->models.push_back(bubObj);
-		this->models.push_back(bubObj1);
-		this->models.push_back(bubObj2);
+
+		this->bubbles.push_back(bubObj);
+		this->bubbles.push_back(bubObj1);
+		this->bubbles.push_back(bubObj2);
+
+		this->ship = new ShipObject();
+		this->ship->Transform.SetPosition(glm::vec3(0.0f));
 
 		this->texture = new TextureClass();
 		this->texture->Bind();
 		this->texture->LoadTexture("Textures/Test.png");
 		this->texture->SetBuffers();
 		this->texture->Unbind();
-		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 
+		this->camera = Camera();
+		this->camera.SetOrthographic(800, 600);
 		this->isRunning = true;
 	}
 
@@ -107,9 +114,14 @@ namespace EngineOpenGL
 			case SDL_QUIT:
 				isRunning = false;
 				break;
-			case SDL_WINDOWEVENT_RESIZED:
-				SDL_SetWindowSize(window, event.window.data1, event.window.data2);
-				this->updateScreen(event.window.data1, event.window.data2);
+			case SDL_WINDOWEVENT:
+				switch (event.window.event)
+				{
+					case SDL_WINDOWEVENT_RESIZED:
+						SDL_SetWindowSize(window, event.window.data1, event.window.data2);
+						this->updateScreen(event.window.data1, event.window.data2);
+					break;
+				}
 				break;
 			//case SDL_MOUSEMOTION:
 			//	pos = Vector(event.motion.x, event.motion.y);
@@ -126,21 +138,23 @@ namespace EngineOpenGL
 
 	void GameManager::Update()
 	{
-		for (BubbleObject* model : this->models)
+		for (BubbleObject* model : this->bubbles)
 		{
 			model->Update();
 		}
+		this->ship->Update();
 	}
 
 	void GameManager::Render()
 	{
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		for (BubbleObject* model : this->models)
+		this->ship->Render(this->camera);
+		for (BubbleObject* model : this->bubbles)
 		{      
-			model->Render();
+			model->Render(this->camera);
 		}
+		
 		SDL_GL_SwapWindow(this->window);
 	}
 

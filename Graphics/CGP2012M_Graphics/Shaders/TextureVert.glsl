@@ -6,12 +6,14 @@ layout (location=2) in vec2 texCoord;
 out vec3 Colour;
 out vec2 textureCoordinate;
 
+uniform mat4 ViewMatrix;
+uniform mat4 ProjectionMatrix;
 uniform mat4 WorldMatrix;
 
 void main()
 {
 
-	gl_Position = WorldMatrix * vec4(Position, 1.0);
+	gl_Position = ProjectionMatrix * ViewMatrix * WorldMatrix * vec4(Position, 1.0);
 	Colour = vColour;
 	textureCoordinate = vec2(texCoord.x, 1 - texCoord.y);
 

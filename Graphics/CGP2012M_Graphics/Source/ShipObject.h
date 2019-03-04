@@ -1,22 +1,19 @@
-#ifndef BUBBLEOBJECT_H
-#define BUBBLEOBJECT_H
+#ifndef SHIPOBJECT_H
+#define SHIPOBJECT_H
 #include "Model.h"
-#include "Camera.h"
 #include "TransformMatrix.h"
+#include "Camera.h"
 
 namespace EngineOpenGL
 {
-	class BubbleObject
+	class ShipObject
 	{
 		bool CheckBounds();
 		Model* model;
-		int xDirection;
-		int yDirection;
-		glm::vec3 shapeColour;
 
 	public:
-		BubbleObject();
-		~BubbleObject();
+		ShipObject();
+		~ShipObject();
 		void Update();
 		void Render(Camera cam);
 
@@ -24,5 +21,5 @@ namespace EngineOpenGL
 		TransformMatrix Transform;
 	};
 }
+#endif SHIPOBJECT_H
 
-#endif

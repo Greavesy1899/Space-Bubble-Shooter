@@ -6,6 +6,8 @@
 #include "SDL.h"
 #include "ShaderProgram.h"
 #include "BubbleObject.h"
+#include "ShipObject.h"
+#include "Camera.h"
 
 namespace EngineOpenGL
 {
@@ -13,8 +15,10 @@ namespace EngineOpenGL
 	{
 		SDL_Window* window;
 		SDL_GLContext glContext;
-		std::vector<BubbleObject*> models;
+		std::vector<BubbleObject*> bubbles;
+		ShipObject* ship;
 		TextureClass* texture;
+		Camera camera;
 
 		bool isRunning = false;
 		void updateScreen(int width, int height);
@@ -32,7 +36,7 @@ namespace EngineOpenGL
 
 		//functions.
 		void PreInitGL();
-		void PreInitSDL();
+		void PreInitSDL(int width, int height);
 		void Init();
 		void Input();
 		void Update();

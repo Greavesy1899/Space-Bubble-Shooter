@@ -156,8 +156,10 @@
     <ClCompile Include="Source/ShaderProgram.cpp" />
     <ClCompile Include="Source/Main.cpp" />
     <ClCompile Include="Source/TextureClass.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\ShaderManager.cpp" />
+    <ClCompile Include="Source\ShipObject.cpp" />
     <ClCompile Include="Source\SZ_Timer.cpp" />
     <ClCompile Include="source\TransformMatrix.cpp" />
   </ItemGroup>
@@ -168,9 +170,11 @@
     <ClInclude Include="Source/Model.h" />
     <ClInclude Include="Source/ShaderProgram.h" />
     <ClInclude Include="Source\BubbleObject.h" />
+    <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source/TextureClass.h" />
     <ClInclude Include="Source\InputManager.h" />
+    <ClInclude Include="Source\ShipObject.h" />
     <ClInclude Include="Source\SZ_Timer.h" />
     <ClInclude Include="source\TransformMatrix.h" />
   </ItemGroup>

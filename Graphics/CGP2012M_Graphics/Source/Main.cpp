@@ -27,10 +27,23 @@
 using namespace EngineOpenGL;
 SZ_Timer aTimer;
 
+void GetDesktopResolution(int& height, int& width)
+{
+	RECT desktop;
+	const HWND hDesktop = GetDesktopWindow();
+	GetWindowRect(hDesktop, &desktop);
+	width = desktop.right;
+	height = desktop.bottom;
+}
+
 int main(int argc, char *argv[]) {
+	int height = 0;
+	int width = 0;
+	GetDesktopResolution(height, width);
+
 	srand(time(NULL));
 	GameManager* gManager = new GameManager();
-	gManager->PreInitSDL();
+	gManager->PreInitSDL(width, height);
 	gManager->PreInitGL();
 	gManager->Init();
 
