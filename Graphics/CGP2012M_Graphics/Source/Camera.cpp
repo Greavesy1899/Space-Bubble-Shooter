@@ -18,7 +18,7 @@ namespace EngineOpenGL
 	void Camera::SetOrthographic(float width, float height)
 	{
 		float ratio = width / height;
-		this->projectionMatrix = glm::ortho(-4.0f * ratio, 4.0f * ratio, -4.0f, 4.0f, this->screenNear, this->screenFar);
+		this->projectionMatrix = glm::ortho(-4.0f, 4.0f, -4.0f, 4.0f, this->screenNear, this->screenFar);
 		this->isOrtho = true;
 	}
 

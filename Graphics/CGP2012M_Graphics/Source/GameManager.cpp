@@ -8,12 +8,6 @@ namespace EngineOpenGL
 	{
 		glViewport(0, 0, width, height);
 		this->camera.SetOrthographic(width, height);
-		//bugged as shit.
-		//glm::mat4 proj = glm::perspective(45.0f, (float)width / height, 0.1f, 1000.0f);
-
-		//glMatrixMode(GL_PROJECTION);
-		//glLoadMatrixf(glm::value_ptr(proj));
-		//glMatrixMode(GL_MODELVIEW);
 	}
 
 	GameManager::GameManager()
@@ -70,7 +64,9 @@ namespace EngineOpenGL
 	{
 		SDL_Init(SDL_INIT_EVERYTHING);
 		IMG_Init(SDL_INIT_EVERYTHING);
-		this->window = SDL_CreateWindow("OpenGL Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width/2, height/2, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+
+		GLint windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
+		this->window = SDL_CreateWindow("Connor Greaves, CGP2012M, 17643079", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width/2, height/2, windowFlags);
 	}
 
 	void GameManager::Init()
@@ -134,6 +130,25 @@ namespace EngineOpenGL
 
 		if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_ESCAPE))
 			isRunning = false;
+
+		if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_P))
+		{
+			if (!this->isFullscreen)
+			{
+				SDL_SetWindowFullscreen(this->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+				this->isFullscreen = true;
+			}
+			else
+			{
+				SDL_SetWindowFullscreen(this->window, 0);
+				SDL_SetWindowSize(this->window, 800, 600);
+				SDL_SetWindowBordered(this->window, SDL_TRUE);
+				SDL_SetWindowPosition(this->window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+				updateScreen(800, 600);
+				this->isFullscreen = false;
+			}
+		}
+			
 	}
 
 	void GameManager::Update()

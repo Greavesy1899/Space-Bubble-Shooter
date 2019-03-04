@@ -21,6 +21,7 @@ namespace EngineOpenGL
 		Camera camera;
 
 		bool isRunning = false;
+		bool isFullscreen = false;
 		void updateScreen(int width, int height);
 
 	public:
