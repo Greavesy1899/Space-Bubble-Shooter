@@ -2,6 +2,7 @@
 #define SINGLETONMANAGER_H
 #include "ShaderManager.h"
 #include "InputManager.h"
+#include "TextureManager.h"
 
 namespace EngineOpenGL
 {
@@ -12,6 +13,7 @@ namespace EngineOpenGL
 
 		ShaderManager* sm;
 		InputManager* im;
+		TextureManager* tm;
 	public:
 		static Singleton* getInstance();
 
@@ -20,6 +22,7 @@ namespace EngineOpenGL
 
 		ShaderManager* GetSM() const;
 		InputManager* GetIM() const;
+		TextureManager* GetTM() const;
 
 	private:
 		Singleton();

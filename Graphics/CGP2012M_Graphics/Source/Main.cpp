@@ -47,7 +47,6 @@ int main(int argc, char *argv[]) {
 	gManager->PreInitGL();
 	gManager->Init();
 
-	//temp fix
 	while (gManager->GetIsRunning())
 	{
 		aTimer.resetTicksTimer();

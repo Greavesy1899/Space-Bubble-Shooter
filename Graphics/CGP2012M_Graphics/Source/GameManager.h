@@ -17,7 +17,6 @@ namespace EngineOpenGL
 		SDL_GLContext glContext;
 		std::vector<BubbleObject*> bubbles;
 		ShipObject* ship;
-		TextureClass* texture;
 		Camera camera;
 
 		bool isRunning = false;

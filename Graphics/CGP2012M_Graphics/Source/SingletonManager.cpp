@@ -15,6 +15,7 @@ namespace EngineOpenGL
 	{
 		delete this->sm;
 		delete this->im;
+		delete this->tm;
 		delete this->instance;
 	}
 	ShaderManager * Singleton::GetSM() const
@@ -25,9 +26,14 @@ namespace EngineOpenGL
 	{
 		return this->im;
 	}
+	TextureManager * Singleton::GetTM() const
+	{
+		return this->tm;
+	}
 	Singleton::Singleton()
 	{
 		this->sm = new ShaderManager();
 		this->im = new InputManager();
+		this->tm = new TextureManager();
 	}
 }

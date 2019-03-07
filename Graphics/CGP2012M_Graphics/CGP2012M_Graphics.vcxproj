@@ -162,6 +162,7 @@
     <ClCompile Include="Source\ShipObject.cpp" />
     <ClCompile Include="Source\SZ_Timer.cpp" />
     <ClCompile Include="source\TransformMatrix.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source/BoundingBox.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\ShipObject.h" />
     <ClInclude Include="Source\SZ_Timer.h" />
+    <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="source\TransformMatrix.h" />
   </ItemGroup>
   <ItemGroup>

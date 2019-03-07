@@ -25,7 +25,6 @@ namespace EngineOpenGL
 			delete this->bubbles[i];
 		this->bubbles.clear();
 		delete this->ship;
-		delete this->texture;
 		SDL_Quit();
 		IMG_Quit();
 	}
@@ -84,12 +83,6 @@ namespace EngineOpenGL
 
 		this->ship = new ShipObject();
 		this->ship->Transform.SetPosition(glm::vec3(0.0f));
-
-		this->texture = new TextureClass();
-		this->texture->Bind();
-		this->texture->LoadTexture("Textures/Test.png");
-		this->texture->SetBuffers();
-		this->texture->Unbind();
 
 		this->camera = Camera();
 		this->camera.SetOrthographic(800, 600);
