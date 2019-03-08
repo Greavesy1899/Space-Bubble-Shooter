@@ -16,6 +16,7 @@ namespace EngineOpenGL
 
 	public:
 		BubbleObject();
+		BubbleObject(OBJLoader loader);
 		~BubbleObject();
 		void Update();
 		void Render(Camera cam);

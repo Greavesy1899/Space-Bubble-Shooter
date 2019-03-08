@@ -17,6 +17,7 @@ namespace EngineOpenGL
 	{
 		this->textures = std::map<int, TextureClass*>();
 		this->AddTexture(0, "Textures/Test.png");
+		this->AddTexture(1, "Textures/Bubble.png");
 	}
 
 	TextureManager::~TextureManager()
@@ -34,7 +35,7 @@ namespace EngineOpenGL
 			if (x.first == key)
 				return x.second;
 		}
-		printf("Error! Did not find shader!\n");
+		printf("Error! Did not find texture!\n");
 		return nullptr;
 	}
 }

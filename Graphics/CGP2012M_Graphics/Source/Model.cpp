@@ -76,10 +76,40 @@ namespace EngineOpenGL
 
 		for (int i = 1; i != 30; i++)
 		{
-			this->vertices[i] = VertexLayout((radiusFactor * cos(angle)), radiusFactor * sin(angle), 0.0f, 0.0f, 1.0f, 0.0f, ((radiusFactor * cos(angle))*0.5f) + 0.5f, ((radiusFactor * sin(angle))*0.5f) + 0.5f);
+			glm::vec3 pos = glm::vec3(radiusFactor * cos(angle), radiusFactor * sin(angle), 0.0f);
+			glm::vec3 col = glm::vec3(0.0f, 1.0f, 0.0f);
+			glm::vec2 uv = glm::vec2(((radiusFactor * cos(angle))*0.5f) + 0.75f, ((radiusFactor * sin(angle))*0.75f) + 0.5f);
+
+			this->vertices[i] = VertexLayout(pos, col, uv);
 			angle += (2 * 3.141) / 28.0f;
 		}
 		UpdateBoundingBox();
+		return true;
+	}
+
+	bool Model::SetModelToObj(OBJLoader loader)
+	{
+		this->vertices = new VertexLayout[loader.vertices.size()];
+		this->numVertices = loader.vertices.size();
+		this->numTriangles = (GLushort)loader.indices.size()/3;
+		this->indices = new GLushort[loader.indices.size()];
+
+		for (int i = 0; i != loader.vertices.size(); i++)
+		{
+			VertexLayout vertex = VertexLayout();
+			vertex.position = loader.vertices[i];
+			vertex.color = glm::vec3(1.0f);
+			vertex.uv = loader.texCoords[i];
+			this->vertices[i] = vertex;
+		}
+
+		for (int i = 0; i != loader.indices.size(); i++)
+		{
+			this->indices[i] = loader.indices[i];
+		}
+
+		UpdateBoundingBox();
+
 		return true;
 	}
 
@@ -192,5 +222,11 @@ namespace EngineOpenGL
 		this->position = glm::vec3(x, y, z);
 		this->color = glm::vec3(r, g, b);
 		this->uv = glm::vec2(u, v);
+	}
+	Model::VertexLayout::VertexLayout(glm::vec3 pos, glm::vec3 color, glm::vec2 uv)
+	{
+		this->position = pos;
+		this->color = color;
+		this->uv = uv;
 	}
 }

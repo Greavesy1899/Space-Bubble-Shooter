@@ -14,6 +14,7 @@
 #include "ShaderProgram.h"
 #include "BoundingBox.h"
 #include "TransformMatrix.h"
+#include "OBJLoader.h"
 
 namespace EngineOpenGL
 {
@@ -28,6 +29,7 @@ namespace EngineOpenGL
 
 			VertexLayout();
 			VertexLayout(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b, GLfloat u, GLfloat v);
+			VertexLayout(glm::vec3 pos, glm::vec3 color, glm::vec2 uv);
 		};
 
 	private:
@@ -51,6 +53,7 @@ namespace EngineOpenGL
 		bool SetIndices(GLushort* inds, GLuint numTringles);
 		bool SetModelToSquare(GLfloat widthFactor, GLfloat heightFactor);
 		bool SetModelToCircle(GLfloat radiusFactor);
+		bool SetModelToObj(OBJLoader loader);
 		void UpdateBoundingBox();
 		GLuint GetShaderID() const;
 		BoundingBox GetBBox() const;

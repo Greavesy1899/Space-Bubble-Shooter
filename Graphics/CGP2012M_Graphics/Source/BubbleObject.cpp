@@ -40,8 +40,12 @@ namespace EngineOpenGL
 	}
 	BubbleObject::BubbleObject()
 	{
+	}
+	BubbleObject::BubbleObject(OBJLoader loader)
+	{
 		this->model = new Model();
-		this->model->SetModelToCircle(0.125f);
+		this->model->SetModelToObj(loader);
+		//this->model->SetModelToCircle(1.0f);
 		this->model->Init();
 		this->model->Bind();
 		this->model->Build();
@@ -64,6 +68,7 @@ namespace EngineOpenGL
 
 	void BubbleObject::Render(Camera cam)
 	{
+		Singleton::getInstance()->GetTM()->GetTexture(1)->Bind();
 		this->model->LinkShader();
 		this->model->Bind();
 		glUseProgram(this->model->GetShaderID());
@@ -72,7 +77,7 @@ namespace EngineOpenGL
 		GLint shapeColorLoc = glGetUniformLocation(this->model->GetShaderID(), "shapeColour");
 		GLint viewMatrixLoc = glGetUniformLocation(this->model->GetShaderID(), "ViewMatrix");
 		GLint projectMatrixLoc = glGetUniformLocation(this->model->GetShaderID(), "ProjectionMatrix");
-		glProgramUniform1i(this->model->GetShaderID(), uniformLoc, 2);
+		glProgramUniform1i(this->model->GetShaderID(), uniformLoc, 0);
 		glUniformMatrix4fv(worldMatrixLoc, 1, GL_FALSE, glm::value_ptr(this->Transform.GetMatrix()));
 		glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, glm::value_ptr(cam.GetViewMatrix()));
 		glUniformMatrix4fv(projectMatrixLoc, 1, GL_FALSE, glm::value_ptr(cam.GetProjectionMatrix()));
@@ -80,6 +85,7 @@ namespace EngineOpenGL
 		this->model->Render();
 		this->model->Unbind();
 		this->model->DetachShader();
+		Singleton::getInstance()->GetTM()->GetTexture(1)->Unbind();
 	}
 
 	Model* BubbleObject::GetModel()

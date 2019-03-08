@@ -158,6 +158,7 @@
     <ClCompile Include="Source/TextureClass.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
+    <ClCompile Include="Source\OBJLoader.cpp" />
     <ClCompile Include="Source\ShaderManager.cpp" />
     <ClCompile Include="Source\ShipObject.cpp" />
     <ClCompile Include="Source\SZ_Timer.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source/TextureClass.h" />
     <ClInclude Include="Source\InputManager.h" />
+    <ClInclude Include="Source\OBJLoader.h" />
     <ClInclude Include="Source\ShipObject.h" />
     <ClInclude Include="Source\SZ_Timer.h" />
     <ClInclude Include="Source\TextureManager.h" />

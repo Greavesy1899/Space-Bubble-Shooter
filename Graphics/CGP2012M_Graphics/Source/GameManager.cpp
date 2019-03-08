@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "SDL_image.h"
 #include "SingletonManager.h"
+#include "OBJLoader.h"
 
 namespace EngineOpenGL
 {
@@ -55,6 +56,9 @@ namespace EngineOpenGL
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(MessageCallback, 0);
 
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		//should build the manager;
 		Singleton::getInstance();
 	}
@@ -70,11 +74,15 @@ namespace EngineOpenGL
 
 	void GameManager::Init()
 	{
-		BubbleObject* bubObj = new BubbleObject();
+		OBJLoader loader = OBJLoader();
+		loader.ParseOBJ("Models/circle.obj");
+		//BubbleObject* bubObj4 = new BubbleObject();
+
+		BubbleObject* bubObj = new BubbleObject(loader);
 		bubObj->Transform.SetPosition(glm::vec3(-0.5f, 0.5f, 0.0f));
-		BubbleObject* bubObj1 = new BubbleObject();
+		BubbleObject* bubObj1 = new BubbleObject(loader);
 		bubObj1->Transform.SetPosition(glm::vec3(0.5f, -0.5f, 0.0f));
-		BubbleObject* bubObj2 = new BubbleObject();
+		BubbleObject* bubObj2 = new BubbleObject(loader);
 		bubObj2->Transform.SetPosition(glm::vec3(-0.5f, 0.5f, 0.0f));
 
 		this->bubbles.push_back(bubObj);
