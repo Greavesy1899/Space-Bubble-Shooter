@@ -84,6 +84,9 @@ namespace EngineOpenGL
 		BubbleObject* bubObj2 = new BubbleObject(loader);
 		bubObj2->Transform.Translate(glm::vec3(-0.5f, 0.5f, 0.0f));
 
+		this->background = new GameObject(4.0f, 4.0f);
+		this->background->Transform.SetPosition(glm::vec3(0.0f));
+
 		this->bubbles.push_back(bubObj);
 		this->bubbles.push_back(bubObj1);
 		this->bubbles.push_back(bubObj2);
@@ -119,10 +122,6 @@ namespace EngineOpenGL
 					break;
 				}
 				break;
-			//case SDL_MOUSEMOTION:
-			//	pos = Vector(event.motion.x, event.motion.y);
-			//	Singleton::getInstance()->GetIM()->SetMousePos(pos);
-			//	break;
 			default:
 				break;
 			}
@@ -154,6 +153,7 @@ namespace EngineOpenGL
 
 	void GameManager::Update()
 	{
+		this->background->Update();
 		for (BubbleObject* model : this->bubbles)
 		{
 			model->Update();
@@ -165,6 +165,7 @@ namespace EngineOpenGL
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		this->background->Render(this->camera);
 		this->ship->Render(this->camera);
 		for (BubbleObject* model : this->bubbles)
 		{      

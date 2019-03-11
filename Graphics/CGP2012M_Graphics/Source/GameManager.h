@@ -8,6 +8,7 @@
 #include "BubbleObject.h"
 #include "ShipObject.h"
 #include "Camera.h"
+#include "GameObject.h"
 
 namespace EngineOpenGL
 {
@@ -17,6 +18,7 @@ namespace EngineOpenGL
 		SDL_GLContext glContext;
 		std::vector<BubbleObject*> bubbles;
 		ShipObject* ship;
+		GameObject* background;
 		Camera camera;
 
 		bool isRunning = false;

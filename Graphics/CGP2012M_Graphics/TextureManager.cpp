@@ -18,6 +18,7 @@ namespace EngineOpenGL
 		this->textures = std::map<int, TextureClass*>();
 		this->AddTexture(0, "Textures/Test.png");
 		this->AddTexture(1, "Textures/Bubble.png");
+		this->AddTexture(2, "Textures/Background.png");
 	}
 
 	TextureManager::~TextureManager()

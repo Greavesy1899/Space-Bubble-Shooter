@@ -29,17 +29,26 @@ namespace EngineOpenGL
 	void TextureClass::SetBuffers()
 	{
 		glBindTexture(GL_TEXTURE_2D, this->textureID);
+		switch (this->surface->format->BytesPerPixel)
+		{
+		case 1:
+			printf("ERROR! 8 bit depth cannot be handled!");
+			break;
+		case 2:
+			printf("ERROR! 16 bit depth cannot be handled!");
+			break;
+		case 3:
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->surface->w, this->surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, this->surface->pixels);
+			break;
+		case 4:
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->surface->w, this->surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->surface->pixels);
+			break;
+		}
+		glGenerateMipmap(GL_TEXTURE_2D);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-		if (this->surface->format->BytesPerPixel == 3)
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->surface->w, this->surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, this->surface->pixels);
-		else
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->surface->w, this->surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->surface->pixels);
-
-		//glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
 	void TextureClass::Bind()
