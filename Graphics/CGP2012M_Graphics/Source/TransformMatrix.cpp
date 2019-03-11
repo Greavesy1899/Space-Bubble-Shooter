@@ -54,6 +54,7 @@ glm::vec3 TransformMatrix::GetEuler() const
 		rotation.x = atan2(this->matrix[1][0], this->matrix[0][0]);
 		rotation.z = atan2(this->matrix[2][1], this->matrix[2][2]);
 	}
+	//radian conversion
 	return rotation;
 }
 
@@ -93,4 +94,9 @@ void TransformMatrix::SetRotation(glm::vec3 rot, float angle)
 {
 	this->matrix = glm::mat4(1.0f);
 	this->matrix = glm::rotate(this->matrix, angle, rot);
+}
+
+void TransformMatrix::SetMatrix(glm::mat4 mat)
+{
+	this->matrix = mat;
 }

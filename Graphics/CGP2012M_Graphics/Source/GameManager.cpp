@@ -76,14 +76,13 @@ namespace EngineOpenGL
 	{
 		OBJLoader loader = OBJLoader();
 		loader.ParseOBJ("Models/circle.obj");
-		//BubbleObject* bubObj4 = new BubbleObject();
 
 		BubbleObject* bubObj = new BubbleObject(loader);
-		bubObj->Transform.SetPosition(glm::vec3(-0.5f, 0.5f, 0.0f));
+		bubObj->Transform.Translate(glm::vec3(-1.0f, 0.5f, 0.0f));
 		BubbleObject* bubObj1 = new BubbleObject(loader);
-		bubObj1->Transform.SetPosition(glm::vec3(0.5f, -0.5f, 0.0f));
+		bubObj1->Transform.Translate(glm::vec3(0.5f, -2.5f, 0.0f));
 		BubbleObject* bubObj2 = new BubbleObject(loader);
-		bubObj2->Transform.SetPosition(glm::vec3(-0.5f, 0.5f, 0.0f));
+		bubObj2->Transform.Translate(glm::vec3(-0.5f, 0.5f, 0.0f));
 
 		this->bubbles.push_back(bubObj);
 		this->bubbles.push_back(bubObj1);
@@ -149,7 +148,8 @@ namespace EngineOpenGL
 				this->isFullscreen = false;
 			}
 		}
-			
+		
+		this->ship->Input();
 	}
 
 	void GameManager::Update()
@@ -163,7 +163,7 @@ namespace EngineOpenGL
 
 	void GameManager::Render()
 	{
-		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		this->ship->Render(this->camera);
 		for (BubbleObject* model : this->bubbles)

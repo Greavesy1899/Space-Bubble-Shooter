@@ -3,6 +3,7 @@
 #include "Model.h"
 #include "TransformMatrix.h"
 #include "Camera.h"
+#include "BulletObject.h"
 
 namespace EngineOpenGL
 {
@@ -10,10 +11,13 @@ namespace EngineOpenGL
 	{
 		bool CheckBounds();
 		Model* model;
+		BulletObject* bulletObject;
+		float forwardVector;
 
 	public:
 		ShipObject();
 		~ShipObject();
+		void Input();
 		void Update();
 		void Render(Camera cam);
 

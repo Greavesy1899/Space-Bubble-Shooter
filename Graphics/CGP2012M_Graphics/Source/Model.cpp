@@ -45,8 +45,8 @@ namespace EngineOpenGL
 
 		//vertices
 		this->vertices = new VertexLayout[4];
-		this->vertices[0] = VertexLayout(widthFactor, heightFactor, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-		this->vertices[1] = VertexLayout(widthFactor, -heightFactor, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+		this->vertices[0] = VertexLayout(widthFactor, heightFactor, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+		this->vertices[1] = VertexLayout(widthFactor, -heightFactor, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
 		this->vertices[2] = VertexLayout(-widthFactor, -heightFactor, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
 		this->vertices[3] = VertexLayout(-widthFactor, heightFactor, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 

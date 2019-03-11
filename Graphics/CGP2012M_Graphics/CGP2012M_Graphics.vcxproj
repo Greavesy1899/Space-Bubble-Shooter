@@ -156,6 +156,7 @@
     <ClCompile Include="Source/ShaderProgram.cpp" />
     <ClCompile Include="Source/Main.cpp" />
     <ClCompile Include="Source/TextureClass.cpp" />
+    <ClCompile Include="Source\BulletObject.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\OBJLoader.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Source/Model.h" />
     <ClInclude Include="Source/ShaderProgram.h" />
     <ClInclude Include="Source\BubbleObject.h" />
+    <ClInclude Include="Source\BulletObject.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source/TextureClass.h" />
