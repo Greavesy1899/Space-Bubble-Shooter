@@ -1,15 +1,13 @@
 #ifndef BUBBLEOBJECT_H
 #define BUBBLEOBJECT_H
-#include "Model.h"
+#include "GameObject.h"
 #include "Camera.h"
-#include "TransformMatrix.h"
 
 namespace EngineOpenGL
 {
-	class BubbleObject
+	class BubbleObject : public GameObject
 	{
 		bool CheckBounds();
-		Model* model;
 		int xDirection;
 		int yDirection;
 		glm::vec3 shapeColour;
@@ -18,11 +16,9 @@ namespace EngineOpenGL
 		BubbleObject();
 		BubbleObject(OBJLoader loader);
 		~BubbleObject();
-		void Update();
-		void Render(Camera cam);
 
-		Model* GetModel();
-		TransformMatrix Transform;
+		void Update() override;
+		void Render(Camera cam) override;
 	};
 }
 

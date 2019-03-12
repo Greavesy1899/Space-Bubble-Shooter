@@ -1,29 +1,24 @@
 #ifndef SHIPOBJECT_H
 #define SHIPOBJECT_H
-#include "Model.h"
-#include "TransformMatrix.h"
+#include "GameObject.h"
 #include "Camera.h"
 #include "BulletObject.h"
 
 namespace EngineOpenGL
 {
-	class ShipObject
+	class ShipObject : public GameObject
 	{
 		bool CheckBounds();
-		Model* model;
 		BulletObject* bulletObject;
 		float forwardVector;
 
 	public:
 		ShipObject();
 		~ShipObject();
-		void Input();
-		void Update();
-		void Render(Camera cam);
-
-		Model* GetModel();
-		TransformMatrix Transform;
+		void Input() override;
+		void Update() override;
+		void Render(Camera cam) override;
 	};
 }
-#endif SHIPOBJECT_H
+#endif
 

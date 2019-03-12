@@ -8,12 +8,12 @@ namespace EngineOpenGL
 	void GameManager::updateScreen(int width, int height)
 	{
 		glViewport(0, 0, width, height);
-		this->camera.SetOrthographic(width, height);
+		this->scene->UpdateCamera(width, height);
 	}
 
 	GameManager::GameManager()
 	{
-		this->bubbles = std::vector<BubbleObject*>();
+		this->scene = new Scene();
 	}
 
 
@@ -21,11 +21,7 @@ namespace EngineOpenGL
 	{
 		SDL_DestroyWindow(this->window);
 		SDL_GL_DeleteContext(this->window);
-
-		for (int i = 0; i != this->bubbles.size(); i++)
-			delete this->bubbles[i];
-		this->bubbles.clear();
-		delete this->ship;
+		delete this->scene;
 		SDL_Quit();
 		IMG_Quit();
 	}
@@ -74,28 +70,7 @@ namespace EngineOpenGL
 
 	void GameManager::Init()
 	{
-		OBJLoader loader = OBJLoader();
-		loader.ParseOBJ("Models/circle.obj");
-
-		BubbleObject* bubObj = new BubbleObject(loader);
-		bubObj->Transform.Translate(glm::vec3(-1.0f, 0.5f, 0.0f));
-		BubbleObject* bubObj1 = new BubbleObject(loader);
-		bubObj1->Transform.Translate(glm::vec3(0.5f, -2.5f, 0.0f));
-		BubbleObject* bubObj2 = new BubbleObject(loader);
-		bubObj2->Transform.Translate(glm::vec3(-0.5f, 0.5f, 0.0f));
-
-		this->background = new GameObject(4.0f, 4.0f);
-		this->background->Transform.SetPosition(glm::vec3(0.0f));
-
-		this->bubbles.push_back(bubObj);
-		this->bubbles.push_back(bubObj1);
-		this->bubbles.push_back(bubObj2);
-
-		this->ship = new ShipObject();
-		this->ship->Transform.SetPosition(glm::vec3(0.0f));
-
-		this->camera = Camera();
-		this->camera.SetOrthographic(800, 600);
+		this->scene->Init();
 		this->isRunning = true;
 	}
 
@@ -147,31 +122,20 @@ namespace EngineOpenGL
 				this->isFullscreen = false;
 			}
 		}
-		
-		this->ship->Input();
+
+		scene->Input();
 	}
 
 	void GameManager::Update()
 	{
-		this->background->Update();
-		for (BubbleObject* model : this->bubbles)
-		{
-			model->Update();
-		}
-		this->ship->Update();
+		scene->Update();
 	}
 
 	void GameManager::Render()
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		this->background->Render(this->camera);
-		this->ship->Render(this->camera);
-		for (BubbleObject* model : this->bubbles)
-		{      
-			model->Render(this->camera);
-		}
-		
+		scene->Render();	
 		SDL_GL_SwapWindow(this->window);
 	}
 

@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Source/BubbleObject.cpp" />
     <ClCompile Include="Source/BoundingBox.cpp" />
     <ClCompile Include="Source/SingletonManager.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\OBJLoader.h" />
+    <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\ShipObject.h" />
     <ClInclude Include="Source\SZ_Timer.h" />
     <ClInclude Include="Source\TextureManager.h" />

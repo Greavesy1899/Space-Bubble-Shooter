@@ -3,12 +3,9 @@
 #include <vector>
 #include <GL/glew.h>
 
+#include "Scene.h"
 #include "SDL.h"
 #include "ShaderProgram.h"
-#include "BubbleObject.h"
-#include "ShipObject.h"
-#include "Camera.h"
-#include "GameObject.h"
 
 namespace EngineOpenGL
 {
@@ -16,10 +13,7 @@ namespace EngineOpenGL
 	{
 		SDL_Window* window;
 		SDL_GLContext glContext;
-		std::vector<BubbleObject*> bubbles;
-		ShipObject* ship;
-		GameObject* background;
-		Camera camera;
+		Scene* scene;
 
 		bool isRunning = false;
 		bool isFullscreen = false;

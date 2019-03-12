@@ -83,9 +83,4 @@ namespace EngineOpenGL
 		this->model->DetachShader();
 		Singleton::getInstance()->GetTM()->GetTexture(1)->Unbind();
 	}
-
-	Model* BubbleObject::GetModel()
-	{
-		return this->model;
-	}
 }

@@ -9,6 +9,7 @@ namespace EngineOpenGL
 	class GameObject
 	{
 
+	protected:
 		Model* model;
 
 	public:
@@ -18,11 +19,11 @@ namespace EngineOpenGL
 		GameObject(float radiusFactor);
 
 		~GameObject();
-		void Input();
-		void Update();
-		void Render(Camera cam);
+		virtual void Input();
+		virtual void Update();
+		virtual void Render(Camera cam);
+		virtual Model* GetModel();
 
-		Model* GetModel();
 		TransformMatrix Transform;
 	};
 }

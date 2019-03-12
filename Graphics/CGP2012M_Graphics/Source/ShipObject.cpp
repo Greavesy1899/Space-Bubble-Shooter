@@ -76,9 +76,4 @@ namespace EngineOpenGL
 		if (bulletObject != nullptr)
 			bulletObject->Render(cam);
 	}
-
-	Model * ShipObject::GetModel()
-	{
-		return this->model;
-	}
 }
