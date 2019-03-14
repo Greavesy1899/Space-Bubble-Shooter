@@ -54,7 +54,9 @@ namespace EngineOpenGL
 
 	void EngineOpenGL::GameObject::Render(Camera cam)
 	{
-		Singleton::getInstance()->GetTM()->GetTexture(2)->Bind();
+		if(this->textureID > 0 && this->textureID < Singleton::getInstance()->GetTM()->GetSize())
+			Singleton::getInstance()->GetTM()->GetTexture(this->textureID)->Bind();
+
 		this->model->LinkShader();
 		this->model->Bind();
 		glUseProgram(this->model->GetShaderID());
@@ -63,15 +65,34 @@ namespace EngineOpenGL
 		GLint shapeColorLoc = glGetUniformLocation(this->model->GetShaderID(), "shapeColour");
 		GLint viewMatrixLoc = glGetUniformLocation(this->model->GetShaderID(), "ViewMatrix");
 		GLint projectMatrixLoc = glGetUniformLocation(this->model->GetShaderID(), "ProjectionMatrix");
-		glProgramUniform1i(this->model->GetShaderID(), uniformLoc, 0);
 		glUniformMatrix4fv(worldMatrixLoc, 1, GL_FALSE, glm::value_ptr(this->Transform.GetMatrix()));
 		glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, glm::value_ptr(cam.GetViewMatrix()));
 		glUniformMatrix4fv(projectMatrixLoc, 1, GL_FALSE, glm::value_ptr(cam.GetProjectionMatrix()));
-		glUniform3f(shapeColorLoc, 0.0f, 0.0f, 0.0f);
+
+		glProgramUniform1i(this->model->GetShaderID(), uniformLoc, this->renderType);
+		glUniform3f(shapeColorLoc, colour.r, colour.g, colour.b);
+
 		this->model->Render();
 		this->model->Unbind();
 		this->model->DetachShader();
-		Singleton::getInstance()->GetTM()->GetTexture(2)->Unbind();
+
+		if (this->textureID > 0 && this->textureID < Singleton::getInstance()->GetTM()->GetSize())
+			Singleton::getInstance()->GetTM()->GetTexture(this->textureID)->Unbind();
+	}
+
+	void GameObject::SetRenderType(RenderTypes type)
+	{
+		this->renderType = type;
+	}
+
+	void GameObject::SetDiffuseColour(glm::vec3 colour)
+	{
+		this->colour = colour;
+	}
+
+	void GameObject::SetTextureID(int id)
+	{
+		this->textureID = id;
 	}
 
 	Model * EngineOpenGL::GameObject::GetModel()

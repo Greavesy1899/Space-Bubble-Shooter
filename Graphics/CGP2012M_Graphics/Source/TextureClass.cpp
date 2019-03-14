@@ -32,10 +32,10 @@ namespace EngineOpenGL
 		switch (this->surface->format->BytesPerPixel)
 		{
 		case 1:
-			printf("ERROR! 8 bit depth cannot be handled!");
+			printf("ERROR! 8 bit depth cannot be handled!\n");
 			break;
 		case 2:
-			printf("ERROR! 16 bit depth cannot be handled!");
+			printf("ERROR! 16 bit depth cannot be handled!\n");
 			break;
 		case 3:
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->surface->w, this->surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, this->surface->pixels);

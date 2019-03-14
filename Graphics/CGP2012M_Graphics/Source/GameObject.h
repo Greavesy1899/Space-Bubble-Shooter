@@ -7,10 +7,26 @@
 
 namespace EngineOpenGL
 {
+	enum ObjectTypes
+	{
+		BASIC = 0,
+		BUBBLE = 1,
+		SHIP = 2,
+		BULLET = 3,
+	};
+	enum RenderTypes
+	{
+		TEXTURE = 0,
+		VERTEX_COLOUR,
+		COLOUR
+	};
 	class GameObject
 	{
 	protected:
 		Model* model;
+		RenderTypes renderType;
+		int textureID;
+		glm::vec3 colour;
 
 	public:
 		GameObject();
@@ -22,7 +38,10 @@ namespace EngineOpenGL
 		virtual void Input();
 		virtual void Update();
 		virtual void Render(Camera cam);
-		virtual short GetObjectType() { return 0; }
+		virtual void SetRenderType(RenderTypes type);
+		virtual void SetDiffuseColour(glm::vec3 colour);
+		virtual void SetTextureID(int id);
+		virtual short GetObjectType() { return ObjectTypes::BASIC; }
 		virtual Model* GetModel();
 
 		TransformMatrix Transform;

@@ -17,7 +17,7 @@ namespace EngineOpenGL
 		void Input() override;
 		void Update() override;
 		void Render(Camera cam) override;
-		virtual short GetObjectType() override { return 2; }
+		virtual short GetObjectType() override { return ObjectTypes::SHIP; }
 	};
 }
 #endif

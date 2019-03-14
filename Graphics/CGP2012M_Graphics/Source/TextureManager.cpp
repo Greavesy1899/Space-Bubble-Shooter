@@ -1,4 +1,4 @@
-#include "Source/TextureManager.h"
+#include "TextureManager.h"
 
 #include <map>
 namespace EngineOpenGL
@@ -38,5 +38,9 @@ namespace EngineOpenGL
 		}
 		printf("Error! Did not find texture!\n");
 		return nullptr;
+	}
+	int TextureManager::GetSize() const
+	{
+		return this->textures.size();
 	}
 }

@@ -75,8 +75,8 @@ namespace EngineOpenGL
 			printf("Unknown type!");
 			break;
 		}
-		std::cout << "import success:" << std::endl;
-		std::cout << text.c_str() << std::endl;
+		//std::cout << "import success:" << std::endl;
+		//std::cout << text.c_str() << std::endl;
 
 		glShaderSource(shaderBuff, 1, &ptr, NULL);
 		glCompileShader(shaderBuff);
@@ -85,12 +85,12 @@ namespace EngineOpenGL
 		GLchar infoLog[512];
 
 		glGetShaderiv(shaderBuff, GL_COMPILE_STATUS, &success);
-		std::cout << "Shader compile: " << shaderBuff << " " << success << std::endl;
+		//std::cout << "Shader compile: " << shaderBuff << " " << success << std::endl;
 
 		if (!success)
 		{
 			glGetShaderInfoLog(shaderBuff, 512, NULL, infoLog);
-			std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
+			std::cout << "Failed to compile shader:\n" << infoLog << std::endl;
 		}
 
 		return true;

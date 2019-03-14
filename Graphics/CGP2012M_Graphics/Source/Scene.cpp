@@ -1,4 +1,4 @@
-#include "Source\Scene.h"
+#include "Scene.h"
 
 namespace EngineOpenGL
 {
@@ -21,6 +21,28 @@ namespace EngineOpenGL
 
 		GameObject* background = new GameObject(4.0f, 4.0f);
 		background->Transform.SetPosition(glm::vec3(0.0f));
+		background->SetRenderType(RenderTypes::TEXTURE);
+		background->SetTextureID(2);
+
+		GameObject* leftObstacle = new GameObject(0.125f, 4.0f);
+		leftObstacle->Transform.SetPosition(glm::vec3(-4.0f, 0.0f, 0.0f));
+		leftObstacle->SetRenderType(RenderTypes::COLOUR);
+		leftObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+
+		GameObject* rightObstacle = new GameObject(0.125f, 4.0f);
+		rightObstacle->Transform.SetPosition(glm::vec3(4.0f, 0.0f, 0.0f));
+		rightObstacle->SetRenderType(RenderTypes::COLOUR);
+		rightObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+
+		GameObject* topObstacle = new GameObject(4.0f, 0.125f);
+		topObstacle->Transform.SetPosition(glm::vec3(0.04, 4.0f, 0.0f));
+		topObstacle->SetRenderType(RenderTypes::COLOUR);
+		topObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+
+		GameObject* botObstacle = new GameObject(4.0f, 0.125f);
+		botObstacle->Transform.SetPosition(glm::vec3(0.0f, -4.0f, 0.0f));
+		botObstacle->SetRenderType(RenderTypes::COLOUR);
+		botObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
 
 		ShipObject* ship = new ShipObject();
 		ship->Transform.SetPosition(glm::vec3(0.0f));
@@ -33,6 +55,10 @@ namespace EngineOpenGL
 		bubObj2->Transform.Translate(glm::vec3(-0.5f, 0.5f, 0.0f));
 
 		this->objects.push_back(background);
+		this->objects.push_back(leftObstacle);
+		this->objects.push_back(rightObstacle);
+		this->objects.push_back(topObstacle);
+		this->objects.push_back(botObstacle);
 		this->objects.push_back(ship);
 		this->objects.push_back(bubObj);
 		this->objects.push_back(bubObj1);
@@ -61,9 +87,26 @@ namespace EngineOpenGL
 	}
 	void Scene::Update()
 	{
-		for (GameObject* obj : this->objects)
+		//collision checks.
+		for (auto it = this->objects.begin(); it != this->objects.end();)
 		{
-			obj->GetModel()->GetBBox();
+			bool d = false;
+			GameObject* obj = (*it);
+			if (obj->GetObjectType() == ObjectTypes::BULLET)
+			{
+				glm::vec3 pos = obj->Transform.GetPosition();
+
+				if ((pos.x < -4.0f || pos.x > 4.0f) || (pos.y < -4.0f || pos.y > 4.0f))
+					d = true;
+			}
+
+			if (d)
+			{
+				it = this->objects.erase(it);
+				delete obj;
+			}
+			else
+				++it;
 		}
 		for (GameObject* obj : this->objects)
 			obj->Update();

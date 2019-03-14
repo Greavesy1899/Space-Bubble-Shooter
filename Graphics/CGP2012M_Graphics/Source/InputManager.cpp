@@ -81,17 +81,17 @@ namespace EngineOpenGL
 
 		if (SDL_NumJoysticks() > 0)
 		{
-			SDL_LogCritical(SDL_LOG_CATEGORY_INPUT, "Found %i joystick(s).\n", SDL_NumJoysticks());
+			//SDL_LogCritical(SDL_LOG_CATEGORY_INPUT, "Found %i joystick(s).\n", SDL_NumJoysticks());
 			this->joystick = SDL_JoystickOpen(0);
 
 			if (this->joystick)
 			{
-				SDL_LogCritical(SDL_LOG_CATEGORY_INPUT, "Opened Joystick 0\n");
-				SDL_LogCritical(SDL_LOG_CATEGORY_INPUT, "Name: %s\n", SDL_JoystickNameForIndex(0));
+				//SDL_LogCritical(SDL_LOG_CATEGORY_INPUT, "Opened Joystick 0\n");
+				//SDL_LogCritical(SDL_LOG_CATEGORY_INPUT, "Name: %s\n", SDL_JoystickNameForIndex(0));
 			}
 			else
 			{
-				SDL_LogCritical(SDL_LOG_CATEGORY_ERROR, "Failed to load joystick!\n");
+				//SDL_LogCritical(SDL_LOG_CATEGORY_ERROR, "Failed to load joystick!\n");
 			}
 		}
 	}

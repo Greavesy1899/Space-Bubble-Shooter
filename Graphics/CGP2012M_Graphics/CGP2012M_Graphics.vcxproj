@@ -148,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Source/Scene.cpp" />
     <ClCompile Include="Source/BubbleObject.cpp" />
     <ClCompile Include="Source/BoundingBox.cpp" />
     <ClCompile Include="Source/SingletonManager.cpp" />
@@ -166,7 +166,7 @@
     <ClCompile Include="Source\ShipObject.cpp" />
     <ClCompile Include="Source\SZ_Timer.cpp" />
     <ClCompile Include="source\TransformMatrix.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Source/TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source/BoundingBox.h" />

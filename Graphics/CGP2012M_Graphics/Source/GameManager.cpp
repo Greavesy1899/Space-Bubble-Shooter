@@ -28,7 +28,44 @@ namespace EngineOpenGL
 
 	void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 	{
-		fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n", (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""), type, severity, message);
+		std::string errMessage = "Debug Message: ";
+		errMessage += "Type: ";
+
+		switch (type)
+		{
+		case GL_DEBUG_TYPE_ERROR:
+			errMessage += "Error";
+			break;
+		case GL_DEBUG_TYPE_OTHER:
+			errMessage += "Other";
+			break;
+		case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+			errMessage += "Deprecated";
+			break;
+		case GL_DEBUG_TYPE_PERFORMANCE:
+			errMessage += "Performance";
+			break;
+		}
+
+		errMessage += "Severity: ";
+		switch (severity)
+		{
+		case GL_DEBUG_SEVERITY_HIGH:
+			errMessage += "High";
+			break;
+		case GL_DEBUG_SEVERITY_LOW:
+			errMessage += "Low";
+			break;
+		case GL_DEBUG_SEVERITY_MEDIUM:
+			errMessage += "Medium";
+			break;
+		case GL_DEBUG_SEVERITY_NOTIFICATION:
+			errMessage += "Notification";
+		}
+		errMessage += " ";
+		errMessage += message;
+
+		std::cout << errMessage << std::endl;
 	}
 
 	void GameManager::PreInitGL()

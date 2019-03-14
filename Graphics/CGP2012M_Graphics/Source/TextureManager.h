@@ -22,6 +22,7 @@ namespace EngineOpenGL
 		TextureManager operator=(TextureManager& sm) = delete;
 
 		TextureClass* GetTexture(int key) const;
+		int GetSize() const;
 
 	};
 }
