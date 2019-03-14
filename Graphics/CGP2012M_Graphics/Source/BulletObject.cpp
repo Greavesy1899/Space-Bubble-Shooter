@@ -44,9 +44,4 @@ namespace EngineOpenGL
 		this->model->Unbind();
 		this->model->DetachShader();
 	}
-
-	Model * EngineOpenGL::BulletObject::GetModel()
-	{
-		return this->model;
-	}
 }

@@ -1,25 +1,23 @@
 #ifndef BULLETOBJECT_H
 #define BULLETOBJECT_H
 
+#include "GameObject.h"
 #include "Model.h"
 #include "Camera.h"
 
 namespace EngineOpenGL
 {
-	class BulletObject
+	class BulletObject : public GameObject
 	{
-		Model* model;
 
 	public:
 		BulletObject();
 		~BulletObject();
 
-		void Update();
-		void Render(Camera cam);
-
-		Model* GetModel();
-		TransformMatrix Transform;
+		void Update() override;
+		void Render(Camera cam) override;
+		virtual short GetObjectType() override { return 3; }
 	};
 }
-#endif BULLETOBJECT_H
+#endif 
 

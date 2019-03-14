@@ -19,6 +19,7 @@ namespace EngineOpenGL
 
 		void Update() override;
 		void Render(Camera cam) override;
+		virtual short GetObjectType() override { return 1; }
 	};
 }
 

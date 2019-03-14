@@ -9,7 +9,6 @@ namespace EngineOpenGL
 	class ShipObject : public GameObject
 	{
 		bool CheckBounds();
-		BulletObject* bulletObject;
 		float forwardVector;
 
 	public:
@@ -18,6 +17,7 @@ namespace EngineOpenGL
 		void Input() override;
 		void Update() override;
 		void Render(Camera cam) override;
+		virtual short GetObjectType() override { return 2; }
 	};
 }
 #endif

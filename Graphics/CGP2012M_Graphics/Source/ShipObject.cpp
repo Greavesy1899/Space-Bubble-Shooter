@@ -15,7 +15,6 @@ namespace EngineOpenGL
 		this->model->Bind();
 		this->model->Build();
 		this->model->Unbind();
-		this->bulletObject = nullptr;
 	}
 
 	ShipObject::~ShipObject()
@@ -39,17 +38,10 @@ namespace EngineOpenGL
 			glm::vec3 pos = euler * 0.1f * TransformMatrix::GetUp();
 			this->Transform.Translate(glm::vec3((float)sin(pos.x)*0.1f, (float)cos(pos.x)*0.1f, 0.0f));
 		}
-		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_SPACE) && bulletObject == nullptr)
-		{
-			this->bulletObject = new BulletObject();
-			bulletObject->Transform.SetMatrix(this->Transform.GetMatrix());
-		}
 	}
 
 	void ShipObject::Update()
 	{
-		if (bulletObject != nullptr)
-			bulletObject->Update();
 	}
 
 	void ShipObject::Render(Camera cam)
@@ -72,8 +64,5 @@ namespace EngineOpenGL
 		this->model->Unbind();
 		this->model->DetachShader();
 		Singleton::getInstance()->GetTM()->GetTexture(0)->Unbind();
-
-		if (bulletObject != nullptr)
-			bulletObject->Render(cam);
 	}
 }

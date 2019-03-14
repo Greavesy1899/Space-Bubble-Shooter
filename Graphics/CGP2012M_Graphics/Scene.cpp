@@ -50,11 +50,21 @@ namespace EngineOpenGL
 	}
 	void Scene::Input()
 	{
+		if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_SPACE)) {
+			BulletObject* bullet = new BulletObject();
+			bullet->Transform.SetMatrix(this->objects.at(1)->Transform.GetMatrix());
+			this->objects.push_back(bullet);
+		}
+
 		for (GameObject* obj : this->objects)
 			obj->Input();
 	}
 	void Scene::Update()
 	{
+		for (GameObject* obj : this->objects)
+		{
+			obj->GetModel()->GetBBox();
+		}
 		for (GameObject* obj : this->objects)
 			obj->Update();
 	}
