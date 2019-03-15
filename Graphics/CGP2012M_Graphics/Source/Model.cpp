@@ -20,7 +20,7 @@ namespace EngineOpenGL
 	{
 		this->vertices = vl;
 		this->numVertices = numVertices;
-		UpdateBoundingBox();
+		UpdateModelBounds();
 		return true;
 	}
 
@@ -52,7 +52,7 @@ namespace EngineOpenGL
 
 		this->numTriangles = 2;
 		this->numVertices = 4;
-		UpdateBoundingBox();
+		UpdateModelBounds();
 		return true;
 	}
 
@@ -83,7 +83,7 @@ namespace EngineOpenGL
 			this->vertices[i] = VertexLayout(pos, col, uv);
 			angle += (2 * 3.141) / 28.0f;
 		}
-		UpdateBoundingBox();
+		UpdateModelBounds();
 		return true;
 	}
 
@@ -108,12 +108,12 @@ namespace EngineOpenGL
 			this->indices[i] = loader.indices[i];
 		}
 
-		UpdateBoundingBox();
+		UpdateModelBounds();
 
 		return true;
 	}
 
-	void Model::UpdateBoundingBox()
+	void Model::UpdateModelBounds()
 	{
 		glm::vec3 min(0);
 		glm::vec3 max(0);
@@ -141,7 +141,7 @@ namespace EngineOpenGL
 				max.z = pos.z;
 		}
 
-		this->bbox = BoundingBox(min, max);
+		this->bounds = ModelBounds(min, max);
 	}
 
 	GLuint Model::GetShaderID() const
@@ -149,9 +149,19 @@ namespace EngineOpenGL
 		return this->shader->GetProgramID();
 	}
 
-	BoundingBox Model::GetBBox() const
+	ModelBounds Model::GetBounds() const
 	{
-		return this->bbox;
+		return this->bounds;
+	}
+
+	GLuint Model::GetNumVertices() const
+	{
+		return this->numVertices;
+	}
+
+	GLuint Model::GetNumTriangles() const
+	{
+		return this->numTriangles;
 	}
 
 	bool Model::Init()

@@ -4,7 +4,7 @@ namespace EngineOpenGL
 {
 	bool BubbleObject::CheckBounds()
 	{
-		BoundingBox bbox = this->model->GetBBox();
+		ModelBounds bbox = this->model->GetBounds();
 		glm::vec3 pos = this->Transform.GetPosition();
 
 		if (pos.x + bbox.GetMinimum().x < -4.0f) {

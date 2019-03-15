@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include <algorithm>
 
 namespace EngineOpenGL
 {
@@ -104,11 +105,23 @@ namespace EngineOpenGL
 		glm::vec3 pos1 = obj1->Transform.GetPosition();
 		glm::vec3 pos2 = obj2->Transform.GetPosition();
 
-		BoundingBox newBBox1 = BoundingBox(obj1->GetModel()->GetBBox().GetMinimum() + pos1, obj1->GetModel()->GetBBox().GetMaximum() + pos1);
-		BoundingBox newBBox2 = BoundingBox(obj2->GetModel()->GetBBox().GetMinimum() + pos2, obj2->GetModel()->GetBBox().GetMaximum() + pos2);
+		ModelBounds newBBox1 = ModelBounds(obj1->GetModel()->GetBounds().GetMinimum() + pos1, obj1->GetModel()->GetBounds().GetMaximum() + pos1);
+		ModelBounds newBBox2 = ModelBounds(obj2->GetModel()->GetBounds().GetMinimum() + pos2, obj2->GetModel()->GetBounds().GetMaximum() + pos2);
 
-		return (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) && (newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
-			(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) && (newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);/* &&
-			(newBBox1.GetMinimum().z < newBBox2.GetMaximum().z) && (newBBox1.GetMaximum().z > newBBox2.GetMinimum().z);*/
+
+		GLfloat distX = std::max(pos1.x, std::min(pos2.x, pos1.x + obj2->GetModel()->GetBounds().GetWidth()));
+		GLfloat distY = std::max(pos1.y, std::min(pos2.y, pos1.y + obj2->GetModel()->GetBounds().GetHeight()));
+		GLfloat magnitude = sqrt(distX * distX + distY * distY);
+		GLfloat radius = obj1->GetModel()->GetBounds().GetRadius() + obj2->GetModel()->GetBounds().GetRadius();
+		std::cout << magnitude << " " << radius << std::endl;
+		bool isCircleIntersection = magnitude < radius;
+
+		//bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) && 
+		//	(newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
+		//	(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) && 
+		//	(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
+
+		//std::cout << isCircleIntersection << " " << isBBoxColliding << std::endl;
+		return /*isBBoxColliding &&*/ isCircleIntersection;
 	}
 }

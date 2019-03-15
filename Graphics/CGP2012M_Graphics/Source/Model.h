@@ -12,7 +12,7 @@
 #include "TextureClass.h"
 #include "SingletonManager.h"
 #include "ShaderProgram.h"
-#include "BoundingBox.h"
+#include "ModelBounds.h"
 #include "TransformMatrix.h"
 #include "OBJLoader.h"
 
@@ -42,7 +42,7 @@ namespace EngineOpenGL
 		GLuint vbo;
 		GLuint ibo;
 		GLuint vao;
-		BoundingBox bbox;
+		ModelBounds bounds;
 
 	public:
 		Model();
@@ -54,9 +54,13 @@ namespace EngineOpenGL
 		bool SetModelToSquare(GLfloat widthFactor, GLfloat heightFactor);
 		bool SetModelToCircle(GLfloat radiusFactor);
 		bool SetModelToObj(OBJLoader loader);
-		void UpdateBoundingBox();
+		void UpdateModelBounds();
+
 		GLuint GetShaderID() const;
-		BoundingBox GetBBox() const;
+		ModelBounds GetBounds() const;
+		GLuint GetNumVertices() const;
+		GLuint GetNumTriangles() const;
+
 		bool Unbind();
 		bool Bind();
 		bool Build();
