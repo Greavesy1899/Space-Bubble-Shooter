@@ -44,6 +44,8 @@ namespace EngineOpenGL
 		virtual short GetObjectType() { return ObjectTypes::BASIC; }
 		virtual Model* GetModel();
 
+		static bool IsColliding(GameObject* obj1, GameObject* obj2);
+
 		TransformMatrix Transform;
 	};
 }

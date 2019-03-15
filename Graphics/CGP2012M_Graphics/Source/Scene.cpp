@@ -78,7 +78,7 @@ namespace EngineOpenGL
 	{
 		if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_SPACE)) {
 			BulletObject* bullet = new BulletObject();
-			bullet->Transform.SetMatrix(this->objects.at(1)->Transform.GetMatrix());
+			bullet->Transform.SetMatrix(this->objects.at(5)->Transform.GetMatrix());
 			this->objects.push_back(bullet);
 		}
 
@@ -98,6 +98,21 @@ namespace EngineOpenGL
 
 				if ((pos.x < -4.0f || pos.x > 4.0f) || (pos.y < -4.0f || pos.y > 4.0f))
 					d = true;
+			}
+			else if(obj->GetObjectType() == ObjectTypes::BUBBLE)
+			{
+
+				for (auto object : this->objects)
+				{
+					if (object->GetObjectType() == ObjectTypes::BULLET)
+					{
+						bool isCollision = GameObject::IsColliding(obj, object);
+						printf("%i\n", isCollision);
+
+						if (isCollision)
+							d = true;
+					}
+				}
 			}
 
 			if (d)

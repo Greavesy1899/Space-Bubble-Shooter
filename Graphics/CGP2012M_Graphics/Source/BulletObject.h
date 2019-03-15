@@ -15,7 +15,6 @@ namespace EngineOpenGL
 		~BulletObject();
 
 		void Update() override;
-		void Render(Camera cam) override;
 		virtual short GetObjectType() override { return ObjectTypes::BULLET; }
 	};
 }

@@ -99,4 +99,16 @@ namespace EngineOpenGL
 	{
 		return this->model;
 	}
+	bool GameObject::IsColliding(GameObject * obj1, GameObject * obj2)
+	{
+		glm::vec3 pos1 = obj1->Transform.GetPosition();
+		glm::vec3 pos2 = obj2->Transform.GetPosition();
+
+		BoundingBox newBBox1 = BoundingBox(obj1->GetModel()->GetBBox().GetMinimum() + pos1, obj1->GetModel()->GetBBox().GetMaximum() + pos1);
+		BoundingBox newBBox2 = BoundingBox(obj2->GetModel()->GetBBox().GetMinimum() + pos2, obj2->GetModel()->GetBBox().GetMaximum() + pos2);
+
+		return (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) && (newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
+			(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) && (newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);/* &&
+			(newBBox1.GetMinimum().z < newBBox2.GetMaximum().z) && (newBBox1.GetMaximum().z > newBBox2.GetMinimum().z);*/
+	}
 }
