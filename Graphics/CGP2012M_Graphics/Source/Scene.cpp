@@ -106,10 +106,7 @@ namespace EngineOpenGL
 				{
 					if (object->GetObjectType() == ObjectTypes::BULLET)
 					{
-						bool isCollision = GameObject::IsColliding(obj, object);
-						printf("%i\n", isCollision);
-
-						if (isCollision)
+						if (GameObject::IsColliding(obj, object))
 							d = true;
 					}
 				}
