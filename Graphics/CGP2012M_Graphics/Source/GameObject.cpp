@@ -100,20 +100,18 @@ namespace EngineOpenGL
 	{
 		return this->model;
 	}
-	bool GameObject::IsColliding(GameObject * obj1, GameObject * obj2)
+	bool GameObject::IsColliding(GameObject * rect, GameObject * circle)
 	{
-		glm::vec3 pos1 = obj1->Transform.GetPosition();
-		glm::vec3 pos2 = obj2->Transform.GetPosition();
+		glm::vec3 pos1 = rect->Transform.GetPosition();
+		glm::vec3 pos2 = circle->Transform.GetPosition();
 
-		ModelBounds newBBox1 = ModelBounds(obj1->GetModel()->GetBounds().GetMinimum() + pos1, obj1->GetModel()->GetBounds().GetMaximum() + pos1);
-		ModelBounds newBBox2 = ModelBounds(obj2->GetModel()->GetBounds().GetMinimum() + pos2, obj2->GetModel()->GetBounds().GetMaximum() + pos2);
+		ModelBounds newBBox1 = ModelBounds(rect->GetModel()->GetBounds().GetMinimum() + pos1, rect->GetModel()->GetBounds().GetMaximum() + pos1);
+		ModelBounds newBBox2 = ModelBounds(circle->GetModel()->GetBounds().GetMinimum() + pos2, circle->GetModel()->GetBounds().GetMaximum() + pos2);
 
-
-		GLfloat distX = std::max(pos1.x, std::min(pos2.x, pos1.x + obj2->GetModel()->GetBounds().GetWidth()));
-		GLfloat distY = std::max(pos1.y, std::min(pos2.y, pos1.y + obj2->GetModel()->GetBounds().GetHeight()));
+		GLfloat distX = std::max(pos1.x, std::min(pos2.x, pos1.x + rect->GetModel()->GetBounds().GetWidth()));
+		GLfloat distY = std::max(pos1.y, std::min(pos2.y, pos1.y + rect->GetModel()->GetBounds().GetHeight()));
 		GLfloat magnitude = sqrt(distX * distX + distY * distY);
-		GLfloat radius = obj1->GetModel()->GetBounds().GetRadius() + obj2->GetModel()->GetBounds().GetRadius();
-		std::cout << magnitude << " " << radius << std::endl;
+		GLfloat radius = rect->GetModel()->GetBounds().GetRadius() + circle->GetModel()->GetBounds().GetRadius();
 		bool isCircleIntersection = magnitude < radius;
 
 		//bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) && 
