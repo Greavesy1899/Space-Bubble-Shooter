@@ -17,7 +17,7 @@ namespace EngineOpenGL
 	void Scene::Init()
 	{
 		OBJLoader loader = OBJLoader();
-		loader.ParseOBJ("Models/circle.obj");
+		loader.ParseOBJ("Models/circle.wobj");
 
 		GameObject* background = new GameObject(4.0f, 4.0f);
 		background->Transform.SetPosition(glm::vec3(0.0f));

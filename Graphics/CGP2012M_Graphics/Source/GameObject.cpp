@@ -102,24 +102,24 @@ namespace EngineOpenGL
 	}
 	bool GameObject::IsColliding(GameObject * rect, GameObject * circle)
 	{
-		glm::vec3 pos1 = rect->Transform.GetPosition();
-		glm::vec3 pos2 = circle->Transform.GetPosition();
+		glm::vec3 rectPos = rect->Transform.GetPosition();
+		glm::vec3 circlePos = circle->Transform.GetPosition();
 
-		ModelBounds newBBox1 = ModelBounds(rect->GetModel()->GetBounds().GetMinimum() + pos1, rect->GetModel()->GetBounds().GetMaximum() + pos1);
-		ModelBounds newBBox2 = ModelBounds(circle->GetModel()->GetBounds().GetMinimum() + pos2, circle->GetModel()->GetBounds().GetMaximum() + pos2);
+		ModelBounds newBBox1 = ModelBounds(rectPos + rect->GetModel()->GetBounds().GetMinimum(), rectPos + rect->GetModel()->GetBounds().GetMaximum());
+		ModelBounds newBBox2 = ModelBounds(circlePos + circle->GetModel()->GetBounds().GetMinimum(), circlePos + circle->GetModel()->GetBounds().GetMaximum());
 
-		GLfloat distX = std::max(pos1.x, std::min(pos2.x, pos1.x + rect->GetModel()->GetBounds().GetWidth()));
-		GLfloat distY = std::max(pos1.y, std::min(pos2.y, pos1.y + rect->GetModel()->GetBounds().GetHeight()));
-		GLfloat magnitude = sqrt(distX * distX + distY * distY);
-		GLfloat radius = rect->GetModel()->GetBounds().GetRadius() + circle->GetModel()->GetBounds().GetRadius();
+		GLfloat distX = circlePos.x - std::max(rectPos.x, std::min(circlePos.x, rectPos.x + rect->GetModel()->GetBounds().GetWidth()));
+		GLfloat distY = circlePos.y - std::max(rectPos.y, std::min(circlePos.y, rectPos.y + rect->GetModel()->GetBounds().GetHeight()));
+		GLfloat magnitude = (distX * distX + distY * distY);
+		GLfloat radius = rect->GetModel()->GetBounds().GetRadius() * circle->GetModel()->GetBounds().GetRadius();
 		bool isCircleIntersection = magnitude < radius;
+		std::cout << magnitude << " " << radius << std::endl;
+		bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) && 
+			(newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
+			(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) && 
+			(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
 
-		//bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) && 
-		//	(newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
-		//	(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) && 
-		//	(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
-
-		//std::cout << isCircleIntersection << " " << isBBoxColliding << std::endl;
-		return /*isBBoxColliding &&*/ isCircleIntersection;
+		std::cout << isCircleIntersection << " " << isBBoxColliding << std::endl;
+		return isBBoxColliding && isCircleIntersection;
 	}
 }
