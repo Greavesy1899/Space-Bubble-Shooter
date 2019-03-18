@@ -48,6 +48,7 @@ namespace EngineOpenGL
 			randScale = 0.5f;
 
 		this->Transform.SetScale(glm::vec3(randScale));
+		this->renderType = RenderTypes::SPECIAL_BUBBLE;
 	}
 
 	BubbleObject::~BubbleObject()
@@ -73,7 +74,9 @@ namespace EngineOpenGL
 		GLint shapeColorLoc = glGetUniformLocation(this->model->GetShaderID(), "shapeColour");
 		GLint viewMatrixLoc = glGetUniformLocation(this->model->GetShaderID(), "ViewMatrix");
 		GLint projectMatrixLoc = glGetUniformLocation(this->model->GetShaderID(), "ProjectionMatrix");
-		glProgramUniform1i(this->model->GetShaderID(), uniformLoc, 0);
+		GLint bubbleColorLoc = glGetUniformLocation(this->model->GetShaderID(), "colorModifier");
+		glProgramUniform1i(this->model->GetShaderID(), uniformLoc, this->renderType);
+		glProgramUniform1f(this->model->GetShaderID(), bubbleColorLoc, (float)xDirection);
 		glUniformMatrix4fv(worldMatrixLoc, 1, GL_FALSE, glm::value_ptr(this->Transform.GetMatrix()));
 		glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, glm::value_ptr(cam.GetViewMatrix()));
 		glUniformMatrix4fv(projectMatrixLoc, 1, GL_FALSE, glm::value_ptr(cam.GetProjectionMatrix()));

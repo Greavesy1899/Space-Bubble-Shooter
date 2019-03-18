@@ -18,7 +18,8 @@ namespace EngineOpenGL
 	{
 		TEXTURE = 0,
 		VERTEX_COLOUR,
-		COLOUR
+		COLOUR,
+		SPECIAL_BUBBLE
 	};
 	class GameObject
 	{
