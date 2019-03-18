@@ -10,6 +10,7 @@ namespace EngineOpenGL
 	{
 		bool CheckBounds();
 		float forwardVector;
+		int lives;
 
 	public:
 		ShipObject();
@@ -17,6 +18,10 @@ namespace EngineOpenGL
 		void Input() override;
 		void Update() override;
 		void Render(Camera cam) override;
+		
+		int GetLives() const;
+		void DeincrementLife();
+
 		virtual short GetObjectType() override { return ObjectTypes::SHIP; }
 	};
 }

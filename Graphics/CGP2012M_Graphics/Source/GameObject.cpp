@@ -5,10 +5,12 @@ namespace EngineOpenGL
 {
 	GameObject::GameObject()
 	{
+		this->isHidden = false;
 	}
 
 	GameObject::GameObject(OBJLoader loader)
 	{
+		this->isHidden = false;
 		this->model = new Model();
 		this->model->SetModelToObj(loader);
 		this->model->Init();
@@ -20,6 +22,7 @@ namespace EngineOpenGL
 
 	GameObject::GameObject(float width, float height)
 	{
+		this->isHidden = false;
 		this->model = new Model();
 		this->model->SetModelToSquare(width, height);
 		this->model->Init();
@@ -31,6 +34,7 @@ namespace EngineOpenGL
 
 	GameObject::GameObject(float radiusFactor)
 	{
+		this->isHidden = false;
 		this->model = new Model();
 		this->model->SetModelToCircle(radiusFactor);
 		this->model->Init();
@@ -45,6 +49,16 @@ namespace EngineOpenGL
 		delete this->model;
 	}
 
+	bool GameObject::IsHidden() const
+	{
+		return this->isHidden;
+	}
+
+	void GameObject::HideObject(bool b)
+	{
+		this->isHidden = b;
+	}
+
 	void EngineOpenGL::GameObject::Input()
 	{
 	}
@@ -55,6 +69,9 @@ namespace EngineOpenGL
 
 	void EngineOpenGL::GameObject::Render(Camera cam)
 	{
+		if (isHidden)
+			return;
+
 		if(this->textureID > 0 && this->textureID < Singleton::getInstance()->GetTM()->GetSize())
 			Singleton::getInstance()->GetTM()->GetTexture(this->textureID)->Bind();
 
@@ -96,6 +113,11 @@ namespace EngineOpenGL
 		this->textureID = id;
 	}
 
+	RenderTypes GameObject::GetRenderType() const
+	{
+		return this->renderType;
+	}
+
 	Model * EngineOpenGL::GameObject::GetModel()
 	{
 		return this->model;
@@ -113,13 +135,11 @@ namespace EngineOpenGL
 		GLfloat magnitude = (distX * distX + distY * distY);
 		GLfloat radius = rect->GetModel()->GetBounds().GetRadius() * circle->GetModel()->GetBounds().GetRadius();
 		bool isCircleIntersection = magnitude < radius;
-		std::cout << magnitude << " " << radius << std::endl;
 		bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) && 
 			(newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
 			(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) && 
 			(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
 
-		std::cout << isCircleIntersection << " " << isBBoxColliding << std::endl;
 		return isBBoxColliding && isCircleIntersection;
 	}
 }

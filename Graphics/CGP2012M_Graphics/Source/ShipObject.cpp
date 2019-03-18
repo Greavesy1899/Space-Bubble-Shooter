@@ -15,6 +15,8 @@ namespace EngineOpenGL
 		this->model->Bind();
 		this->model->Build();
 		this->model->Unbind();
+
+		this->lives = 3;
 	}
 
 	ShipObject::~ShipObject()
@@ -64,5 +66,14 @@ namespace EngineOpenGL
 		this->model->Unbind();
 		this->model->DetachShader();
 		Singleton::getInstance()->GetTM()->GetTexture(0)->Unbind();
+	}
+	int ShipObject::GetLives() const
+	{
+		return this->lives;
+	}
+	void ShipObject::DeincrementLife()
+	{
+		if(lives != 0)
+			this->lives--;
 	}
 }

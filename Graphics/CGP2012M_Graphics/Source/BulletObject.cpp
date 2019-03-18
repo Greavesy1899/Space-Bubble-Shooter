@@ -6,7 +6,7 @@ namespace EngineOpenGL
 	BulletObject::BulletObject()
 	{
 		this->model = new Model();
-		this->model->SetModelToSquare(0.05f, 0.1f);
+		this->model->SetModelToSquare(0.01f, 0.05f);
 		this->model->Init();
 		this->model->Bind();
 		this->model->Build();
