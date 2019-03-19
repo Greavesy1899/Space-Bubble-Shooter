@@ -4,12 +4,18 @@ namespace EngineOpenGL
 {
 	Scene::Scene()
 	{
+		this->camera = Camera(1024, 720);
 		this->objects = std::vector<GameObject*>();
 		this->ui = std::vector<GameObject*>();
 	}
 	Scene::~Scene()
 	{
 		this->Clean();
+	}
+	void Scene::ReInitCamera(int w, int h)
+	{
+		this->camera = Camera(w, h);
+		this->camera.SetOrthographic(w, h);
 	}
 	void Scene::UpdateCamera(int w, int h)
 	{
@@ -76,9 +82,6 @@ namespace EngineOpenGL
 			this->ui.push_back(heart);
 			heartOffset.y += 0.5f;
 		}
-
-		this->camera = Camera();
-		this->camera.SetOrthographic(800, 600);
 	}
 	void Scene::Clean()
 	{

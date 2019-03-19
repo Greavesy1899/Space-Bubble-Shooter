@@ -7,7 +7,6 @@ namespace EngineOpenGL
 {
 	void GameManager::updateScreen(int width, int height)
 	{
-		glViewport(0, 0, width, height);
 		this->scene->UpdateCamera(width, height);
 	}
 
@@ -103,10 +102,13 @@ namespace EngineOpenGL
 
 		GLint windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 		this->window = SDL_CreateWindow("Connor Greaves, CGP2012M, 17643079", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width/2, height/2, windowFlags);
+		this->scene->UpdateCamera(width / 2, height / 2);
 	}
 
 	void GameManager::Init()
 	{
+		int h, w;
+		SDL_GetWindowSize(this->window, &w, &h);
 		this->scene->Init();
 		this->isRunning = true;
 	}

@@ -13,9 +13,11 @@ namespace EngineOpenGL
 		bool isOrtho;
 		float screenNear;
 		float screenFar;
+		float aspect;
 
 	public:
-		Camera();
+		Camera(float w, float h);
+		Camera() {};
 		~Camera();
 
 		void SetOrthographic(float width, float height);
