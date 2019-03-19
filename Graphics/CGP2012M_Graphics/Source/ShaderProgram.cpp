@@ -96,6 +96,30 @@ namespace EngineOpenGL
 		return true;
 	}
 
+	void ShaderProgram::SetUniformInt(std::string uniformName, GLint val)
+	{
+		int loc = glGetUniformLocation(this->shaderProgramID, uniformName.c_str());
+		glUniform1i(loc, val);
+	}
+
+	void ShaderProgram::SetUniformFloat(std::string uniformName, GLfloat val)
+	{
+		int loc = glGetUniformLocation(this->shaderProgramID, uniformName.c_str());
+		glUniform1f(loc, val);
+	}
+
+	void ShaderProgram::SetUniformFloat(std::string uniformName, GLfloat val1, GLfloat val2, GLfloat val3)
+	{
+		int loc = glGetUniformLocation(this->shaderProgramID, uniformName.c_str());
+		glUniform3f(loc, val1, val2, val3);
+	}
+
+	void ShaderProgram::SetUniformMatrix(std::string uniformName, glm::mat4 val)
+	{
+		int loc = glGetUniformLocation(this->shaderProgramID, uniformName.c_str());
+		glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(val));
+	}
+
 	GLuint ShaderProgram::GetProgramID()
 	{
 		return this->shaderProgramID;

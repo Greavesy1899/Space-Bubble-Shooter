@@ -20,6 +20,7 @@ namespace EngineOpenGL
 		this->AddTexture(1, "Textures/Bubble.png");
 		this->AddTexture(2, "Textures/Background.png");
 		this->AddTexture(3, "Textures/Heart.png");
+		this->AddTexture(4, "Textures/error.png");
 	}
 
 	TextureManager::~TextureManager()
@@ -37,8 +38,8 @@ namespace EngineOpenGL
 			if (x.first == key)
 				return x.second;
 		}
-		printf("Error! Did not find texture!\n");
-		return nullptr;
+		printf("Error! Did not find texture! Key is: %i \n", key);
+		return this->textures.at(4);
 	}
 	int TextureManager::GetSize() const
 	{

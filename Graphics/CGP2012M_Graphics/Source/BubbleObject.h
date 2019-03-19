@@ -18,7 +18,6 @@ namespace EngineOpenGL
 		~BubbleObject();
 
 		void Update() override;
-		void Render(Camera cam) override;
 		virtual short GetObjectType() override { return ObjectTypes::BUBBLE; }
 	};
 }

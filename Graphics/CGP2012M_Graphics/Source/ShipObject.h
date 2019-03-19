@@ -17,7 +17,6 @@ namespace EngineOpenGL
 		~ShipObject();
 		void Input() override;
 		void Update() override;
-		void Render(Camera cam) override;
 		
 		int GetLives() const;
 		void DeincrementLife();

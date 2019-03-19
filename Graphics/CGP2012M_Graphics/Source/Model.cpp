@@ -207,6 +207,11 @@ namespace EngineOpenGL
 		return true;
 	}
 
+	ShaderProgram * Model::GetShader() const
+	{
+		return this->shader;
+	}
+
 	bool Model::LinkShader() const
 	{
 		this->shader->Attach();

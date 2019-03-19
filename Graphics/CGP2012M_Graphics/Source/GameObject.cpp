@@ -72,29 +72,22 @@ namespace EngineOpenGL
 		if (isHidden)
 			return;
 
-		if(this->textureID > 0 && this->textureID < Singleton::getInstance()->GetTM()->GetSize())
+		if(this->renderType == RenderTypes::TEXTURE || this->renderType == RenderTypes::SPECIAL_BUBBLE)
 			Singleton::getInstance()->GetTM()->GetTexture(this->textureID)->Bind();
 
 		this->model->LinkShader();
 		this->model->Bind();
 		glUseProgram(this->model->GetShaderID());
-		GLint uniformLoc = glGetUniformLocation(this->model->GetShaderID(), "renderType");
-		GLint worldMatrixLoc = glGetUniformLocation(this->model->GetShaderID(), "WorldMatrix");
-		GLint shapeColorLoc = glGetUniformLocation(this->model->GetShaderID(), "shapeColour");
-		GLint viewMatrixLoc = glGetUniformLocation(this->model->GetShaderID(), "ViewMatrix");
-		GLint projectMatrixLoc = glGetUniformLocation(this->model->GetShaderID(), "ProjectionMatrix");
-		glUniformMatrix4fv(worldMatrixLoc, 1, GL_FALSE, glm::value_ptr(this->Transform.GetMatrix()));
-		glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, glm::value_ptr(cam.GetViewMatrix()));
-		glUniformMatrix4fv(projectMatrixLoc, 1, GL_FALSE, glm::value_ptr(cam.GetProjectionMatrix()));
-
-		glProgramUniform1i(this->model->GetShaderID(), uniformLoc, this->renderType);
-		glUniform3f(shapeColorLoc, colour.r, colour.g, colour.b);
-
+		this->model->GetShader()->SetUniformMatrix("WorldMatrix", this->Transform.GetMatrix());
+		this->model->GetShader()->SetUniformMatrix("ViewMatrix", cam.GetViewMatrix());
+		this->model->GetShader()->SetUniformMatrix("ProjectionMatrix", cam.GetProjectionMatrix());
+		this->model->GetShader()->SetUniformInt("renderType", this->renderType);
+		this->model->GetShader()->SetUniformFloat("shapeColour", this->colour.r, this->colour.g, this->colour.b);
 		this->model->Render();
 		this->model->Unbind();
 		this->model->DetachShader();
 
-		if (this->textureID > 0 && this->textureID < Singleton::getInstance()->GetTM()->GetSize())
+		if (this->renderType == RenderTypes::TEXTURE)
 			Singleton::getInstance()->GetTM()->GetTexture(this->textureID)->Unbind();
 	}
 

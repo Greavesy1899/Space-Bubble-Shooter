@@ -65,6 +65,7 @@ namespace EngineOpenGL
 		bool Bind();
 		bool Build();
 		bool Render();
+		ShaderProgram* GetShader() const;
 		bool LinkShader() const;
 		bool DetachShader() const;
 	};

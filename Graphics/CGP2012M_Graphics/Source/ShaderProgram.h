@@ -4,6 +4,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace EngineOpenGL
 {
@@ -25,7 +28,14 @@ namespace EngineOpenGL
 
 		bool ReadShaderFromPath(const char* fileName, short type);
 
+		void SetUniformInt(std::string uniformName, GLint val);
+		void SetUniformFloat(std::string uniformName, GLfloat val);
+		void SetUniformFloat(std::string uniformName, GLfloat val1, GLfloat val2, GLfloat val3);
+		void SetUniformMatrix(std::string uniformName, glm::mat4 val);
+
 		GLuint GetProgramID();
+
+
 	};
 }
 #endif
