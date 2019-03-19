@@ -13,14 +13,13 @@ namespace EngineOpenGL
 		this->minimum = min;
 		this->maximum = max;
 
-		//now make bounding circle
 		this->centre = glm::vec3(
 			(this->minimum.x + this->maximum.x) / 2.0f,
 			(this->minimum.y + this->maximum.y) / 2.0f,
 			(this->minimum.z + this->maximum.z) / 2.0f
 		);
 
-		this->radius = glm::distance(this->centre, this->maximum);
+		this->radius = glm::distance(this->centre, this->maximum)*2;
 
 	}
 	glm::vec3 ModelBounds::GetMinimum() const
