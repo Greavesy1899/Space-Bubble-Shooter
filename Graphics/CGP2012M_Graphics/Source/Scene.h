@@ -22,7 +22,6 @@ namespace EngineOpenGL
 	public:
 		Scene();
 		~Scene();
-		void ReInitCamera(int w, int h);
 		void UpdateCamera(int w, int h);
 		void Init();
 		void Clean();

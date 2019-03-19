@@ -15,6 +15,8 @@ namespace EngineOpenGL
 		SDL_GLContext glContext;
 		Scene* scene;
 
+		glm::vec2 windowSize;
+
 		bool isRunning = false;
 		bool isFullscreen = false;
 		void updateScreen(int width, int height);

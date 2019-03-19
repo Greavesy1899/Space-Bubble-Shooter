@@ -12,11 +12,6 @@ namespace EngineOpenGL
 	{
 		this->Clean();
 	}
-	void Scene::ReInitCamera(int w, int h)
-	{
-		this->camera = Camera(w, h);
-		this->camera.SetOrthographic(w, h);
-	}
 	void Scene::UpdateCamera(int w, int h)
 	{
 		this->camera.SetOrthographic(w, h);

@@ -101,15 +101,15 @@ namespace EngineOpenGL
 		IMG_Init(SDL_INIT_EVERYTHING);
 
 		GLint windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
-		this->window = SDL_CreateWindow("Connor Greaves, CGP2012M, 17643079", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width/2, height/2, windowFlags);
-		this->scene->UpdateCamera(width / 2, height / 2);
+		this->windowSize = glm::vec2(width / 2, height / 2);
+		this->window = SDL_CreateWindow("Connor Greaves, CGP2012M, 17643079", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, this->windowSize.x, this->windowSize.y, windowFlags);
+		this->scene->UpdateCamera(this->windowSize.x, this->windowSize.y);
 	}
 
 	void GameManager::Init()
 	{
-		int h, w;
-		SDL_GetWindowSize(this->window, &w, &h);
 		this->scene->Init();
+		updateScreen(this->windowSize.x, this->windowSize.y);
 		this->isRunning = true;
 	}
 
@@ -154,10 +154,10 @@ namespace EngineOpenGL
 			else
 			{
 				SDL_SetWindowFullscreen(this->window, 0);
-				SDL_SetWindowSize(this->window, 800, 600);
+				SDL_SetWindowSize(this->window, this->windowSize.x, this->windowSize.y);
 				SDL_SetWindowBordered(this->window, SDL_TRUE);
 				SDL_SetWindowPosition(this->window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-				updateScreen(800, 600);
+				updateScreen(this->windowSize.x, this->windowSize.y);
 				this->isFullscreen = false;
 			}
 		}
