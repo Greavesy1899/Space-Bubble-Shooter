@@ -12,19 +12,8 @@ namespace EngineOpenGL
 		this->model->Init();
 		this->model->Bind();
 		this->model->Build();
-		this->model->Unbind();
-		this->xDirection = rand() % 360;
-		this->yDirection = rand() % 360;
-		this->shapeColour = glm::vec3(0.0f, 1.0f, 0.0f);		
-
-		//sort out random scaling.
-		float randScale = (float)rand() / RAND_MAX;
-		
-		if (randScale < 0.5f)
-			randScale = 0.5f;
-
-		this->Transform.SetScale(glm::vec3(randScale));
-		this->model->UpdateModelBounds(this->Transform.GetScale());
+		this->model->Unbind();	
+		this->Respawn();
 		this->renderType = RenderTypes::SPECIAL_BUBBLE;
 		this->textureID = 1;
 	}
@@ -36,11 +25,40 @@ namespace EngineOpenGL
 
 	void BubbleObject::Update()
 	{
-		this->Transform.Translate(glm::vec3((float)sin(xDirection)*0.01f, (float)sin(yDirection)*0.01f, 0.0f));
+		this->Transform.Translate(glm::vec3((float)sin(xDirection)*0.033f, (float)sin(yDirection)*0.033f, 0.0f));
 	}
 	void BubbleObject::InvertDirection()
 	{
 		this->xDirection = -this->xDirection;
 		this->yDirection = -this->yDirection;
+	}
+	void BubbleObject::Respawn()
+	{
+		this->xDirection = rand() % 360;
+		this->yDirection = rand() % 360;
+		this->colour = glm::vec3((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
+
+		//sort out random scaling.
+		float randScale = (float)rand() / RAND_MAX;
+
+		if (randScale < 0.5f)
+			randScale = 0.5f;
+
+		float randX = (float)rand() / RAND_MAX;
+		float randY = (float)rand() / RAND_MAX;
+		int reverseX = rand() % 2;
+		int reverseY = rand() % 2;
+		int multX = rand() % 5;
+		int multY = rand() % 5;
+
+		if (reverseX)
+			randX -= randX;
+
+		if (reverseY)
+			randY -= randY;
+
+		this->Transform.SetPosition(glm::vec3(randX * multX, randY * multY, 0.0f));
+		this->Transform.Scale(glm::vec3(randScale));
+		this->model->UpdateModelBounds(this->Transform.GetScale());
 	}
 }

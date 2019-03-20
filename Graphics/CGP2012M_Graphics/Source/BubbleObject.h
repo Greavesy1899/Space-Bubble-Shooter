@@ -9,7 +9,6 @@ namespace EngineOpenGL
 	{
 		int xDirection;
 		int yDirection;
-		glm::vec3 shapeColour;
 
 	public:
 		BubbleObject();
@@ -18,6 +17,7 @@ namespace EngineOpenGL
 
 		void Update() override;
 		void InvertDirection();
+		void Respawn();
 		virtual short GetObjectType() override { return ObjectTypes::BUBBLE; }
 	};
 }

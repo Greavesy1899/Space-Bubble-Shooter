@@ -9,6 +9,7 @@ namespace EngineOpenGL
 	class ShipObject : public GameObject
 	{
 		bool CheckBounds();
+		void LookAt();
 		float forwardVector;
 		int lives;
 		bool movingForward;

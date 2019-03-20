@@ -18,6 +18,8 @@ namespace EngineOpenGL
 		Camera camera;
 		std::vector<GameObject*> objects;
 		std::vector<GameObject*> ui;
+		int bulletTimer = 25;
+		int bulletRefreshTimer = 25;
 
 	public:
 		Scene();

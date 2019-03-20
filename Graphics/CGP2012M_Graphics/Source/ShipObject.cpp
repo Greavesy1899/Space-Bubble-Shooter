@@ -7,6 +7,10 @@ namespace EngineOpenGL
 		return false;
 	}
 
+	void ShipObject::LookAt()
+	{
+	}
+
 	ShipObject::ShipObject()
 	{
 		this->model = new Model();
@@ -38,16 +42,14 @@ namespace EngineOpenGL
 		}
 		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_W))
 		{
-			this->movingForward = true;
+			glm::vec3 euler = this->Transform.GetEuler();
+			glm::vec3 pos = euler * 0.1f * TransformMatrix::GetUp();
+			this->Transform.Translate(glm::vec3((float)sin(pos.x)*0.1f, (float)cos(pos.x)*0.1f, 0.0f));
 		}
 	}
 
 	void ShipObject::Update()
 	{
-		glm::vec3 euler = this->Transform.GetEuler();
-		glm::vec3 pos = euler * 0.1f * TransformMatrix::GetUp();
-		this->Transform.Translate(glm::vec3((float)sin(pos.x)*0.1f, (float)cos(pos.x)*0.1f, 0.0f));
-		this->movingForward = false;
 	}
 
 	int ShipObject::GetLives() const

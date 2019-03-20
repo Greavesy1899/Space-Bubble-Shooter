@@ -21,6 +21,7 @@ namespace EngineOpenGL
 		this->AddTexture(2, "Textures/Background.png");
 		this->AddTexture(3, "Textures/Heart.png");
 		this->AddTexture(4, "Textures/error.png");
+		this->AddTexture(5, "Textures/Edge.png");
 	}
 
 	TextureManager::~TextureManager()

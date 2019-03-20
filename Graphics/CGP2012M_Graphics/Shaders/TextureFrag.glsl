@@ -26,9 +26,9 @@ void main()
 	}
 	else if(renderType == 3) //SPECIAL_BUBBLE
 	{
-		float r = clamp(sin(vs_pos.x), 0.0f, 1.0f);
-		float g = clamp(cos(vs_pos.y), 0.0f, 1.0f);
-		float b = clamp(tan(colorModifier), 0.0f, 1.0f);
-		vertColour = vec4(r, g, b, 1.0f) * (texture(aTex, vs_uv));
+		float r = clamp(shapeColour.r + sin(vs_pos.x) + sin(vs_pos.y), 0.25f, 1.0f);
+		float g = clamp(shapeColour.g + sin(vs_pos.y) + sin(vs_pos.x), 0.25f, 1.0f);
+		vec4 texAlpha = texture(aTex, vs_uv);
+		vertColour = vec4(r, g, shapeColour.b, texAlpha.w);
 	}
 } 
