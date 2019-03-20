@@ -14,12 +14,12 @@ namespace EngineOpenGL
 	}
 	void Scene::UpdateCamera(int w, int h)
 	{
-		this->camera.SetOrthographic(w, h);
+		this->camera.SetOrthographic((float)w, (float)h);
 	}
 	void Scene::Init()
 	{
 		OBJLoader loader = OBJLoader();
-		loader.ParseOBJ("Models/circle.wobj");
+		loader.ParseOBJ("Models/circle.obj");
 
 		GameObject* background = new GameObject(4.0f, 4.0f, ObjectTypes::BASIC);
 		background->Transform.SetPosition(glm::vec3(0.0f));

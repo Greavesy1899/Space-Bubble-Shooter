@@ -36,7 +36,6 @@ namespace EngineOpenGL
 
 	void BubbleObject::Update()
 	{
-		//CheckBounds();
 		this->Transform.Translate(glm::vec3((float)sin(xDirection)*0.01f, (float)sin(yDirection)*0.01f, 0.0f));
 	}
 	void BubbleObject::InvertDirection()

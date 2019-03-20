@@ -81,7 +81,7 @@ namespace EngineOpenGL
 			glm::vec2 uv = glm::vec2(((radiusFactor * cos(angle))*0.5f) + 0.75f, ((radiusFactor * sin(angle))*0.75f) + 0.5f);
 
 			this->vertices[i] = VertexLayout(pos, col, uv);
-			angle += (2 * 3.141) / 28.0f;
+			angle += (2 * 3.141) / (GLfloat)28.0f;
 		}
 		UpdateModelBounds();
 		return true;
