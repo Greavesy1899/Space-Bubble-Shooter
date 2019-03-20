@@ -90,7 +90,7 @@ namespace EngineOpenGL
 		this->model->Unbind();
 		this->model->DetachShader();
 
-		if (this->renderType == RenderTypes::TEXTURE)
+		if (this->renderType == RenderTypes::TEXTURE || this->renderType == RenderTypes::SPECIAL_BUBBLE)
 			Singleton::getInstance()->GetTM()->GetTexture(this->textureID)->Unbind();
 	}
 
@@ -137,9 +137,9 @@ namespace EngineOpenGL
 		GLfloat radius = rect->GetModel()->GetBounds().GetRadius() * circle->GetModel()->GetBounds().GetRadius();
 		bool isCircleIntersection = magnitude < radius;
 		bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) && 
-			(newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
-			(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) && 
-			(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
+							   (newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
+			                   (newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) && 
+			                   (newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
 
 		return isBBoxColliding && isCircleIntersection;
 	}

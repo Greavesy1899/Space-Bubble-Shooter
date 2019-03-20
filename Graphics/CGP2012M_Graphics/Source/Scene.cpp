@@ -141,6 +141,11 @@ namespace EngineOpenGL
 							bubble->InvertDirection();
 						}
 					}
+					else if (object->GetObjectType() == ObjectTypes::BULLET)
+					{
+						if (GameObject::IsBoxColliding(object, obj))
+							d = true;
+					}
 				}
 			}
 			else if (obj->GetObjectType() == ObjectTypes::SHIP)
@@ -168,12 +173,12 @@ namespace EngineOpenGL
 					}
 					else if (object->GetObjectType() == ObjectTypes::OBSTACLE)
 					{
-						if (GameObject::IsBoxColliding(obj, object) && !ship->HasMoved())
+						if (GameObject::IsBoxColliding(obj, object))
 							move = false;
 					}
 				}
 
-				if (move)
+				if (ship->HasMoved() && move)
 					ship->Update();
 			}
 			else if (obj->GetObjectType() == ObjectTypes::BASIC || obj->GetObjectType() == ObjectTypes::OBSTACLE)
