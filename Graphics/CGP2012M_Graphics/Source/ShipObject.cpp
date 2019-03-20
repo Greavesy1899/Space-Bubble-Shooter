@@ -18,6 +18,7 @@ namespace EngineOpenGL
 		this->textureID = 0;
 		this->renderType = RenderTypes::TEXTURE;
 		this->lives = 3;
+		this->movingForward = false;
 	}
 
 	ShipObject::~ShipObject()
@@ -26,8 +27,7 @@ namespace EngineOpenGL
 	}
 
 	void ShipObject::Input()
-	{
-		glm::vec3 euler = this->Transform.GetEuler();
+	{	
 		if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_A))
 		{
 			this->Transform.Rotate(TransformMatrix::GetForward(), glm::radians(5.0f));
@@ -38,18 +38,25 @@ namespace EngineOpenGL
 		}
 		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_W))
 		{
-			glm::vec3 pos = euler * 0.1f * TransformMatrix::GetUp();
-			this->Transform.Translate(glm::vec3((float)sin(pos.x)*0.1f, (float)cos(pos.x)*0.1f, 0.0f));
+			this->movingForward = true;
 		}
 	}
 
 	void ShipObject::Update()
 	{
+		glm::vec3 euler = this->Transform.GetEuler();
+		glm::vec3 pos = euler * 0.1f * TransformMatrix::GetUp();
+		this->Transform.Translate(glm::vec3((float)sin(pos.x)*0.1f, (float)cos(pos.x)*0.1f, 0.0f));
+		this->movingForward = false;
 	}
 
 	int ShipObject::GetLives() const
 	{
 		return this->lives;
+	}
+	bool ShipObject::HasMoved() const
+	{
+		return this->movingForward;
 	}
 	void ShipObject::DeincrementLife()
 	{

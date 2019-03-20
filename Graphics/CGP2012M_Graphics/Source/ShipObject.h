@@ -11,6 +11,7 @@ namespace EngineOpenGL
 		bool CheckBounds();
 		float forwardVector;
 		int lives;
+		bool movingForward;
 
 	public:
 		ShipObject();
@@ -19,6 +20,7 @@ namespace EngineOpenGL
 		void Update() override;
 		
 		int GetLives() const;
+		bool HasMoved() const;
 		void DeincrementLife();
 
 		virtual short GetObjectType() override { return ObjectTypes::SHIP; }

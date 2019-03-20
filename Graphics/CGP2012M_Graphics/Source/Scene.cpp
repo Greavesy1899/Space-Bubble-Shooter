@@ -116,6 +116,8 @@ namespace EngineOpenGL
 			GameObject* obj = (*it);
 			if (obj->GetObjectType() == ObjectTypes::BULLET)
 			{
+				obj->Update();
+
 				for (auto object : this->objects)
 				{
 					if (object->GetObjectType() == ObjectTypes::OBSTACLE)
@@ -127,6 +129,8 @@ namespace EngineOpenGL
 			}
 			else if(obj->GetObjectType() == ObjectTypes::BUBBLE)
 			{
+				obj->Update();
+
 				for (auto object : this->objects)
 				{
 					if (object->GetObjectType() == ObjectTypes::OBSTACLE)
@@ -141,6 +145,9 @@ namespace EngineOpenGL
 			}
 			else if (obj->GetObjectType() == ObjectTypes::SHIP)
 			{
+				auto* ship = dynamic_cast<ShipObject*>(obj);
+				bool move = true;
+
 				for (auto object : this->objects)
 				{
 					if (object->GetObjectType() == ObjectTypes::BUBBLE)
@@ -159,7 +166,19 @@ namespace EngineOpenGL
 							}
 						}
 					}
+					else if (object->GetObjectType() == ObjectTypes::OBSTACLE)
+					{
+						if (GameObject::IsBoxColliding(obj, object) && !ship->HasMoved())
+							move = false;
+					}
 				}
+
+				if (move)
+					ship->Update();
+			}
+			else if (obj->GetObjectType() == ObjectTypes::BASIC || obj->GetObjectType() == ObjectTypes::OBSTACLE)
+			{
+				obj->Update();
 			}
 
 			if (d)
@@ -170,8 +189,6 @@ namespace EngineOpenGL
 			else
 				++it;
 		}
-		for (GameObject* obj : this->objects)
-			obj->Update();
 
 		for (GameObject* obj : this->ui)
 			obj->Update();

@@ -111,7 +111,7 @@ namespace EngineOpenGL
 
 	void GameObject::SetObjectType(ObjectTypes type)
 	{
-		//this->ob
+		this->objectType = type;
 	}
 
 	RenderTypes GameObject::GetRenderType() const
