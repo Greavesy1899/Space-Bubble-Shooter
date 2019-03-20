@@ -189,8 +189,6 @@
     <ClInclude Include="source\TransformMatrix.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\BaseFrag.glsl" />
-    <None Include="Shaders\BaseVert.glsl" />
     <None Include="Shaders\TextureFrag.glsl" />
     <None Include="Shaders\TextureVert.glsl" />
   </ItemGroup>

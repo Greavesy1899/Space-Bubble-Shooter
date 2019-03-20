@@ -130,12 +130,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\BaseFrag.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Shaders\BaseVert.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="Shaders\TextureVert.glsl">
       <Filter>Resource Files</Filter>
     </None>

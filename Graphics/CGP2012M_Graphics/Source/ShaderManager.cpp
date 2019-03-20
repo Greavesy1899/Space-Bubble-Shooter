@@ -4,18 +4,12 @@ namespace EngineOpenGL
 {
 	ShaderManager::ShaderManager()
 	{
-		ShaderProgram* baseShaderProgram = new ShaderProgram();
-		baseShaderProgram->Init();
-		baseShaderProgram->ReadShaderFromPath("Shaders/BaseVert.glsl", 0);
-		baseShaderProgram->ReadShaderFromPath("Shaders/BaseFrag.glsl", 1);
-
 		ShaderProgram* textureShaderProgram = new ShaderProgram();
 		textureShaderProgram->Init();
 		textureShaderProgram->ReadShaderFromPath("Shaders/TextureVert.glsl", 0);
 		textureShaderProgram->ReadShaderFromPath("Shaders/TextureFrag.glsl", 1);
 
-		this->shaders[0] = baseShaderProgram;
-		this->shaders[1] = textureShaderProgram;
+		this->shaders[0] = textureShaderProgram;
 	}
 
 	ShaderManager::~ShaderManager()

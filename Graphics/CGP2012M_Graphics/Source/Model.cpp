@@ -4,7 +4,7 @@ namespace EngineOpenGL
 {
 	Model::Model()
 	{
-		this->shader = Singleton::getInstance()->GetSM()->GetShader(1);
+		this->shader = Singleton::getInstance()->GetSM()->GetShader(0);
 	}
 
 	Model::~Model()
