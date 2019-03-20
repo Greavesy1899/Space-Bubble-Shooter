@@ -2,30 +2,6 @@
 
 namespace EngineOpenGL
 {
-	bool BubbleObject::CheckBounds()
-	{
-		ModelBounds bbox = this->model->GetBounds();
-		glm::vec3 pos = this->Transform.GetPosition();
-
-		if (pos.x + bbox.GetMinimum().x < -4.0f) {
-			this->xDirection = -this->xDirection;
-		}
-
-		if (pos.y + bbox.GetMinimum().y < -4.0f) {
-			this->yDirection = -this->yDirection;
-		}
-
-		if (pos.x + bbox.GetMaximum().x > 4.0f) {
-			this->xDirection = -this->xDirection;
-		}
-
-		if (pos.y + bbox.GetMaximum().y > 4.0f) {
-			this->yDirection = -this->yDirection;
-		}
-
-		this->Transform.Translate(glm::vec3(sin(this->xDirection)*0.01f, sin(this->yDirection)*0.01f, 0.0f));
-		return true;
-	}
 	BubbleObject::BubbleObject()
 	{
 	}
@@ -48,6 +24,7 @@ namespace EngineOpenGL
 			randScale = 0.5f;
 
 		this->Transform.SetScale(glm::vec3(randScale));
+		this->model->UpdateModelBounds(this->Transform.GetScale());
 		this->renderType = RenderTypes::SPECIAL_BUBBLE;
 		this->textureID = 1;
 	}
@@ -59,7 +36,12 @@ namespace EngineOpenGL
 
 	void BubbleObject::Update()
 	{
-		CheckBounds();
+		//CheckBounds();
 		this->Transform.Translate(glm::vec3((float)sin(xDirection)*0.01f, (float)sin(yDirection)*0.01f, 0.0f));
+	}
+	void BubbleObject::InvertDirection()
+	{
+		this->xDirection = -this->xDirection;
+		this->yDirection = -this->yDirection;
 	}
 }

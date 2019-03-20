@@ -113,7 +113,7 @@ namespace EngineOpenGL
 		return true;
 	}
 
-	void Model::UpdateModelBounds()
+	void Model::UpdateModelBounds(glm::vec3 scale)
 	{
 		glm::vec3 min(0);
 		glm::vec3 max(0);
@@ -141,7 +141,7 @@ namespace EngineOpenGL
 				max.z = pos.z;
 		}
 
-		this->bounds = ModelBounds(min, max);
+		this->bounds = ModelBounds(min*scale, max*scale);
 	}
 
 	GLuint Model::GetShaderID() const

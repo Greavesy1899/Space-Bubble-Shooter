@@ -13,6 +13,7 @@ namespace EngineOpenGL
 		BUBBLE = 1,
 		SHIP = 2,
 		BULLET = 3,
+		OBSTACLE = 4
 	};
 	enum RenderTypes
 	{
@@ -23,6 +24,9 @@ namespace EngineOpenGL
 	};
 	class GameObject
 	{
+	private:
+		ObjectTypes objectType;
+
 	protected:
 		Model* model;
 		RenderTypes renderType;
@@ -32,9 +36,9 @@ namespace EngineOpenGL
 
 	public:
 		GameObject();
-		GameObject(OBJLoader loader);
-		GameObject(float width, float height);
-		GameObject(float radiusFactor);
+		GameObject(OBJLoader loader, ObjectTypes type);
+		GameObject(float width, float height, ObjectTypes type);
+		GameObject(float radiusFactor, ObjectTypes type);
 
 		~GameObject();
 
@@ -47,12 +51,14 @@ namespace EngineOpenGL
 		virtual void SetRenderType(RenderTypes type);
 		virtual void SetDiffuseColour(glm::vec3 colour);
 		virtual void SetTextureID(int id);
+		virtual void SetObjectType(ObjectTypes type);
 
-		virtual short GetObjectType() { return ObjectTypes::BASIC; }
+		virtual short GetObjectType() { return this->objectType; }
 		RenderTypes GetRenderType() const;
 		virtual Model* GetModel();
 
-		static bool IsColliding(GameObject* obj1, GameObject* obj2);
+		static bool IsCircleBoxColliding(GameObject* rect, GameObject* circle);
+		static bool IsBoxColliding(GameObject* obj1, GameObject* obj2);
 
 		TransformMatrix Transform;
 	};

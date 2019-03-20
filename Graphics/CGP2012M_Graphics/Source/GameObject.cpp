@@ -8,8 +8,9 @@ namespace EngineOpenGL
 		this->isHidden = false;
 	}
 
-	GameObject::GameObject(OBJLoader loader)
+	GameObject::GameObject(OBJLoader loader, ObjectTypes type)
 	{
+		this->objectType = type;
 		this->isHidden = false;
 		this->model = new Model();
 		this->model->SetModelToObj(loader);
@@ -20,8 +21,9 @@ namespace EngineOpenGL
 		this->Transform = TransformMatrix();
 	}
 
-	GameObject::GameObject(float width, float height)
+	GameObject::GameObject(float width, float height, ObjectTypes type)
 	{
+		this->objectType = type;
 		this->isHidden = false;
 		this->model = new Model();
 		this->model->SetModelToSquare(width, height);
@@ -32,8 +34,9 @@ namespace EngineOpenGL
 		this->Transform = TransformMatrix();
 	}
 
-	GameObject::GameObject(float radiusFactor)
+	GameObject::GameObject(float radiusFactor, ObjectTypes type)
 	{
+		this->objectType = type;
 		this->isHidden = false;
 		this->model = new Model();
 		this->model->SetModelToCircle(radiusFactor);
@@ -106,6 +109,11 @@ namespace EngineOpenGL
 		this->textureID = id;
 	}
 
+	void GameObject::SetObjectType(ObjectTypes type)
+	{
+		//this->ob
+	}
+
 	RenderTypes GameObject::GetRenderType() const
 	{
 		return this->renderType;
@@ -115,7 +123,7 @@ namespace EngineOpenGL
 	{
 		return this->model;
 	}
-	bool GameObject::IsColliding(GameObject * rect, GameObject * circle)
+	bool GameObject::IsCircleBoxColliding(GameObject * rect, GameObject * circle)
 	{
 		glm::vec3 rectPos = rect->Transform.GetPosition();
 		glm::vec3 circlePos = circle->Transform.GetPosition();
@@ -134,5 +142,21 @@ namespace EngineOpenGL
 			(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
 
 		return isBBoxColliding && isCircleIntersection;
+	}
+
+	bool GameObject::IsBoxColliding(GameObject * obj1, GameObject * obj2)
+	{
+		glm::vec3 rect1Pos = obj1->Transform.GetPosition();
+		glm::vec3 rect2Pos = obj2->Transform.GetPosition();
+
+		ModelBounds newBBox1 = ModelBounds(rect1Pos + obj1->GetModel()->GetBounds().GetMinimum(), rect1Pos + obj1->GetModel()->GetBounds().GetMaximum());
+		ModelBounds newBBox2 = ModelBounds(rect2Pos + obj2->GetModel()->GetBounds().GetMinimum(), rect2Pos + obj2->GetModel()->GetBounds().GetMaximum());
+
+		bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) &&
+			(newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
+			(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) &&
+			(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
+
+		return isBBoxColliding;
 	}
 }

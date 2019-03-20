@@ -7,7 +7,6 @@ namespace EngineOpenGL
 {
 	class BubbleObject : public GameObject
 	{
-		bool CheckBounds();
 		int xDirection;
 		int yDirection;
 		glm::vec3 shapeColour;
@@ -18,6 +17,7 @@ namespace EngineOpenGL
 		~BubbleObject();
 
 		void Update() override;
+		void InvertDirection();
 		virtual short GetObjectType() override { return ObjectTypes::BUBBLE; }
 	};
 }

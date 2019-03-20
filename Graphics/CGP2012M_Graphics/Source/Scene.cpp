@@ -21,31 +21,31 @@ namespace EngineOpenGL
 		OBJLoader loader = OBJLoader();
 		loader.ParseOBJ("Models/circle.wobj");
 
-		GameObject* background = new GameObject(4.0f, 4.0f);
+		GameObject* background = new GameObject(4.0f, 4.0f, ObjectTypes::BASIC);
 		background->Transform.SetPosition(glm::vec3(0.0f));
 		background->SetRenderType(RenderTypes::TEXTURE);
 		background->SetDiffuseColour(glm::vec3(0.0f));
 		background->SetTextureID(2);
 
-		GameObject* leftObstacle = new GameObject(0.125f, 4.0f);
+		GameObject* leftObstacle = new GameObject(0.125f, 4.0f, ObjectTypes::OBSTACLE);
 		leftObstacle->Transform.SetPosition(glm::vec3(-4.0f, 0.0f, 0.0f));
 		leftObstacle->SetRenderType(RenderTypes::COLOUR);
-		leftObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+		leftObstacle->SetDiffuseColour(glm::vec3(1.0f, 1.0f, 1.0f));
 
-		GameObject* rightObstacle = new GameObject(0.125f, 4.0f);
+		GameObject* rightObstacle = new GameObject(0.125f, 4.0f, ObjectTypes::OBSTACLE);
 		rightObstacle->Transform.SetPosition(glm::vec3(4.0f, 0.0f, 0.0f));
 		rightObstacle->SetRenderType(RenderTypes::COLOUR);
-		rightObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+		rightObstacle->SetDiffuseColour(glm::vec3(1.0f, 1.0f, 1.0f));
 
-		GameObject* topObstacle = new GameObject(4.0f, 0.125f);
+		GameObject* topObstacle = new GameObject(4.0f, 0.125f, ObjectTypes::OBSTACLE);
 		topObstacle->Transform.SetPosition(glm::vec3(0.04, 4.0f, 0.0f));
 		topObstacle->SetRenderType(RenderTypes::COLOUR);
-		topObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+		topObstacle->SetDiffuseColour(glm::vec3(1.0f, 1.0f, 1.0f));
 
-		GameObject* botObstacle = new GameObject(4.0f, 0.125f);
+		GameObject* botObstacle = new GameObject(4.0f, 0.125f, ObjectTypes::OBSTACLE);
 		botObstacle->Transform.SetPosition(glm::vec3(0.0f, -4.0f, 0.0f));
 		botObstacle->SetRenderType(RenderTypes::COLOUR);
-		botObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+		botObstacle->SetDiffuseColour(glm::vec3(1.0f, 1.0f, 1.0f));
 
 		ShipObject* ship = new ShipObject();
 		ship->Transform.SetPosition(glm::vec3(0.0f, -3.5f, 0.0f));
@@ -70,7 +70,7 @@ namespace EngineOpenGL
 		glm::vec3 heartOffset(-3.5f, -3.5f, 0.0f);
 		for (int i = 0; i != ship->GetLives(); i++)
 		{
-			GameObject* heart = new GameObject(0.2f, 0.2f);
+			GameObject* heart = new GameObject(0.2f, 0.2f, ObjectTypes::BASIC);
 			heart->Transform.Translate(heartOffset);
 			heart->SetRenderType(RenderTypes::TEXTURE);
 			heart->SetTextureID(3);
@@ -116,19 +116,26 @@ namespace EngineOpenGL
 			GameObject* obj = (*it);
 			if (obj->GetObjectType() == ObjectTypes::BULLET)
 			{
-				glm::vec3 pos = obj->Transform.GetPosition();
-
-				if ((pos.x < -4.0f || pos.x > 4.0f) || (pos.y < -4.0f || pos.y > 4.0f))
-					d = true;
+				for (auto object : this->objects)
+				{
+					if (object->GetObjectType() == ObjectTypes::OBSTACLE)
+					{
+						if (GameObject::IsBoxColliding(object, obj))
+							d = true;
+					}
+				}
 			}
 			else if(obj->GetObjectType() == ObjectTypes::BUBBLE)
 			{
 				for (auto object : this->objects)
 				{
-					if (object->GetObjectType() == ObjectTypes::BULLET)
+					if (object->GetObjectType() == ObjectTypes::OBSTACLE)
 					{
-						if (GameObject::IsColliding(object, obj))
-							d = true;
+						if (GameObject::IsBoxColliding(object, obj))
+						{
+							auto* bubble = dynamic_cast<BubbleObject*>(obj);
+							bubble->InvertDirection();
+						}
 					}
 				}
 			}
@@ -138,7 +145,7 @@ namespace EngineOpenGL
 				{
 					if (object->GetObjectType() == ObjectTypes::BUBBLE)
 					{
-						if (GameObject::IsColliding(obj, object))
+						if (GameObject::IsCircleBoxColliding(obj, object))
 						{
 							auto* ship = dynamic_cast<ShipObject*>(obj);
 							ship->DeincrementLife();

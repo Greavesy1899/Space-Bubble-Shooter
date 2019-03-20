@@ -54,7 +54,7 @@ namespace EngineOpenGL
 		bool SetModelToSquare(GLfloat widthFactor, GLfloat heightFactor);
 		bool SetModelToCircle(GLfloat radiusFactor);
 		bool SetModelToObj(OBJLoader loader);
-		void UpdateModelBounds();
+		void UpdateModelBounds(glm::vec3 scale = glm::vec3(1.0f));
 
 		GLuint GetShaderID() const;
 		ModelBounds GetBounds() const;
