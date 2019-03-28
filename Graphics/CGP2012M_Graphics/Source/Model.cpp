@@ -45,10 +45,10 @@ namespace EngineOpenGL
 
 		//vertices
 		this->vertices = new VertexLayout[4];
-		this->vertices[0] = VertexLayout(widthFactor, heightFactor, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-		this->vertices[1] = VertexLayout(widthFactor, -heightFactor, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
-		this->vertices[2] = VertexLayout(-widthFactor, -heightFactor, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
-		this->vertices[3] = VertexLayout(-widthFactor, heightFactor, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+		this->vertices[0] = VertexLayout(widthFactor, heightFactor, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+		this->vertices[1] = VertexLayout(widthFactor, -heightFactor, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+		this->vertices[2] = VertexLayout(-widthFactor, -heightFactor, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+		this->vertices[3] = VertexLayout(-widthFactor, heightFactor, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 
 		this->numTriangles = 2;
 		this->numVertices = 4;
@@ -71,16 +71,17 @@ namespace EngineOpenGL
 			this->indices[i + 2] = ++ind;
 		}
 
-		this->vertices[0] = VertexLayout(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		this->vertices[0] = VertexLayout(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 		GLfloat angle = 0.0f;
 
 		for (int i = 1; i != 30; i++)
 		{
 			glm::vec3 pos = glm::vec3(radiusFactor * cos(angle), radiusFactor * sin(angle), 0.0f);
 			glm::vec3 col = glm::vec3(0.0f, 1.0f, 0.0f);
+			glm::vec3 nor = glm::vec3(1.0f, 1.0f, 1.0f);
 			glm::vec2 uv = glm::vec2(((radiusFactor * cos(angle))*0.5f) + 0.75f, ((radiusFactor * sin(angle))*0.75f) + 0.5f);
 
-			this->vertices[i] = VertexLayout(pos, col, uv);
+			this->vertices[i] = VertexLayout(pos, nor, col, uv);
 			angle += (2 * 3.141) / (GLfloat)28.0f;
 		}
 		UpdateModelBounds();
@@ -195,8 +196,10 @@ namespace EngineOpenGL
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)(sizeof(glm::vec3)));
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)(2*sizeof(glm::vec3)));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)(2*sizeof(glm::vec3)));
 		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)(3*sizeof(glm::vec3)));
+		glEnableVertexAttribArray(3);
 		return true;
 	}
 
@@ -232,15 +235,17 @@ namespace EngineOpenGL
 		this->uv = glm::vec2();
 	}
 
-	Model::VertexLayout::VertexLayout(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b, GLfloat u, GLfloat v)
+	Model::VertexLayout::VertexLayout(GLfloat px, GLfloat py, GLfloat pz, GLfloat nx, GLfloat ny, GLfloat nz, GLfloat r, GLfloat g, GLfloat b, GLfloat u, GLfloat v)
 	{
-		this->position = glm::vec3(x, y, z);
+		this->position = glm::vec3(px, py, pz);
+		this->normal = glm::vec3(nx, ny, nz);
 		this->color = glm::vec3(r, g, b);
 		this->uv = glm::vec2(u, v);
 	}
-	Model::VertexLayout::VertexLayout(glm::vec3 pos, glm::vec3 color, glm::vec2 uv)
+	Model::VertexLayout::VertexLayout(glm::vec3 pos, glm::vec3 nor, glm::vec3 color, glm::vec2 uv)
 	{
 		this->position = pos;
+		this->normal = nor;
 		this->color = color;
 		this->uv = uv;
 	}

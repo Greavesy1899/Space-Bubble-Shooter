@@ -58,6 +58,27 @@ void OBJLoader::ParseVertexLine(std::string line)
 		}
 		this->vertices.push_back(newVec);
 	}
+	else if (line.find("vn") == 0)
+	{
+		std::istringstream input;
+		input.str(line);
+
+		std::string tempBuf = "";
+
+		int idx = 0;
+		glm::vec3 newVec = glm::vec3();
+		while (std::getline(input, tempBuf, ' '))
+		{
+			if (idx != 0 && !tempBuf.empty())
+			{
+				newVec[idx - 1] = stof(tempBuf);
+			}
+
+			if (!tempBuf.empty())
+				idx++;
+		}
+		this->normals.push_back(newVec);
+	}
 }
 
 void OBJLoader::ParseFaceLine(std::string line)

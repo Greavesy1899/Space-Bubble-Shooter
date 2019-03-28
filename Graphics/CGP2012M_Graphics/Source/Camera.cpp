@@ -6,10 +6,10 @@ namespace EngineOpenGL
 	Camera::Camera(float w, float h)
 	{
 		this->projectionMatrix = glm::mat4(1.0f);
-		this->viewMatrix = glm::mat4(1.0f);
-		this->screenNear = 0.0f;
-		this->screenFar = 5.0f;
-		this->isOrtho = false;
+		this->viewMatrix = TransformMatrix();
+		this->viewMatrix.SetPosition(glm::vec3(0.0f, 0.0f, -10.0f));
+		this->screenNear = 0.1f;
+		this->screenFar = 50.0f;
 		this->aspect = w / h;
 	}
 
@@ -20,9 +20,16 @@ namespace EngineOpenGL
 	void Camera::SetOrthographic(float width, float height)
 	{
 		this->projectionMatrix = glm::ortho(-4.0f, 4.0f, -4.0f, 4.0f, this->screenNear, this->screenFar);
-		this->isOrtho = true;
 		float updatedWidth = height * aspect;
 		glViewport((width-updatedWidth)/2, 0, updatedWidth, height);
+	}
+
+	void Camera::SetPerspective(float width, float height)
+	{
+		this->projectionMatrix = glm::perspective(glm::radians(45.0f), this->aspect, this->screenNear, this->screenFar);
+		float updatedWidth = height * aspect;
+		glViewport((width - updatedWidth) / 2, 0, updatedWidth, height);
+
 	}
 
 	glm::mat4 Camera::GetProjectionMatrix()
@@ -32,7 +39,7 @@ namespace EngineOpenGL
 
 	glm::mat4 Camera::GetViewMatrix()
 	{
-		return this->viewMatrix;
+		return this->viewMatrix.GetMatrix();
 	}
 
 

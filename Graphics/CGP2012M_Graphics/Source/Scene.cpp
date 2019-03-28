@@ -4,7 +4,7 @@ namespace EngineOpenGL
 {
 	Scene::Scene()
 	{
-		this->camera = Camera(1024, 720);
+		this->camera = Camera(683, 384);
 		this->objects = std::vector<GameObject*>();
 		this->ui = std::vector<GameObject*>();
 	}
@@ -14,7 +14,8 @@ namespace EngineOpenGL
 	}
 	void Scene::UpdateCamera(int w, int h)
 	{
-		this->camera.SetOrthographic((float)w, (float)h);
+		//this->camera.SetOrthographic((float)w, (float)h);
+		this->camera.SetPerspective((float)w, (float)h);
 	}
 	void Scene::Init()
 	{

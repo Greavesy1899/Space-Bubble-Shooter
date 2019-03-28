@@ -172,7 +172,7 @@ namespace EngineOpenGL
 
 	void GameManager::Render()
 	{
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		scene->Render();	
 		SDL_GL_SwapWindow(this->window);

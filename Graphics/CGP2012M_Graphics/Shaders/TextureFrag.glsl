@@ -2,6 +2,7 @@
 out vec4 vertColour;
 
 in vec3 vs_col;
+in vec3 vs_nor;
 in vec2 vs_uv;
 in vec4 vs_pos;
 

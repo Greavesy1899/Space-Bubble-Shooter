@@ -3,14 +3,14 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "TransformMatrix.h"
 
 namespace EngineOpenGL
 {
 	class Camera
 	{
 		glm::mat4 projectionMatrix;
-		glm::mat4 viewMatrix;
-		bool isOrtho;
+		TransformMatrix viewMatrix;
 		float screenNear;
 		float screenFar;
 		float aspect;
@@ -21,6 +21,7 @@ namespace EngineOpenGL
 		~Camera();
 
 		void SetOrthographic(float width, float height);
+		void SetPerspective(float width, float height);
 		glm::mat4 GetProjectionMatrix();
 		glm::mat4 GetViewMatrix();
 	};

@@ -24,12 +24,13 @@ namespace EngineOpenGL
 		struct VertexLayout
 		{
 			glm::vec3 position;
+			glm::vec3 normal;
 			glm::vec3 color;
 			glm::vec2 uv;
 
 			VertexLayout();
-			VertexLayout(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b, GLfloat u, GLfloat v);
-			VertexLayout(glm::vec3 pos, glm::vec3 color, glm::vec2 uv);
+			VertexLayout(GLfloat px, GLfloat py, GLfloat pz, GLfloat nx, GLfloat ny, GLfloat nz, GLfloat r, GLfloat g, GLfloat b, GLfloat u, GLfloat v);
+			VertexLayout(glm::vec3 pos, glm::vec3 nor, glm::vec3 color, glm::vec2 uv);
 		};
 
 	private:
