@@ -16,68 +16,46 @@ OBJLoader::~OBJLoader()
 
 void OBJLoader::ParseVertexLine(std::string line)
 {
+	int bType = -1;
+
 	if (line.find("vt") == 0)
-	{
-		std::istringstream input;
-		input.str(line);
-
-		std::string tempBuf = "";
-
-		int idx = 0;
-		glm::vec3 newVec = glm::vec3();
-		while (std::getline(input, tempBuf, ' '))
-		{
-			if (idx != 0 && !tempBuf.empty())
-			{
-				newVec[idx - 1] = stof(tempBuf);
-			}
-
-			if (!tempBuf.empty())
-				idx++;
-		}
-		this->texCoords.push_back(glm::vec2(newVec.x, newVec.y));
-	}
-	else if (line.find("v") == 0)
-	{
-		std::istringstream input;
-		input.str(line);
-
-		std::string tempBuf = "";
-
-		int idx = 0;
-		glm::vec3 newVec = glm::vec3();
-		while (std::getline(input, tempBuf, ' '))
-		{
-			if (idx != 0 && !tempBuf.empty())
-			{
-				newVec[idx - 1] = stof(tempBuf);
-			}
-
-			if (!tempBuf.empty())
-				idx++;
-		}
-		this->vertices.push_back(newVec);
-	}
+		bType = 0;
 	else if (line.find("vn") == 0)
+		bType = 1;
+	else if (line.find("v") == 0)
+		bType = 2;
+
+	std::istringstream input;
+	input.str(line);
+
+	std::string tempBuf = "";
+
+	int idx = 0;
+	glm::vec3 newVec = glm::vec3();
+	while (std::getline(input, tempBuf, ' '))
 	{
-		std::istringstream input;
-		input.str(line);
-
-		std::string tempBuf = "";
-
-		int idx = 0;
-		glm::vec3 newVec = glm::vec3();
-		while (std::getline(input, tempBuf, ' '))
+		if (idx != 0 && !tempBuf.empty())
 		{
-			if (idx != 0 && !tempBuf.empty())
-			{
-				newVec[idx - 1] = stof(tempBuf);
-			}
-
-			if (!tempBuf.empty())
-				idx++;
+			newVec[idx - 1] = stof(tempBuf);
 		}
+
+		if (!tempBuf.empty())
+			idx++;
+	}
+
+	switch (bType)
+	{
+	case 0:
+		this->texCoords.push_back(glm::vec2(newVec.x, newVec.y));
+		break;
+	case 1:
 		this->normals.push_back(newVec);
+		break;
+	case 2:
+		this->vertices.push_back(newVec);
+		break;
+	default:
+		break;
 	}
 }
 
