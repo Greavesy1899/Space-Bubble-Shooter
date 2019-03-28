@@ -22,28 +22,28 @@ namespace EngineOpenGL
 		OBJLoader loader = OBJLoader();
 		loader.ParseOBJ("Models/circle.obj");
 
-		GameObject* background = new GameObject(4.0f, 4.0f, ObjectTypes::BASIC);
+		GameObject* background = new GameObject(4.0f, 4.0f, 0.1f, ObjectTypes::BASIC);
 		background->Transform.SetPosition(glm::vec3(0.0f));
 		background->SetRenderType(RenderTypes::TEXTURE);
 		background->SetDiffuseColour(glm::vec3(0.0f));
 		background->SetTextureID(2);
 
-		GameObject* leftObstacle = new GameObject(0.125f, 4.0f, ObjectTypes::OBSTACLE);
+		GameObject* leftObstacle = new GameObject(0.125f, 4.0f, 0.1f, ObjectTypes::OBSTACLE);
 		leftObstacle->Transform.SetPosition(glm::vec3(-4.0f, 0.0f, 0.0f));
 		leftObstacle->SetRenderType(RenderTypes::COLOUR);
 		leftObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
 
-		GameObject* rightObstacle = new GameObject(0.125f, 4.0f, ObjectTypes::OBSTACLE);
+		GameObject* rightObstacle = new GameObject(0.125f, 4.0f, 0.1f, ObjectTypes::OBSTACLE);
 		rightObstacle->Transform.SetPosition(glm::vec3(4.0f, 0.0f, 0.0f));
 		rightObstacle->SetRenderType(RenderTypes::COLOUR);
 		rightObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
 
-		GameObject* topObstacle = new GameObject(4.0f, 0.125f, ObjectTypes::OBSTACLE);
+		GameObject* topObstacle = new GameObject(4.0f, 0.125f, 0.1f, ObjectTypes::OBSTACLE);
 		topObstacle->Transform.SetPosition(glm::vec3(0.04, 4.0f, 0.0f));
 		topObstacle->SetRenderType(RenderTypes::COLOUR);
 		topObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
 
-		GameObject* botObstacle = new GameObject(4.0f, 0.125f, ObjectTypes::OBSTACLE);
+		GameObject* botObstacle = new GameObject(4.0f, 0.125f, 0.1f, ObjectTypes::OBSTACLE);
 		botObstacle->Transform.SetPosition(glm::vec3(0.0f, -4.0f, 0.0f));
 		botObstacle->SetRenderType(RenderTypes::COLOUR);
 		botObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));

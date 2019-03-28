@@ -53,6 +53,7 @@ namespace EngineOpenGL
 		bool SetVertices(VertexLayout* vl, GLuint numVertices);
 		bool SetIndices(GLushort* inds, GLuint numTringles);
 		bool SetModelToSquare(GLfloat widthFactor, GLfloat heightFactor);
+		bool SetModelToCube(GLfloat widthFactor, GLfloat heightFactor, GLfloat depthFactor);
 		bool SetModelToCircle(GLfloat radiusFactor);
 		bool SetModelToObj(OBJLoader loader);
 		void UpdateModelBounds(glm::vec3 scale = glm::vec3(1.0f));

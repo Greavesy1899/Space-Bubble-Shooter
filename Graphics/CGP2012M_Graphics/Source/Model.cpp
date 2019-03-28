@@ -33,7 +33,6 @@ namespace EngineOpenGL
 
 	bool Model::SetModelToSquare(GLfloat widthFactor, GLfloat heightFactor)
 	{
-
 		//indices
 		this->indices = new GLushort[6];
 		this->indices[0] = 1;
@@ -52,6 +51,75 @@ namespace EngineOpenGL
 
 		this->numTriangles = 2;
 		this->numVertices = 4;
+		UpdateModelBounds();
+		return true;
+	}
+
+	bool Model::SetModelToCube(GLfloat widthFactor, GLfloat heightFactor, GLfloat depthFactor)
+	{
+		//indices
+		this->indices = new GLushort[36];
+		this->indices[0] = 0;
+		this->indices[1] = 1;
+		this->indices[2] = 2;
+
+		this->indices[3] = 2;
+		this->indices[4] = 3;
+		this->indices[5] = 0;
+
+		this->indices[6] = 4;
+		this->indices[7] = 5;
+		this->indices[8] = 6;
+
+		this->indices[9] = 6;
+		this->indices[10] = 7;
+		this->indices[11] = 4;
+
+		this->indices[12] = 0;
+		this->indices[13] = 3;
+		this->indices[14] = 5;
+
+		this->indices[15] = 5;
+		this->indices[16] = 4;
+		this->indices[17] = 0;
+
+		this->indices[18] = 3;
+		this->indices[19] = 2;
+		this->indices[20] = 6;
+
+		this->indices[21] = 6;
+		this->indices[22] = 5;
+		this->indices[23] = 3;
+
+		this->indices[24] = 2;
+		this->indices[25] = 1;
+		this->indices[26] = 7;
+
+		this->indices[27] = 7;
+		this->indices[28] = 6;
+		this->indices[29] = 2;
+
+		this->indices[30] = 1;
+		this->indices[31] = 0;
+		this->indices[32] = 4;
+
+		this->indices[33] = 4;
+		this->indices[34] = 7;
+		this->indices[35] = 1;
+
+		//vertices
+		this->vertices = new VertexLayout[8];
+		this->vertices[0] = VertexLayout(-widthFactor, -heightFactor, -depthFactor, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+		this->vertices[1] = VertexLayout(-widthFactor, heightFactor, -depthFactor, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+		this->vertices[2] = VertexLayout(widthFactor, heightFactor, -depthFactor, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+		this->vertices[3] = VertexLayout(widthFactor, -heightFactor, -depthFactor, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+		this->vertices[4] = VertexLayout(-widthFactor, -heightFactor, depthFactor, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+		this->vertices[5] = VertexLayout(-widthFactor, heightFactor, depthFactor, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+		this->vertices[6] = VertexLayout(widthFactor, heightFactor, depthFactor, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+		this->vertices[7] = VertexLayout(widthFactor, -heightFactor, depthFactor, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+		this->numTriangles = 12;
+		this->numVertices = 8;
 		UpdateModelBounds();
 		return true;
 	}

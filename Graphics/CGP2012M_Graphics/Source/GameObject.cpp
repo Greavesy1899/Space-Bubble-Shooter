@@ -34,6 +34,19 @@ namespace EngineOpenGL
 		this->Transform = TransformMatrix();
 	}
 
+	GameObject::GameObject(float width, float height, float depth, ObjectTypes type)
+	{
+		this->objectType = type;
+		this->isHidden = false;
+		this->model = new Model();
+		this->model->SetModelToCube(width, height, depth);
+		this->model->Init();
+		this->model->Bind();
+		this->model->Build();
+		this->model->Unbind();
+		this->Transform = TransformMatrix();
+	}
+
 	GameObject::GameObject(float radiusFactor, ObjectTypes type)
 	{
 		this->objectType = type;
