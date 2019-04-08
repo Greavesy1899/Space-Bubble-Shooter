@@ -109,14 +109,14 @@ namespace EngineOpenGL
 
 		//vertices
 		this->vertices = new VertexLayout[8];
-		this->vertices[0] = VertexLayout(-widthFactor, -heightFactor, -depthFactor, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-		this->vertices[1] = VertexLayout(-widthFactor, heightFactor, -depthFactor, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
-		this->vertices[2] = VertexLayout(widthFactor, heightFactor, -depthFactor, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
-		this->vertices[3] = VertexLayout(widthFactor, -heightFactor, -depthFactor, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
-		this->vertices[4] = VertexLayout(-widthFactor, -heightFactor, depthFactor, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-		this->vertices[5] = VertexLayout(-widthFactor, heightFactor, depthFactor, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
-		this->vertices[6] = VertexLayout(widthFactor, heightFactor, depthFactor, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
-		this->vertices[7] = VertexLayout(widthFactor, -heightFactor, depthFactor, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+		this->vertices[0] = VertexLayout(glm::vec3(-widthFactor, -heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(0.0f, 1.0f));
+		this->vertices[1] = VertexLayout(glm::vec3(-widthFactor, heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f));
+		this->vertices[2] = VertexLayout(glm::vec3(widthFactor, heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f));
+		this->vertices[3] = VertexLayout(glm::vec3(widthFactor, -heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
+		this->vertices[4] = VertexLayout(glm::vec3(-widthFactor, -heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(0.0f, 1.0f));
+		this->vertices[5] = VertexLayout(glm::vec3(-widthFactor, heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f));
+		this->vertices[6] = VertexLayout(glm::vec3(widthFactor, heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f));
+		this->vertices[7] = VertexLayout(glm::vec3(widthFactor, -heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
 
 		this->numTriangles = 12;
 		this->numVertices = 8;
@@ -273,7 +273,7 @@ namespace EngineOpenGL
 
 	bool Model::Render()
 	{
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glDrawElements(GL_TRIANGLES, this->numTriangles * 3, GL_UNSIGNED_SHORT, 0);
 		return true;
 	}

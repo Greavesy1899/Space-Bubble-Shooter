@@ -1,27 +1,48 @@
 #include "TextureManager.h"
-
 #include <map>
+#include <tinyxml2.h>
+
+using namespace tinyxml2;
+
 namespace EngineOpenGL
 {
-	void TextureManager::AddTexture(int id, const char * name)
+	void TextureManager::AddTexture(int id, const std::string& name, const std::string& path)
 	{
 		TextureClass* texture = new TextureClass();
+		texture->SetName(name);
 		texture->Bind();
-		texture->LoadTexture(name);
+		texture->LoadTexture(path);
 		texture->SetBuffers();
 		texture->Unbind();
 		this->textures.insert(std::pair<int, TextureClass*>(id, texture));
 	}
 
+	void TextureManager::LoadTextureXML()
+	{
+		XMLDocument doc;
+		doc.LoadFile("resource_textures.xml");
+
+		if (doc.Error())
+			printf("Error loading texture loader\n");
+
+		XMLElement* node = doc.RootElement();
+
+		if (strcmp(node->Attribute("version"), "1") != 0)
+			printf("Old texture loader \n");
+
+		for (const XMLElement* child = node->FirstChildElement(); child != nullptr; child = child->NextSiblingElement())
+		{
+			int id = child->IntAttribute("id");
+			std::string name = child->Attribute("name");
+			std::string path = child->Attribute("path");
+			this->AddTexture(id, name, path);
+		}
+	}
+
 	TextureManager::TextureManager()
 	{
 		this->textures = std::map<int, TextureClass*>();
-		this->AddTexture(0, "Textures/Test.png");
-		this->AddTexture(1, "Textures/Bubble.png");
-		this->AddTexture(2, "Textures/Background.png");
-		this->AddTexture(3, "Textures/Heart.png");
-		this->AddTexture(4, "Textures/error.png");
-		this->AddTexture(5, "Textures/Edge.png");
+		LoadTextureXML();
 	}
 
 	TextureManager::~TextureManager()
@@ -40,6 +61,16 @@ namespace EngineOpenGL
 				return x.second;
 		}
 		printf("Error! Did not find texture! Key is: %i \n", key);
+		return this->textures.at(4);
+	}
+	TextureClass * TextureManager::GetTextureByName(const std::string & name) const
+	{
+		for (auto& x : this->textures)
+		{
+			if (x.second->GetName().compare(name))
+				return x.second;
+		}
+		printf("Error! Did not find texture! Name is: %i \n", name);
 		return this->textures.at(4);
 	}
 	int TextureManager::GetSize() const

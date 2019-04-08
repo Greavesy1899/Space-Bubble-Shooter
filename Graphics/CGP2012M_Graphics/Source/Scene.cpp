@@ -30,23 +30,23 @@ namespace EngineOpenGL
 
 		GameObject* leftObstacle = new GameObject(0.125f, 4.0f, 0.1f, ObjectTypes::OBSTACLE);
 		leftObstacle->Transform.SetPosition(glm::vec3(-4.0f, 0.0f, 0.0f));
-		leftObstacle->SetRenderType(RenderTypes::COLOUR);
-		leftObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+		leftObstacle->SetRenderType(RenderTypes::TEXTURE);
+		leftObstacle->SetTextureID(5);
 
 		GameObject* rightObstacle = new GameObject(0.125f, 4.0f, 0.1f, ObjectTypes::OBSTACLE);
 		rightObstacle->Transform.SetPosition(glm::vec3(4.0f, 0.0f, 0.0f));
-		rightObstacle->SetRenderType(RenderTypes::COLOUR);
-		rightObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+		rightObstacle->SetRenderType(RenderTypes::TEXTURE);
+		rightObstacle->SetTextureID(5);
 
 		GameObject* topObstacle = new GameObject(4.0f, 0.125f, 0.1f, ObjectTypes::OBSTACLE);
 		topObstacle->Transform.SetPosition(glm::vec3(0.04, 4.0f, 0.0f));
-		topObstacle->SetRenderType(RenderTypes::COLOUR);
-		topObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+		topObstacle->SetRenderType(RenderTypes::TEXTURE);
+		topObstacle->SetTextureID(5);
 
 		GameObject* botObstacle = new GameObject(4.0f, 0.125f, 0.1f, ObjectTypes::OBSTACLE);
 		botObstacle->Transform.SetPosition(glm::vec3(0.0f, -4.0f, 0.0f));
-		botObstacle->SetRenderType(RenderTypes::COLOUR);
-		botObstacle->SetDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+		botObstacle->SetRenderType(RenderTypes::TEXTURE);
+		botObstacle->SetTextureID(5);
 
 		ShipObject* ship = new ShipObject();
 		ship->Transform.SetPosition(glm::vec3(0.0f, -3.5f, 0.0f));

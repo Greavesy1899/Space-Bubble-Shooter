@@ -18,12 +18,22 @@ namespace EngineOpenGL
 		return this->textureID;
 	}
 
-	void TextureClass::LoadTexture(const char * file)
+	void TextureClass::LoadTexture(const std::string& path)
 	{
-		this->surface = IMG_Load(file);
+		this->surface = IMG_Load(path.c_str());
 
 		if (this->surface == NULL)
-			std::cout << "Failed to load surface from " << file << "!";
+			std::cout << "Failed to load surface from " << path.c_str() << "!";
+	}
+
+	std::string TextureClass::GetName() const
+	{
+		return this->name;
+	}
+
+	void TextureClass::SetName(const std::string & name)
+	{
+		this->name = name;
 	}
 
 	void TextureClass::SetBuffers()

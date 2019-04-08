@@ -10,7 +10,8 @@ namespace EngineOpenGL
 	{
 		std::map<int, TextureClass*> textures;
 
-		void AddTexture(int, const char*); //only called during build phase.
+		void AddTexture(int, const std::string&, const std::string&); //only called during build phase.
+		void LoadTextureXML();
 	public:
 		TextureManager();
 		~TextureManager();
@@ -21,7 +22,9 @@ namespace EngineOpenGL
 		TextureManager operator=(const TextureManager& sm) = delete;
 		TextureManager operator=(TextureManager& sm) = delete;
 
+
 		TextureClass* GetTexture(int key) const;
+		TextureClass* GetTextureByName(const std::string& name) const;
 		int GetSize() const;
 
 	};

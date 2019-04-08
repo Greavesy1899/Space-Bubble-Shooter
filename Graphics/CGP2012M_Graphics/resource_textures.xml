@@ -1,0 +1,8 @@
+<TextureLoader version="1">
+	<Texture id="0" name="Test" path="Textures/Test.png"/>
+	<Texture id="1" name="Bubble" path="Textures/Bubble.png"/>
+	<Texture id="2" name="Background" path="Textures/Background.png"/>
+	<Texture id="3" name="Heart" path="Textures/Heart.png"/>
+	<Texture id="4" name="Error" path="Textures/Error.png"/>
+	<Texture id="5" name="Edge" path="Textures/Edge.png"/>
+</TextureLoader>
