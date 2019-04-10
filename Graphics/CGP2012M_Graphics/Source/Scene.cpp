@@ -20,9 +20,10 @@ namespace EngineOpenGL
 	void Scene::Init()
 	{
 		OBJLoader loader = OBJLoader();
+		//loader.ParseOBJ("Models/box.obj");
 		loader.ParseOBJ("Models/circle.obj");
 
-		GameObject* background = new GameObject(4.0f, 4.0f, 0.1f, ObjectTypes::BASIC);
+		GameObject* background = new GameObject(4.0f, 4.0f, ObjectTypes::BASIC);
 		background->Transform.SetPosition(glm::vec3(0.0f));
 		background->SetRenderType(RenderTypes::TEXTURE);
 		background->SetDiffuseColour(glm::vec3(0.0f));

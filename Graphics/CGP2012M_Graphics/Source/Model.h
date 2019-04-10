@@ -44,6 +44,7 @@ namespace EngineOpenGL
 		GLuint ibo;
 		GLuint vao;
 		ModelBounds bounds;
+		bool isObj;
 
 	public:
 		Model();

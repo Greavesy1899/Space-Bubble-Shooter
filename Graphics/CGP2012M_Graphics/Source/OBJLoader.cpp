@@ -66,12 +66,29 @@ void OBJLoader::ParseFaceLine(std::string line)
 
 	std::string tempBuf = "";
 
-	while (std::getline(input, tempBuf, ' '))
+	while (std::getline(input, tempBuf))
 	{
-		if (!tempBuf.empty() && tempBuf != "f")
+		std::istringstream c(line.substr(2));
+		glm::ivec3 v = glm::ivec3();
+		glm::ivec3 vt = glm::ivec3();
+		glm::ivec3 vn = glm::ivec3();
+
+		for (int i = 0; i != 3; i++)
 		{
-			GLushort ind = std::stoi(tempBuf.substr(0, tempBuf.find('/')));
-			this->indices.push_back(ind-1);
+			char slash;
+			c >> v[i];
+			c >> slash;
+			c >> vt[i];
+			c >> slash;
+			c >> vn[i];
+			
+			v[i]--;
+			vt[i]--;
+			vn[i]--;
+
+			this->indices.push_back(v[i]);
+			this->indices.push_back(vt[i]);
+			this->indices.push_back(vn[i]);
 		}
 	}
 }
@@ -100,5 +117,5 @@ bool OBJLoader::ParseOBJ(const char * file)
 		else if (line[0] == 'f')
 			ParseFaceLine(line);
 	}
-	return false;
+	return true;
 }

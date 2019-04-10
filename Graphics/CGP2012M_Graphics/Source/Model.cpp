@@ -5,6 +5,7 @@ namespace EngineOpenGL
 	Model::Model()
 	{
 		this->shader = Singleton::getInstance()->GetSM()->GetShader(0);
+		isObj = false;
 	}
 
 	Model::~Model()
@@ -60,63 +61,63 @@ namespace EngineOpenGL
 		//indices
 		this->indices = new GLushort[36];
 		this->indices[0] = 0;
-		this->indices[1] = 1;
-		this->indices[2] = 2;
+		this->indices[1] = 2;
+		this->indices[2] = 3;
 
-		this->indices[3] = 2;
-		this->indices[4] = 3;
+		this->indices[3] = 3;
+		this->indices[4] = 1;
 		this->indices[5] = 0;
 
 		this->indices[6] = 4;
 		this->indices[7] = 5;
-		this->indices[8] = 6;
+		this->indices[8] = 7;
 
-		this->indices[9] = 6;
-		this->indices[10] = 7;
+		this->indices[9] = 7;
+		this->indices[10] = 6;
 		this->indices[11] = 4;
 
 		this->indices[12] = 0;
-		this->indices[13] = 3;
+		this->indices[13] = 1;
 		this->indices[14] = 5;
 
 		this->indices[15] = 5;
 		this->indices[16] = 4;
 		this->indices[17] = 0;
 
-		this->indices[18] = 3;
-		this->indices[19] = 2;
-		this->indices[20] = 6;
+		this->indices[18] = 1;
+		this->indices[19] = 3;
+		this->indices[20] = 7;
 
-		this->indices[21] = 6;
+		this->indices[21] = 7;
 		this->indices[22] = 5;
-		this->indices[23] = 3;
+		this->indices[23] = 1;
 
-		this->indices[24] = 2;
-		this->indices[25] = 1;
-		this->indices[26] = 7;
+		this->indices[24] = 3;
+		this->indices[25] = 2;
+		this->indices[26] = 6;
 
-		this->indices[27] = 7;
-		this->indices[28] = 6;
-		this->indices[29] = 2;
+		this->indices[27] = 6;
+		this->indices[28] = 7;
+		this->indices[29] = 3;
 
-		this->indices[30] = 1;
+		this->indices[30] = 2;
 		this->indices[31] = 0;
 		this->indices[32] = 4;
 
 		this->indices[33] = 4;
-		this->indices[34] = 7;
-		this->indices[35] = 1;
+		this->indices[34] = 6;
+		this->indices[35] = 2;
 
 		//vertices
 		this->vertices = new VertexLayout[8];
-		this->vertices[0] = VertexLayout(glm::vec3(-widthFactor, -heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(0.0f, 1.0f));
-		this->vertices[1] = VertexLayout(glm::vec3(-widthFactor, heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f));
-		this->vertices[2] = VertexLayout(glm::vec3(widthFactor, heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f));
+		this->vertices[0] = VertexLayout(glm::vec3(-widthFactor, -heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(0.0f, 1.0f));
+		this->vertices[1] = VertexLayout(glm::vec3(widthFactor, -heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f));
+		this->vertices[2] = VertexLayout(glm::vec3(-widthFactor, -heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f));
 		this->vertices[3] = VertexLayout(glm::vec3(widthFactor, -heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
-		this->vertices[4] = VertexLayout(glm::vec3(-widthFactor, -heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(0.0f, 1.0f));
-		this->vertices[5] = VertexLayout(glm::vec3(-widthFactor, heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f));
-		this->vertices[6] = VertexLayout(glm::vec3(widthFactor, heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f));
-		this->vertices[7] = VertexLayout(glm::vec3(widthFactor, -heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
+		this->vertices[4] = VertexLayout(glm::vec3(-widthFactor, heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(0.0f, 1.0f));
+		this->vertices[5] = VertexLayout(glm::vec3(widthFactor, heightFactor, depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f));
+		this->vertices[6] = VertexLayout(glm::vec3(-widthFactor, heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f));
+		this->vertices[7] = VertexLayout(glm::vec3(widthFactor, heightFactor, -depthFactor), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
 
 		this->numTriangles = 12;
 		this->numVertices = 8;
@@ -158,27 +159,30 @@ namespace EngineOpenGL
 
 	bool Model::SetModelToObj(OBJLoader loader)
 	{
-		this->vertices = new VertexLayout[loader.vertices.size()];
-		this->numVertices = loader.vertices.size();
-		this->numTriangles = (GLushort)loader.indices.size()/3;
-		this->indices = new GLushort[loader.indices.size()];
+		
+		GLushort indCount = loader.indices.size() / 3;
+		this->numTriangles = (GLushort)indCount / 6;
+		this->numVertices = numTriangles;
+		this->vertices = new VertexLayout[indCount];
+		this->indices = new GLushort[indCount];
 
-		for (int i = 0; i != loader.vertices.size(); i++)
+
+		//vertices
+		GLushort intIDX = 0;
+		for (int i = 0; i != loader.indices.size(); i+=3)
 		{
 			VertexLayout vertex = VertexLayout();
-			vertex.position = loader.vertices[i];
+			vertex.position = loader.vertices[loader.indices[i + 0]];
+			vertex.uv = loader.texCoords[loader.indices[i + 1]];
+			vertex.normal = loader.normals[loader.indices[i + 2]];
 			vertex.color = glm::vec3(1.0f);
-			vertex.uv = loader.texCoords[i];
-			this->vertices[i] = vertex;
-		}
-
-		for (int i = 0; i != loader.indices.size(); i++)
-		{
-			this->indices[i] = loader.indices[i];
+			this->vertices[intIDX] = vertex;
+			this->indices[intIDX] = loader.indices[i];
+			intIDX++;
 		}
 
 		UpdateModelBounds();
-
+		this->isObj = true;
 		return true;
 	}
 
@@ -257,9 +261,10 @@ namespace EngineOpenGL
 
 	bool Model::Build()
 	{
+		int mult = (this->isObj ? 1 : 6);
 		glBufferData(GL_ARRAY_BUFFER, this->numVertices * sizeof(VertexLayout), this->vertices, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->numTriangles*6, this->indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->numTriangles * mult, this->indices, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)0);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexLayout), (GLvoid*)(sizeof(glm::vec3)));
@@ -273,8 +278,12 @@ namespace EngineOpenGL
 
 	bool Model::Render()
 	{
-	    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glDrawElements(GL_TRIANGLES, this->numTriangles * 3, GL_UNSIGNED_SHORT, 0);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		if (isObj)
+			glDrawArrays(GL_TRIANGLES, 0, this->numVertices * sizeof(VertexLayout));
+		else
+			glDrawElements(GL_TRIANGLES, this->numTriangles*3, GL_UNSIGNED_SHORT, 0);
+
 		return true;
 	}
 
