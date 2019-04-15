@@ -10,7 +10,6 @@ namespace EngineOpenGL
 	class Camera
 	{
 		glm::mat4 projectionMatrix;
-		TransformMatrix viewMatrix;
 		float screenNear;
 		float screenFar;
 		float aspect;
@@ -22,6 +21,7 @@ namespace EngineOpenGL
 
 		void SetOrthographic(float width, float height);
 		void SetPerspective(float width, float height);
+		TransformMatrix ViewMatrix;
 		glm::mat4 GetProjectionMatrix();
 		glm::mat4 GetViewMatrix();
 	};

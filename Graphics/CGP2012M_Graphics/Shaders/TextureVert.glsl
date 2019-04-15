@@ -17,7 +17,7 @@ void main()
 {
 
 	gl_Position = ProjectionMatrix * ViewMatrix * WorldMatrix * vec4(Position, 1.0);
-	vs_pos = ProjectionMatrix * ViewMatrix * WorldMatrix * vec4(Position, 1.0);
+	vs_pos = WorldMatrix * vec4(Position, 1.0);
 	vs_nor = Normal;
 	vs_col = vColour;
 	vs_uv = texCoord;

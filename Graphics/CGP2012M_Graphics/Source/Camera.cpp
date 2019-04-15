@@ -6,8 +6,8 @@ namespace EngineOpenGL
 	Camera::Camera(float w, float h)
 	{
 		this->projectionMatrix = glm::mat4(1.0f);
-		this->viewMatrix = TransformMatrix();
-		this->viewMatrix.SetPosition(glm::vec3(0.0f, 0.0f, -10.0f));
+		this->ViewMatrix = TransformMatrix();
+		this->ViewMatrix.SetPosition(glm::vec3(0.0f, 0.0f, -10.0f));
 		this->screenNear = 0.1f;
 		this->screenFar = 50.0f;
 		this->aspect = w / h;
@@ -39,7 +39,7 @@ namespace EngineOpenGL
 
 	glm::mat4 Camera::GetViewMatrix()
 	{
-		return this->viewMatrix.GetMatrix();
+		return this->ViewMatrix.GetMatrix();
 	}
 
 

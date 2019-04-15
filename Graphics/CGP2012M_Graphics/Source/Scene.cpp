@@ -20,37 +20,42 @@ namespace EngineOpenGL
 	void Scene::Init()
 	{
 		OBJLoader loader = OBJLoader();
-		//loader.ParseOBJ("Models/box.obj");
-		loader.ParseOBJ("Models/circle.obj");
+		loader.ParseOBJ("Models/boundary.obj");
+		
 
 		GameObject* background = new GameObject(4.0f, 4.0f, ObjectTypes::BASIC);
-		background->Transform.SetPosition(glm::vec3(0.0f));
+		background->Transform.SetPosition(glm::vec3(0.0f, 0.0f, -0.1f));
 		background->SetRenderType(RenderTypes::TEXTURE);
 		background->SetDiffuseColour(glm::vec3(0.0f));
 		background->SetTextureID(2);
 
-		GameObject* leftObstacle = new GameObject(0.125f, 4.0f, 0.1f, ObjectTypes::OBSTACLE);
+		GameObject* leftObstacle = new GameObject(loader, ObjectTypes::OBSTACLE);
 		leftObstacle->Transform.SetPosition(glm::vec3(-4.0f, 0.0f, 0.0f));
+		leftObstacle->Transform.Rotate(glm::vec3(0.0f,0.0f, 1.571f), 1.571f);
 		leftObstacle->SetRenderType(RenderTypes::TEXTURE);
 		leftObstacle->SetTextureID(5);
 
-		GameObject* rightObstacle = new GameObject(0.125f, 4.0f, 0.1f, ObjectTypes::OBSTACLE);
+		GameObject* rightObstacle = new GameObject(loader, ObjectTypes::OBSTACLE);
 		rightObstacle->Transform.SetPosition(glm::vec3(4.0f, 0.0f, 0.0f));
+		rightObstacle->Transform.Rotate(glm::vec3(0.0f, 0.0f, 1.571f), 1.571f);
 		rightObstacle->SetRenderType(RenderTypes::TEXTURE);
 		rightObstacle->SetTextureID(5);
 
-		GameObject* topObstacle = new GameObject(4.0f, 0.125f, 0.1f, ObjectTypes::OBSTACLE);
+		GameObject* topObstacle = new GameObject(loader, ObjectTypes::OBSTACLE);
 		topObstacle->Transform.SetPosition(glm::vec3(0.04, 4.0f, 0.0f));
 		topObstacle->SetRenderType(RenderTypes::TEXTURE);
 		topObstacle->SetTextureID(5);
 
-		GameObject* botObstacle = new GameObject(4.0f, 0.125f, 0.1f, ObjectTypes::OBSTACLE);
+		GameObject* botObstacle = new GameObject(loader, ObjectTypes::OBSTACLE);
 		botObstacle->Transform.SetPosition(glm::vec3(0.0f, -4.0f, 0.0f));
 		botObstacle->SetRenderType(RenderTypes::TEXTURE);
 		botObstacle->SetTextureID(5);
 
 		ShipObject* ship = new ShipObject();
 		ship->Transform.SetPosition(glm::vec3(0.0f, -3.5f, 0.0f));
+
+		loader = OBJLoader();
+		loader.ParseOBJ("Models/circle.obj");
 
 		BubbleObject* bubObj = new BubbleObject(loader);
 		BubbleObject* bubObj1 = new BubbleObject(loader);
@@ -105,6 +110,24 @@ namespace EngineOpenGL
 				this->objects[0]->SetRenderType(RenderTypes::COLOUR);
 			else
 				this->objects[0]->SetRenderType(RenderTypes::TEXTURE);
+		}
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_T)) {
+			this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.0f, 0.1f));
+		}
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_G)) {
+			this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.0f, -0.1f));
+		}
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_F)) {
+			this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.1f, 0.0f));
+		}
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_H)) {
+			this->camera.ViewMatrix.Translate(glm::vec3(0.0f, -0.1f, 0.0f));
+		}
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_R)) {
+			this->camera.ViewMatrix.Rotate(glm::vec3(0.1f, 0.0f, 0.0f), 0.1f);
+		}
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_Y)) {
+			this->camera.ViewMatrix.Rotate(glm::vec3(0.0f, 0.1f, 0.0f), 0.1f);
 		}
 
 		for (GameObject* obj : this->objects)

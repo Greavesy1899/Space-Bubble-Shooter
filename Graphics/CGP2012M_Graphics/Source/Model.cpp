@@ -40,8 +40,8 @@ namespace EngineOpenGL
 		this->indices[1] = 0;
 		this->indices[2] = 2;
 		this->indices[3] = 2;
-		this->indices[4] = 3;
-		this->indices[5] = 0;
+		this->indices[4] = 0;
+		this->indices[5] = 3;
 
 		//vertices
 		this->vertices = new VertexLayout[4];
@@ -161,7 +161,7 @@ namespace EngineOpenGL
 	{
 		
 		GLushort indCount = loader.indices.size() / 3;
-		this->numTriangles = (GLushort)indCount / 6;
+		this->numTriangles = (GLushort)indCount;
 		this->numVertices = numTriangles;
 		this->vertices = new VertexLayout[indCount];
 		this->indices = new GLushort[indCount];

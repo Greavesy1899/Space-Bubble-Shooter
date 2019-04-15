@@ -86,9 +86,12 @@ namespace EngineOpenGL
 		GLenum err = glewInit();
 
 		glEnable(GL_DEBUG_OUTPUT);
-		glDebugMessageCallback(MessageCallback, 0);
-
+		glEnable(GL_CULL_FACE);
 		glEnable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+
+		glDebugMessageCallback(MessageCallback, 0);
+		glCullFace(GL_BACK);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//should build the manager;
@@ -173,7 +176,7 @@ namespace EngineOpenGL
 	void GameManager::Render()
 	{
 		glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		scene->Render();	
 		SDL_GL_SwapWindow(this->window);
 	}

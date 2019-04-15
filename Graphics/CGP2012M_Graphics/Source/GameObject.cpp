@@ -96,6 +96,7 @@ namespace EngineOpenGL
 		glUseProgram(this->model->GetShaderID());
 		this->model->GetShader()->SetUniformMatrix("WorldMatrix", this->Transform.GetMatrix());
 		this->model->GetShader()->SetUniformMatrix("ViewMatrix", cam.GetViewMatrix());
+		this->model->GetShader()->SetUniformFloat("lightPos", cam.ViewMatrix.GetPosition().x, cam.ViewMatrix.GetPosition().y, cam.ViewMatrix.GetPosition().z);
 		this->model->GetShader()->SetUniformMatrix("ProjectionMatrix", cam.GetProjectionMatrix());
 		this->model->GetShader()->SetUniformInt("renderType", this->renderType);
 		this->model->GetShader()->SetUniformFloat("shapeColour", this->colour.r, this->colour.g, this->colour.b);
@@ -149,10 +150,12 @@ namespace EngineOpenGL
 		GLfloat magnitude = (distX * distX + distY * distY);
 		GLfloat radius = rect->GetModel()->GetBounds().GetRadius() * circle->GetModel()->GetBounds().GetRadius();
 		bool isCircleIntersection = magnitude < radius;
-		bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) && 
-							   (newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
-			                   (newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) && 
-			                   (newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
+		bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) &&
+			(newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
+			(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) &&
+			(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y) &&
+			(newBBox1.GetMinimum().z < newBBox2.GetMaximum().z) &&
+			(newBBox1.GetMaximum().z > newBBox2.GetMinimum().z);
 
 		return isBBoxColliding && isCircleIntersection;
 	}
@@ -168,7 +171,9 @@ namespace EngineOpenGL
 		bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) &&
 			(newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
 			(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) &&
-			(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
+			(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y) &&
+			(newBBox1.GetMaximum().z > newBBox2.GetMinimum().z) &&
+			(newBBox1.GetMaximum().z < newBBox2.GetMinimum().z);
 
 		return isBBoxColliding;
 	}
