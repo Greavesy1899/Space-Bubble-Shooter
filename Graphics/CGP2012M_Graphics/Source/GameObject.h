@@ -39,7 +39,6 @@ namespace EngineOpenGL
 		GameObject(OBJLoader loader, ObjectTypes type);
 		GameObject(float width, float height, ObjectTypes type);
 		GameObject(float width, float height, float depth, ObjectTypes type);
-		GameObject(float radiusFactor, ObjectTypes type);
 
 		~GameObject();
 

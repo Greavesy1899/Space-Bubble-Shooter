@@ -16,7 +16,7 @@ namespace EngineOpenGL
 
 	public:
 		Camera(float w, float h);
-		Camera() {};
+		Camera();
 		~Camera();
 
 		void SetOrthographic(float width, float height);

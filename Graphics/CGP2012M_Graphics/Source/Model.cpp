@@ -4,6 +4,14 @@ namespace EngineOpenGL
 {
 	Model::Model()
 	{
+		this->ibo = NULL;
+		this->indices = nullptr;
+		this->numTriangles = 0;
+		this->numVertices = 0;
+		this->texture = nullptr;
+		this->vao = NULL;
+		this->vbo = NULL;
+		this->vertices = nullptr;
 		this->shader = Singleton::getInstance()->GetSM()->GetShader(0);
 		isObj = false;
 	}
@@ -121,38 +129,6 @@ namespace EngineOpenGL
 
 		this->numTriangles = 12;
 		this->numVertices = 8;
-		UpdateModelBounds();
-		return true;
-	}
-
-	bool Model::SetModelToCircle(GLfloat radiusFactor)
-	{
-		this->vertices = new VertexLayout[30];
-		this->indices = new GLushort[87];
-		this->numVertices = 30;
-		this->numTriangles = 29;
-
-		GLint ind = 1;
-		for (int i = 0; i != 87; i+=3)
-		{
-			this->indices[i] = 0;
-			this->indices[i + 1] = ind;
-			this->indices[i + 2] = ++ind;
-		}
-
-		this->vertices[0] = VertexLayout(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-		GLfloat angle = 0.0f;
-
-		for (int i = 1; i != 30; i++)
-		{
-			glm::vec3 pos = glm::vec3(radiusFactor * cos(angle), radiusFactor * sin(angle), 0.0f);
-			glm::vec3 col = glm::vec3(0.0f, 1.0f, 0.0f);
-			glm::vec3 nor = glm::vec3(1.0f, 1.0f, 1.0f);
-			glm::vec2 uv = glm::vec2(((radiusFactor * cos(angle))*0.5f) + 0.75f, ((radiusFactor * sin(angle))*0.75f) + 0.5f);
-
-			this->vertices[i] = VertexLayout(pos, nor, col, uv);
-			angle += (2 * 3.141) / (GLfloat)28.0f;
-		}
 		UpdateModelBounds();
 		return true;
 	}
@@ -308,6 +284,7 @@ namespace EngineOpenGL
 	Model::VertexLayout::VertexLayout()
 	{
 		this->position = glm::vec3();
+		this->normal = glm::vec3();
 		this->color = glm::vec3();
 		this->uv = glm::vec2();
 	}

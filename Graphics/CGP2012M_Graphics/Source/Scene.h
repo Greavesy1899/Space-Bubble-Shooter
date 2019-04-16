@@ -14,7 +14,6 @@ namespace EngineOpenGL
 	class Scene
 	{
 		std::string name;
-		glm::vec2 boundaries;
 		Camera camera;
 		std::vector<GameObject*> objects;
 		std::vector<GameObject*> ui;

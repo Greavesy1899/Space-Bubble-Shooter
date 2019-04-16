@@ -3,6 +3,15 @@
 
 namespace EngineOpenGL
 {
+	Camera::Camera()
+	{
+		this->projectionMatrix = glm::mat4(1.0f);
+		this->ViewMatrix = TransformMatrix();
+		this->screenNear = 0.1f;
+		this->screenFar = 50.0f;
+		this->aspect = 0.0f;
+	}
+
 	Camera::Camera(float w, float h)
 	{
 		this->projectionMatrix = glm::mat4(1.0f);

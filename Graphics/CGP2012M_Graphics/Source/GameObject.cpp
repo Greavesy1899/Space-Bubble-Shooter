@@ -6,25 +6,38 @@ namespace EngineOpenGL
 	GameObject::GameObject()
 	{
 		this->isHidden = false;
+		this->model = nullptr;
+		this->Transform = TransformMatrix();
+		this->objectType = ObjectTypes::BASIC;
+		this->colour = glm::vec3(1.0f);
+		this->renderType = RenderTypes::COLOUR;
+		this->textureID = -1;
 	}
 
 	GameObject::GameObject(OBJLoader loader, ObjectTypes type)
 	{
 		this->objectType = type;
 		this->isHidden = false;
+		this->Transform = TransformMatrix();
+		this->colour = glm::vec3(1.0f);
+		this->renderType = RenderTypes::COLOUR;
+		this->textureID = -1;
 		this->model = new Model();
 		this->model->SetModelToObj(loader);
 		this->model->Init();
 		this->model->Bind();
 		this->model->Build();
 		this->model->Unbind();
-		this->Transform = TransformMatrix();
 	}
 
 	GameObject::GameObject(float width, float height, ObjectTypes type)
 	{
 		this->objectType = type;
 		this->isHidden = false;
+		this->Transform = TransformMatrix();
+		this->colour = glm::vec3(1.0f);
+		this->renderType = RenderTypes::COLOUR;
+		this->textureID = -1;
 		this->model = new Model();
 		this->model->SetModelToSquare(width, height);
 		this->model->Init();
@@ -38,21 +51,12 @@ namespace EngineOpenGL
 	{
 		this->objectType = type;
 		this->isHidden = false;
+		this->Transform = TransformMatrix();
+		this->colour = glm::vec3(1.0f);
+		this->renderType = RenderTypes::COLOUR;
+		this->textureID = -1;
 		this->model = new Model();
 		this->model->SetModelToCube(width, height, depth);
-		this->model->Init();
-		this->model->Bind();
-		this->model->Build();
-		this->model->Unbind();
-		this->Transform = TransformMatrix();
-	}
-
-	GameObject::GameObject(float radiusFactor, ObjectTypes type)
-	{
-		this->objectType = type;
-		this->isHidden = false;
-		this->model = new Model();
-		this->model->SetModelToCircle(radiusFactor);
 		this->model->Init();
 		this->model->Bind();
 		this->model->Build();
@@ -168,13 +172,13 @@ namespace EngineOpenGL
 		ModelBounds newBBox1 = ModelBounds(rect1Pos + obj1->GetModel()->GetBounds().GetMinimum(), rect1Pos + obj1->GetModel()->GetBounds().GetMaximum());
 		ModelBounds newBBox2 = ModelBounds(rect2Pos + obj2->GetModel()->GetBounds().GetMinimum(), rect2Pos + obj2->GetModel()->GetBounds().GetMaximum());
 
-		bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) &&
-			(newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
-			(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) &&
-			(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y) &&
-			(newBBox1.GetMaximum().z > newBBox2.GetMinimum().z) &&
-			(newBBox1.GetMaximum().z < newBBox2.GetMinimum().z);
+		bool bboxX = newBBox1.GetMinimum().x < newBBox2.GetMaximum().x && (newBBox1.GetMaximum().x > newBBox2.GetMinimum().x);
+		bool bboxY = newBBox1.GetMinimum().y < newBBox2.GetMaximum().y && (newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
+		bool bboxZ = newBBox1.GetMinimum().z < newBBox2.GetMaximum().z && (newBBox1.GetMaximum().z > newBBox2.GetMinimum().z);
+		//printf("%i, %i, %i\n", bboxX, bboxY, bboxZ);
+		bool isBBoxColliding = bboxX && bboxY && bboxZ;
 
+		
 		return isBBoxColliding;
 	}
 }

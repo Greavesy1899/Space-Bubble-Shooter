@@ -8,6 +8,8 @@ namespace EngineOpenGL
 	ShaderProgram::ShaderProgram()
 	{
 		this->shaderProgramID = glCreateProgram();
+		this->fragmentShader = NULL;
+		this->vertexShader = NULL;
 	}
 
 	ShaderProgram::~ShaderProgram()

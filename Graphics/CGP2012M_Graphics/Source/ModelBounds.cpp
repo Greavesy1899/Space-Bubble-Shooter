@@ -6,6 +6,8 @@ namespace EngineOpenGL
 	{
 		this->minimum = glm::vec3(0);
 		this->maximum = glm::vec3(0);
+		this->radius = 0.0f;
+		this->centre = glm::vec3(0.0f);
 	}
 	ModelBounds::ModelBounds(glm::vec3 min, glm::vec3 max)
 	{
