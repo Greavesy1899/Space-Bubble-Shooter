@@ -144,10 +144,14 @@ namespace EngineOpenGL
 	bool GameObject::IsCircleBoxColliding(GameObject * rect, GameObject * circle)
 	{
 		glm::vec3 rectPos = rect->Transform.GetPosition();
-		glm::vec3 circlePos = circle->Transform.GetPosition();
-
-		ModelBounds newBBox1 = ModelBounds(rectPos + rect->GetModel()->GetBounds().GetMinimum(), rectPos + rect->GetModel()->GetBounds().GetMaximum());
-		ModelBounds newBBox2 = ModelBounds(circlePos + circle->GetModel()->GetBounds().GetMinimum(), circlePos + circle->GetModel()->GetBounds().GetMaximum());
+		glm::vec3 rectMin = rect->Transform.GetMatrix() * glm::vec4(rect->GetModel()->GetBounds().GetMinimum(), 1.0f);
+		glm::vec3 rectMax = rect->Transform.GetMatrix() * glm::vec4(rect->GetModel()->GetBounds().GetMaximum(), 1.0f);
+		glm::vec3 circlePos = rect->Transform.GetPosition();
+		glm::vec3 circleMin = circle->Transform.GetMatrix() * glm::vec4(circle->GetModel()->GetBounds().GetMinimum(), 1.0f);
+		glm::vec3 circleMax = circle->Transform.GetMatrix() * glm::vec4(circle->GetModel()->GetBounds().GetMaximum(), 1.0f);
+		
+		ModelBounds newBBox1 = ModelBounds(glm::vec3(rectMin), glm::vec3(rectMax));
+		ModelBounds newBBox2 = ModelBounds(glm::vec3(circleMin), glm::vec3(circleMax));
 
 		GLfloat distX = circlePos.x - std::max(rectPos.x, std::min(circlePos.x, rectPos.x + rect->GetModel()->GetBounds().GetWidth()));
 		GLfloat distY = circlePos.y - std::max(rectPos.y, std::min(circlePos.y, rectPos.y + rect->GetModel()->GetBounds().GetHeight()));
@@ -166,16 +170,17 @@ namespace EngineOpenGL
 
 	bool GameObject::IsBoxColliding(GameObject * obj1, GameObject * obj2)
 	{
-		glm::vec3 rect1Pos = obj1->Transform.GetPosition();
-		glm::vec3 rect2Pos = obj2->Transform.GetPosition();
+		glm::vec4 rect1Min = obj1->Transform.GetMatrix() * glm::vec4(obj1->GetModel()->GetBounds().GetMinimum(), 1.0f);
+		glm::vec4 rect1Max = obj1->Transform.GetMatrix() * glm::vec4(obj1->GetModel()->GetBounds().GetMaximum(), 1.0f);
+		glm::vec4 rect2Min = obj2->Transform.GetMatrix() * glm::vec4(obj2->GetModel()->GetBounds().GetMinimum(), 1.0f);
+		glm::vec4 rect2Max = obj2->Transform.GetMatrix() * glm::vec4(obj2->GetModel()->GetBounds().GetMaximum(), 1.0f);
 
-		ModelBounds newBBox1 = ModelBounds(rect1Pos + obj1->GetModel()->GetBounds().GetMinimum(), rect1Pos + obj1->GetModel()->GetBounds().GetMaximum());
-		ModelBounds newBBox2 = ModelBounds(rect2Pos + obj2->GetModel()->GetBounds().GetMinimum(), rect2Pos + obj2->GetModel()->GetBounds().GetMaximum());
+		ModelBounds newBBox1 = ModelBounds(glm::vec3(rect1Min), glm::vec3(rect1Max));
+		ModelBounds newBBox2 = ModelBounds(glm::vec3(rect2Min), glm::vec3(rect2Max));
 
 		bool bboxX = newBBox1.GetMinimum().x < newBBox2.GetMaximum().x && (newBBox1.GetMaximum().x > newBBox2.GetMinimum().x);
 		bool bboxY = newBBox1.GetMinimum().y < newBBox2.GetMaximum().y && (newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
 		bool bboxZ = newBBox1.GetMinimum().z < newBBox2.GetMaximum().z && (newBBox1.GetMaximum().z > newBBox2.GetMinimum().z);
-		//printf("%i, %i, %i\n", bboxX, bboxY, bboxZ);
 		bool isBBoxColliding = bboxX && bboxY && bboxZ;
 
 		

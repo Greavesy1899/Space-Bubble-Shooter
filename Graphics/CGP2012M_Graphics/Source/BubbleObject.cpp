@@ -4,8 +4,6 @@ namespace EngineOpenGL
 {
 	BubbleObject::BubbleObject()
 	{
-		this->xDirection = 0;
-		this->yDirection = 0;
 
 	}
 	BubbleObject::BubbleObject(OBJLoader loader)
@@ -19,8 +17,6 @@ namespace EngineOpenGL
 		this->Respawn();
 		this->renderType = RenderTypes::SPECIAL_BUBBLE;
 		this->textureID = 1;
-		this->xDirection = 0;
-		this->yDirection = 0;
 	}
 
 	BubbleObject::~BubbleObject()
