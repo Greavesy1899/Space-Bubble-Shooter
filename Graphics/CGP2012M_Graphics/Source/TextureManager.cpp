@@ -6,14 +6,10 @@ using namespace tinyxml2;
 
 namespace EngineOpenGL
 {
-	void TextureManager::AddTexture(int id, const std::string& name, const std::string& path)
+	void TextureManager::AddTexture(int& id, const std::string& name, const std::vector<std::string>& paths, int& type)
 	{
 		TextureClass* texture = new TextureClass();
-		texture->SetName(name);
-		texture->Bind();
-		texture->LoadTexture(path);
-		texture->SetBuffers();
-		texture->Unbind();
+		texture->Init(name, paths, type);
 		this->textures.insert(std::pair<int, TextureClass*>(id, texture));
 	}
 
@@ -34,8 +30,13 @@ namespace EngineOpenGL
 		{
 			int id = child->IntAttribute("id");
 			std::string name = child->Attribute("name");
-			std::string path = child->Attribute("path");
-			this->AddTexture(id, name, path);
+			std::vector<std::string> paths = std::vector<std::string>();
+
+			for (const XMLElement* pathNode = child->FirstChildElement(); pathNode != nullptr; pathNode = pathNode->NextSiblingElement())
+					paths.push_back(pathNode->GetText());
+				
+			int type = child->IntAttribute("type");
+			this->AddTexture(id, name, paths, type);
 		}
 	}
 
@@ -70,7 +71,7 @@ namespace EngineOpenGL
 			if (x.second->GetName().compare(name))
 				return x.second;
 		}
-		printf("Error! Did not find texture! Name is: %i \n", name);
+		printf("Error! Did not find texture! Name is: %s \n", name.c_str());
 		return this->textures.at(4);
 	}
 	int TextureManager::GetSize() const

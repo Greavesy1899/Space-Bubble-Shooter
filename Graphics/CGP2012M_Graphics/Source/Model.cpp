@@ -53,10 +53,10 @@ namespace EngineOpenGL
 
 		//vertices
 		this->vertices = new VertexLayout[4];
-		this->vertices[0] = VertexLayout(widthFactor, heightFactor, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-		this->vertices[1] = VertexLayout(widthFactor, -heightFactor, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
-		this->vertices[2] = VertexLayout(-widthFactor, -heightFactor, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
-		this->vertices[3] = VertexLayout(-widthFactor, heightFactor, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+		this->vertices[0] = VertexLayout(glm::vec3(widthFactor, heightFactor, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(0.0f, 1.0f));
+		this->vertices[1] = VertexLayout(glm::vec3(widthFactor, -heightFactor, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f));
+		this->vertices[2] = VertexLayout(glm::vec3(-widthFactor, -heightFactor, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f));
+		this->vertices[3] = VertexLayout(glm::vec3(-widthFactor, heightFactor, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
 
 		this->numTriangles = 2;
 		this->numVertices = 4;
@@ -191,6 +191,11 @@ namespace EngineOpenGL
 		}
 
 		this->bounds = ModelBounds(min*scale, max*scale);
+	}
+
+	void Model::SetShader(ShaderProgram* sp)
+	{
+		this->shader = sp;
 	}
 
 	GLuint Model::GetShaderID() const

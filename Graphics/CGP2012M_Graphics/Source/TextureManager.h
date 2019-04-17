@@ -1,6 +1,7 @@
 #ifndef TEXTUREMANAGER_H
 #define TEXTUREMANAGER_H
 #include <map>
+#include <vector>
 
 #include "TextureClass.h"
 
@@ -10,7 +11,7 @@ namespace EngineOpenGL
 	{
 		std::map<int, TextureClass*> textures;
 
-		void AddTexture(int, const std::string&, const std::string&); //only called during build phase.
+		void AddTexture(int&, const std::string&, const std::vector<std::string>& , int&); //only called during build phase.
 		void LoadTextureXML();
 	public:
 		TextureManager();

@@ -8,8 +8,13 @@ namespace EngineOpenGL
 		textureShaderProgram->Init();
 		textureShaderProgram->ReadShaderFromPath("Shaders/TextureVert.glsl", 0);
 		textureShaderProgram->ReadShaderFromPath("Shaders/TextureFrag.glsl", 1);
+		ShaderProgram* skyboxShaderProgram = new ShaderProgram();
+		skyboxShaderProgram->Init();
+		skyboxShaderProgram->ReadShaderFromPath("Shaders/SkyboxVert.glsl", 0);
+		skyboxShaderProgram->ReadShaderFromPath("Shaders/SkyboxFrag.glsl", 1);
 
 		this->shaders[0] = textureShaderProgram;
+		this->shaders[1] = skyboxShaderProgram;
 	}
 
 	ShaderManager::~ShaderManager()

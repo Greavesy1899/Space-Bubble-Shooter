@@ -60,6 +60,6 @@ namespace EngineOpenGL
 
 		this->Transform.SetPosition(glm::vec3(randX * multX, randY * multY, 0.0f));
 		this->Transform.Scale(glm::vec3(randScale));
-		this->model->UpdateModelBounds(this->Transform.GetScale());
+		this->model->UpdateModelBounds();
 	}
 }

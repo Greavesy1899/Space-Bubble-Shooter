@@ -13,14 +13,16 @@ namespace EngineOpenGL
 		BUBBLE = 1,
 		SHIP = 2,
 		BULLET = 3,
-		OBSTACLE = 4
+		OBSTACLE = 4,
+		SKYBOX = 5
 	};
 	enum RenderTypes
 	{
 		TEXTURE = 0,
 		VERTEX_COLOUR,
 		COLOUR,
-		SPECIAL_BUBBLE
+		SPECIAL_BUBBLE,
+		SPECIAL_SKYBOX
 	};
 	class GameObject
 	{
@@ -52,6 +54,7 @@ namespace EngineOpenGL
 		virtual void SetDiffuseColour(glm::vec3 colour);
 		virtual void SetTextureID(int id);
 		virtual void SetObjectType(ObjectTypes type);
+		virtual void SetShaderType(ShaderProgram* sp);
 
 		virtual short GetObjectType() { return this->objectType; }
 		RenderTypes GetRenderType() const;

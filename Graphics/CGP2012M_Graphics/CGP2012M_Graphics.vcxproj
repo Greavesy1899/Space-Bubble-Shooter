@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="Source/Scene.cpp" />
     <ClCompile Include="Source/BubbleObject.cpp" />
+    <ClCompile Include="source\LightObject.cpp" />
     <ClCompile Include="Source\ModelBounds.cpp" />
     <ClCompile Include="Source/SingletonManager.cpp" />
     <ClCompile Include="Source/GameManager.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Source/TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\LightObject.h" />
     <ClInclude Include="Source\ModelBounds.h" />
     <ClInclude Include="Source/ShaderManager.h" />
     <ClInclude Include="Source/SingletonManager.h" />
@@ -189,6 +191,8 @@
     <ClInclude Include="source\TransformMatrix.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\SkyboxFrag.glsl" />
+    <None Include="Shaders\SkyboxVert.glsl" />
     <None Include="Shaders\TextureFrag.glsl" />
     <None Include="Shaders\TextureVert.glsl" />
   </ItemGroup>

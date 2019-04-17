@@ -92,7 +92,7 @@ namespace EngineOpenGL
 		if (!success)
 		{
 			glGetShaderInfoLog(shaderBuff, 512, NULL, infoLog);
-			std::cout << "Failed to compile shader:\n" << infoLog << std::endl;
+			std::cout << "Failed to compile: " <<  type  << "\n" << infoLog << std::endl;
 		}
 
 		return true;

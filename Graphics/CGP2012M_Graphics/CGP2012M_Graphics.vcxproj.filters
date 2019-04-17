@@ -72,6 +72,9 @@
     <ClCompile Include="Source\ModelBounds.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\LightObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source/ShaderProgram.h">
@@ -128,12 +131,21 @@
     <ClInclude Include="Source\ModelBounds.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\LightObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\TextureVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Shaders\TextureFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\SkyboxFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\SkyboxVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -79,21 +79,28 @@ namespace EngineOpenGL
 		this->isHidden = b;
 	}
 
-	void EngineOpenGL::GameObject::Input()
+	void GameObject::Input()
 	{
 	}
 
-	void EngineOpenGL::GameObject::Update()
+	void GameObject::Update()
 	{
 	}
 
-	void EngineOpenGL::GameObject::Render(Camera cam)
+	void GameObject::Render(Camera cam)
 	{
 		if (isHidden)
 			return;
 
-		if(this->renderType == RenderTypes::TEXTURE || this->renderType == RenderTypes::SPECIAL_BUBBLE)
+		if (this->renderType == RenderTypes::TEXTURE || this->renderType == RenderTypes::SPECIAL_BUBBLE)
+		{
 			Singleton::getInstance()->GetTM()->GetTexture(this->textureID)->Bind();
+		}	
+		else if ((this->renderType == RenderTypes::SPECIAL_SKYBOX))
+		{
+			Singleton::getInstance()->GetTM()->GetTexture(this->textureID)->Bind();
+			glDepthMask(GL_FALSE);
+		}
 
 		this->model->LinkShader();
 		this->model->Bind();
@@ -109,7 +116,14 @@ namespace EngineOpenGL
 		this->model->DetachShader();
 
 		if (this->renderType == RenderTypes::TEXTURE || this->renderType == RenderTypes::SPECIAL_BUBBLE)
+		{
 			Singleton::getInstance()->GetTM()->GetTexture(this->textureID)->Unbind();
+		}
+		else if ((this->renderType == RenderTypes::SPECIAL_SKYBOX))
+		{
+			Singleton::getInstance()->GetTM()->GetTexture(this->textureID)->Bind();
+			glDepthMask(GL_TRUE);
+		}
 	}
 
 	void GameObject::SetRenderType(RenderTypes type)
@@ -132,6 +146,11 @@ namespace EngineOpenGL
 		this->objectType = type;
 	}
 
+	void GameObject::SetShaderType(ShaderProgram* sp)
+	{
+		this->model->SetShader(sp);
+	}
+
 	RenderTypes GameObject::GetRenderType() const
 	{
 		return this->renderType;
@@ -141,31 +160,24 @@ namespace EngineOpenGL
 	{
 		return this->model;
 	}
-	bool GameObject::IsCircleBoxColliding(GameObject * rect, GameObject * circle)
+	bool GameObject::IsCircleBoxColliding(GameObject* rect, GameObject* circle)
 	{
 		glm::vec3 rectPos = rect->Transform.GetPosition();
 		glm::vec3 rectMin = rect->Transform.GetMatrix() * glm::vec4(rect->GetModel()->GetBounds().GetMinimum(), 1.0f);
 		glm::vec3 rectMax = rect->Transform.GetMatrix() * glm::vec4(rect->GetModel()->GetBounds().GetMaximum(), 1.0f);
-		glm::vec3 circlePos = rect->Transform.GetPosition();
+		glm::vec3 circlePos = circle->Transform.GetPosition();
 		glm::vec3 circleMin = circle->Transform.GetMatrix() * glm::vec4(circle->GetModel()->GetBounds().GetMinimum(), 1.0f);
 		glm::vec3 circleMax = circle->Transform.GetMatrix() * glm::vec4(circle->GetModel()->GetBounds().GetMaximum(), 1.0f);
-		
-		ModelBounds newBBox1 = ModelBounds(glm::vec3(rectMin), glm::vec3(rectMax));
-		ModelBounds newBBox2 = ModelBounds(glm::vec3(circleMin), glm::vec3(circleMax));
-
 		GLfloat distX = circlePos.x - std::max(rectPos.x, std::min(circlePos.x, rectPos.x + rect->GetModel()->GetBounds().GetWidth()));
 		GLfloat distY = circlePos.y - std::max(rectPos.y, std::min(circlePos.y, rectPos.y + rect->GetModel()->GetBounds().GetHeight()));
 		GLfloat magnitude = (distX * distX + distY * distY);
-		GLfloat radius = rect->GetModel()->GetBounds().GetRadius() * circle->GetModel()->GetBounds().GetRadius();
+		GLfloat radius = circle->GetModel()->GetBounds().GetRadius();
 		bool isCircleIntersection = magnitude < radius;
-		bool isBBoxColliding = (newBBox1.GetMinimum().x < newBBox2.GetMaximum().x) &&
-			(newBBox1.GetMaximum().x > newBBox2.GetMinimum().x) &&
-			(newBBox1.GetMinimum().y < newBBox2.GetMaximum().y) &&
-			(newBBox1.GetMaximum().y > newBBox2.GetMinimum().y) &&
-			(newBBox1.GetMinimum().z < newBBox2.GetMaximum().z) &&
-			(newBBox1.GetMaximum().z > newBBox2.GetMinimum().z);
-
-		return isBBoxColliding && isCircleIntersection;
+		bool bboxX = rectMin.x < circleMax.x && circleMax.x > rectMax.x;
+		bool bboxY = rectMin.y < circleMax.y && circleMax.y > rectMax.y;
+		bool bboxZ = rectMin.z < circleMax.z && circleMax.z > rectMax.z;
+		bool isBBoxColliding = bboxX && bboxY && bboxZ;
+		return isCircleIntersection && isBBoxColliding;
 	}
 
 	bool GameObject::IsBoxColliding(GameObject * obj1, GameObject * obj2)
@@ -178,9 +190,9 @@ namespace EngineOpenGL
 		ModelBounds newBBox1 = ModelBounds(glm::vec3(rect1Min), glm::vec3(rect1Max));
 		ModelBounds newBBox2 = ModelBounds(glm::vec3(rect2Min), glm::vec3(rect2Max));
 
-		bool bboxX = newBBox1.GetMinimum().x < newBBox2.GetMaximum().x && (newBBox1.GetMaximum().x > newBBox2.GetMinimum().x);
-		bool bboxY = newBBox1.GetMinimum().y < newBBox2.GetMaximum().y && (newBBox1.GetMaximum().y > newBBox2.GetMinimum().y);
-		bool bboxZ = newBBox1.GetMinimum().z < newBBox2.GetMaximum().z && (newBBox1.GetMaximum().z > newBBox2.GetMinimum().z);
+		bool bboxX = newBBox1.GetMinimum().x < newBBox2.GetMaximum().x && newBBox1.GetMaximum().x > newBBox2.GetMinimum().x;
+		bool bboxY = newBBox1.GetMinimum().y < newBBox2.GetMaximum().y && newBBox1.GetMaximum().y > newBBox2.GetMinimum().y;
+		bool bboxZ = newBBox1.GetMinimum().z < newBBox2.GetMaximum().z && newBBox1.GetMaximum().z > newBBox2.GetMinimum().z;
 		bool isBBoxColliding = bboxX && bboxY && bboxZ;
 
 		

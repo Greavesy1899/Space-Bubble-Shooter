@@ -17,7 +17,7 @@ void main()
 	vec3 norm = normalize(vs_nor);
 	vec3 lightDir = normalize(lightPos - vs_pos.xyz);
 	float diff = max(dot(norm, lightDir), 0.0);
-	vec3 diffuse = diff * vec3(1.0f);
+	vec3 diffuse = diff * vec3(1.0f, 0.0f, 0.0f);
 	vec3 result = (vec3(0.5f) + diffuse);
 
 	if(renderType == 0) //TEXTURE

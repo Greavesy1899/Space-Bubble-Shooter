@@ -18,9 +18,8 @@ void main()
 
 	gl_Position = ProjectionMatrix * ViewMatrix * WorldMatrix * vec4(Position, 1.0);
 	vs_pos = WorldMatrix * vec4(Position, 1.0);
-	vs_nor = Normal;
+	vs_nor = mat3(transpose(inverse(WorldMatrix))) * Normal;  
 	vs_col = vColour;
-	vs_uv = texCoord;
 	vs_uv = vec2(texCoord.x, 1 - texCoord.y);
 
 } 

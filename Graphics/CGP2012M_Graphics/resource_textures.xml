@@ -1,8 +1,25 @@
 <TextureLoader version="1">
-	<Texture id="0" name="Test" path="Textures/Test.png"/>
-	<Texture id="1" name="Bubble" path="Textures/Bubble.png"/>
-	<Texture id="2" name="Background" path="Textures/Background.png"/>
-	<Texture id="3" name="Heart" path="Textures/Heart.png"/>
-	<Texture id="4" name="Error" path="Textures/Error.png"/>
-	<Texture id="5" name="Edge" path="Textures/Edge.png"/>
+	<Texture id="0" name="Test" type="0">
+		<Path>Textures/Test.png</Path>
+	</Texture>
+	<Texture id="1" name="Bubble" type="0">
+		<Path>Textures/Bubble.png</Path>
+	</Texture>
+	<Texture id="2" name="Background" type="1">
+		<Path>Textures/bg_right.png</Path>
+		<Path>Textures/bg_left.png</Path>
+		<Path>Textures/bg_top.png</Path>
+		<Path>Textures/bg_bot.png</Path>
+		<Path>Textures/bg_front.png</Path>
+		<Path>Textures/bg_back.png</Path>
+	</Texture>
+	<Texture id="3" name="Heart" type="0">
+		<Path>Textures/Heart.png</Path>
+	</Texture>
+	<Texture id="4" name="Error" type="0">
+		<Path>Textures/Error.png</Path>
+	</Texture>
+	<Texture id="5" name="Edge" type="0">
+		<Path>Textures/Edge.png</Path>
+	</Texture>
 </TextureLoader>

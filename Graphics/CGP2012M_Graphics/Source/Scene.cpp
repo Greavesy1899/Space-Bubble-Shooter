@@ -20,14 +20,19 @@ namespace EngineOpenGL
 	void Scene::Init()
 	{
 		OBJLoader loader = OBJLoader();
-		loader.ParseOBJ("Models/boundary.obj");
-		
 
-		GameObject* background = new GameObject(4.0f, 4.0f, ObjectTypes::BASIC);
-		background->Transform.SetPosition(glm::vec3(0.0f, 0.0f, -0.1f));
-		background->SetRenderType(RenderTypes::TEXTURE);
+		loader = OBJLoader();
+		loader.ParseOBJ("Models/skybox.obj");
+
+		GameObject* background = new GameObject(loader, ObjectTypes::SKYBOX);
+		background->Transform.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+		background->SetRenderType(RenderTypes::SPECIAL_SKYBOX);
 		background->SetDiffuseColour(glm::vec3(0.0f));
+		background->SetShaderType(Singleton::getInstance()->GetSM()->GetShader(1));
 		background->SetTextureID(2);
+
+		loader = OBJLoader();
+		loader.ParseOBJ("Models/boundary.obj");
 
 		GameObject* leftObstacle = new GameObject(loader, ObjectTypes::OBSTACLE);
 		leftObstacle->Transform.SetPosition(glm::vec3(-4.0f, 0.0f, 0.0f));
