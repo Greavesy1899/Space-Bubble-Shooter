@@ -16,6 +16,7 @@ namespace EngineOpenGL
 
 	public:
 		ShipObject();
+		ShipObject(OBJLoader loader);
 		~ShipObject();
 		void Input() override;
 		void Update() override;

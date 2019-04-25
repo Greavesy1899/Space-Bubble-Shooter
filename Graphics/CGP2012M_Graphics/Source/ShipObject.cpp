@@ -14,7 +14,20 @@ namespace EngineOpenGL
 	ShipObject::ShipObject()
 	{
 		this->model = new Model();
-		this->model->SetModelToSquare(0.2f, 0.2f);
+		this->model->Init();
+		this->model->Bind();
+		this->model->Build();
+		this->model->Unbind();
+		this->textureID = 0;
+		this->renderType = RenderTypes::TEXTURE;
+		this->lives = 3;
+		this->movingForward = false;
+	}
+
+	ShipObject::ShipObject(OBJLoader loader)
+	{
+		this->model = new Model();
+		this->model->SetModelToObj(loader);
 		this->model->Init();
 		this->model->Bind();
 		this->model->Build();

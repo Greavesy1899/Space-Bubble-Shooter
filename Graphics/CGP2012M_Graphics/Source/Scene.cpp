@@ -58,7 +58,10 @@ namespace EngineOpenGL
 		botObstacle->SetRenderType(RenderTypes::TEXTURE);
 		botObstacle->SetTextureID(5);
 
-		ShipObject* ship = new ShipObject();
+		loader = OBJLoader();
+		loader.ParseOBJ("Models/ship.obj");
+
+		ShipObject* ship = new ShipObject(loader);
 		ship->Transform.SetPosition(glm::vec3(0.0f, -3.5f, 0.0f));
 
 		loader = OBJLoader();
@@ -118,24 +121,12 @@ namespace EngineOpenGL
 			else
 				this->objects[0]->SetRenderType(RenderTypes::TEXTURE);
 		}
-		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_T)) {
-		//	this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.0f, 0.1f));
-		//}
-		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_G)) {
-		//	this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.0f, -0.1f));
-		//}
-		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_F)) {
-		//	this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.1f, 0.0f));
-		//}
-		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_H)) {
-		//	this->camera.ViewMatrix.Translate(glm::vec3(0.0f, -0.1f, 0.0f));
-		//}
-		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_R)) {
-		//	this->camera.ViewMatrix.Rotate(glm::vec3(0.1f, 0.0f, 0.0f), 0.1f);
-		//}
-		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_Y)) {
-		//	this->camera.ViewMatrix.Rotate(glm::vec3(0.0f, 0.1f, 0.0f), 0.1f);
-		//}
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_T)) {
+		}
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_G)) {
+		}
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_F)) {
+		}
 
 		for (GameObject* obj : this->objects)
 			obj->Input();
