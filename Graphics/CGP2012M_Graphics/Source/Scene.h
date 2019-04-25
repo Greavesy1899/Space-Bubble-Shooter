@@ -8,6 +8,7 @@
 #include "GameObject.h"
 #include "BubbleObject.h"
 #include "ShipObject.h"
+#include "LightObject.h"
 
 namespace EngineOpenGL
 {
@@ -19,6 +20,7 @@ namespace EngineOpenGL
 		std::vector<GameObject*> ui;
 		int bulletTimer = 25;
 		int bulletRefreshTimer = 25;
+		LightObject light;
 
 	public:
 		Scene();

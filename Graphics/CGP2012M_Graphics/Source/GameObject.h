@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Camera.h"
 #include "TransformMatrix.h"
+#include "LightObject.h"
 
 namespace EngineOpenGL
 {
@@ -49,7 +50,7 @@ namespace EngineOpenGL
 
 		virtual void Input();
 		virtual void Update();
-		virtual void Render(Camera cam);
+		virtual void Render(Camera cam, LightObject light);
 		virtual void SetRenderType(RenderTypes type);
 		virtual void SetDiffuseColour(glm::vec3 colour);
 		virtual void SetTextureID(int id);

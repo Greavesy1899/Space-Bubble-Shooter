@@ -193,6 +193,37 @@ namespace EngineOpenGL
 		this->bounds = ModelBounds(min*scale, max*scale);
 	}
 
+	void Model::UpdateModelBounds(glm::mat4 matrix)
+	{
+		glm::vec3 min(0);
+		glm::vec3 max(0);
+
+		for (int i = 0; i != this->numVertices; i++)
+		{
+			glm::vec4 pos = glm::vec4(this->vertices[i].position, 1.0f) * matrix;
+
+			if (pos.x < min.x)
+				min.x = pos.x;
+
+			if (pos.x > max.x)
+				max.x = pos.x;
+
+			if (pos.y < min.y)
+				min.y = pos.y;
+
+			if (pos.y > max.y)
+				max.y = pos.y;
+
+			if (pos.z < min.z)
+				min.z = pos.z;
+
+			if (pos.z > max.z)
+				max.z = pos.z;
+		}
+
+		this->bounds = ModelBounds(min, max);
+	}
+
 	void Model::SetShader(ShaderProgram* sp)
 	{
 		this->shader = sp;

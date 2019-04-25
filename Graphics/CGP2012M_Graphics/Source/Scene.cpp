@@ -7,6 +7,7 @@ namespace EngineOpenGL
 		this->camera = Camera(683, 384);
 		this->objects = std::vector<GameObject*>();
 		this->ui = std::vector<GameObject*>();
+		this->light = LightObject();
 	}
 	Scene::~Scene()
 	{
@@ -32,19 +33,20 @@ namespace EngineOpenGL
 		background->SetTextureID(2);
 
 		loader = OBJLoader();
-		loader.ParseOBJ("Models/boundary.obj");
+		loader.ParseOBJ("Models/boundaryV.obj");
 
 		GameObject* leftObstacle = new GameObject(loader, ObjectTypes::OBSTACLE);
 		leftObstacle->Transform.SetPosition(glm::vec3(-4.0f, 0.0f, 0.0f));
-		leftObstacle->Transform.Rotate(glm::vec3(0.0f,0.0f, 1.571f), 1.571f);
 		leftObstacle->SetRenderType(RenderTypes::TEXTURE);
 		leftObstacle->SetTextureID(5);
 
 		GameObject* rightObstacle = new GameObject(loader, ObjectTypes::OBSTACLE);
 		rightObstacle->Transform.SetPosition(glm::vec3(4.0f, 0.0f, 0.0f));
-		rightObstacle->Transform.Rotate(glm::vec3(0.0f, 0.0f, 1.571f), 1.571f);
 		rightObstacle->SetRenderType(RenderTypes::TEXTURE);
 		rightObstacle->SetTextureID(5);
+
+		loader = OBJLoader();
+		loader.ParseOBJ("Models/boundaryH.obj");
 
 		GameObject* topObstacle = new GameObject(loader, ObjectTypes::OBSTACLE);
 		topObstacle->Transform.SetPosition(glm::vec3(0.04, 4.0f, 0.0f));
@@ -116,24 +118,24 @@ namespace EngineOpenGL
 			else
 				this->objects[0]->SetRenderType(RenderTypes::TEXTURE);
 		}
-		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_T)) {
-			this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.0f, 0.1f));
-		}
-		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_G)) {
-			this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.0f, -0.1f));
-		}
-		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_F)) {
-			this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.1f, 0.0f));
-		}
-		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_H)) {
-			this->camera.ViewMatrix.Translate(glm::vec3(0.0f, -0.1f, 0.0f));
-		}
-		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_R)) {
-			this->camera.ViewMatrix.Rotate(glm::vec3(0.1f, 0.0f, 0.0f), 0.1f);
-		}
-		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_Y)) {
-			this->camera.ViewMatrix.Rotate(glm::vec3(0.0f, 0.1f, 0.0f), 0.1f);
-		}
+		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_T)) {
+		//	this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.0f, 0.1f));
+		//}
+		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_G)) {
+		//	this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.0f, -0.1f));
+		//}
+		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_F)) {
+		//	this->camera.ViewMatrix.Translate(glm::vec3(0.0f, 0.1f, 0.0f));
+		//}
+		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_H)) {
+		//	this->camera.ViewMatrix.Translate(glm::vec3(0.0f, -0.1f, 0.0f));
+		//}
+		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_R)) {
+		//	this->camera.ViewMatrix.Rotate(glm::vec3(0.1f, 0.0f, 0.0f), 0.1f);
+		//}
+		//else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_Y)) {
+		//	this->camera.ViewMatrix.Rotate(glm::vec3(0.0f, 0.1f, 0.0f), 0.1f);
+		//}
 
 		for (GameObject* obj : this->objects)
 			obj->Input();
@@ -145,15 +147,26 @@ namespace EngineOpenGL
 	}
 	void Scene::Update()
 	{
+		//this->light.SetColour(glm::vec3(0.33f, 0.33f, 0.33f));
+		//this->light.SetPosition(glm::vec3(0.0f));
+		//this->light.SetIntensity(1.0f);
+
 		//collision checks.
+		int lightIDX = 0;
 		for (auto it = this->objects.begin(); it != this->objects.end();)
 		{
 			bool d = false;
+
 			GameObject* obj = (*it);
 			if (obj->GetObjectType() == ObjectTypes::BULLET)
 			{
 				obj->Update();
 
+				if (lightIDX != 3)
+				{
+					this->light.pointLight[lightIDX].position = obj->Transform.GetPosition();
+					lightIDX++;
+				}
 				for (auto object : this->objects)
 				{
 					if (object->GetObjectType() == ObjectTypes::OBSTACLE)
@@ -232,15 +245,21 @@ namespace EngineOpenGL
 				++it;
 		}
 
+		for (int i = lightIDX; i < 3; i++)
+		{
+			if (i <= lightIDX)
+				this->light.pointLight[i].position = glm::vec3(99.0f);
+		}
+
 		for (GameObject* obj : this->ui)
 			obj->Update();
 	}
 	void Scene::Render()
 	{
 		for (GameObject* obj : this->objects)
-			obj->Render(this->camera);
+			obj->Render(this->camera, this->light);
 
 		for (GameObject* obj : this->ui)
-			obj->Render(this->camera);
+			obj->Render(this->camera, this->light);
 	}
 }

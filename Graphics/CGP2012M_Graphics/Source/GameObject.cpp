@@ -87,7 +87,7 @@ namespace EngineOpenGL
 	{
 	}
 
-	void GameObject::Render(Camera cam)
+	void GameObject::Render(Camera cam, LightObject light)
 	{
 		if (isHidden)
 			return;
@@ -107,7 +107,29 @@ namespace EngineOpenGL
 		glUseProgram(this->model->GetShaderID());
 		this->model->GetShader()->SetUniformMatrix("WorldMatrix", this->Transform.GetMatrix());
 		this->model->GetShader()->SetUniformMatrix("ViewMatrix", cam.GetViewMatrix());
-		this->model->GetShader()->SetUniformFloat("lightPos", cam.ViewMatrix.GetPosition().x, cam.ViewMatrix.GetPosition().y, cam.ViewMatrix.GetPosition().z);
+
+		if (this->renderType != RenderTypes::SPECIAL_SKYBOX)
+		{
+			glm::vec3 direction = light.GetDirectLight().direction;
+			glm::vec3 colour = light.GetDirectLight().colour;
+			GLfloat intensity = light.GetDirectLight().intensity;
+			this->model->GetShader()->SetUniformFloat("dLight.direction", direction.x, direction.y, direction.z);
+			this->model->GetShader()->SetUniformFloat("dLight.colour", colour.r, colour.g, colour.b);
+
+			for (int i = 0; i < 3; i++)
+			{
+				std::string start = "pLights[" + std::to_string(i) + "].";
+				this->model->GetShader()->SetUniformFloat(start +"position", light.GetPointLight(i).position.x, light.GetPointLight(i).position.y, light.GetPointLight(i).position.z);
+				this->model->GetShader()->SetUniformFloat(start + "ambient", light.GetPointLight(i).ambient.x, light.GetPointLight(i).ambient.y, light.GetPointLight(i).ambient.z);
+				this->model->GetShader()->SetUniformFloat(start + "diffuse", light.GetPointLight(i).diffuse.x, light.GetPointLight(i).diffuse.y, light.GetPointLight(i).diffuse.z);
+				this->model->GetShader()->SetUniformFloat(start + "constant", light.GetPointLight(i).constant);
+				this->model->GetShader()->SetUniformFloat(start + "quadratic", light.GetPointLight(i).quadratic);
+				this->model->GetShader()->SetUniformFloat(start + "linear", light.GetPointLight(i).linear);
+			}
+
+			this->model->GetShader()->SetUniformFloat("viewPos", cam.ViewMatrix.GetPosition().x, cam.ViewMatrix.GetPosition().y, cam.ViewMatrix.GetPosition().z);
+		}
+
 		this->model->GetShader()->SetUniformMatrix("ProjectionMatrix", cam.GetProjectionMatrix());
 		this->model->GetShader()->SetUniformInt("renderType", this->renderType);
 		this->model->GetShader()->SetUniformFloat("shapeColour", this->colour.r, this->colour.g, this->colour.b);
@@ -160,6 +182,7 @@ namespace EngineOpenGL
 	{
 		return this->model;
 	}
+
 	bool GameObject::IsCircleBoxColliding(GameObject* rect, GameObject* circle)
 	{
 		glm::vec3 rectPos = rect->Transform.GetPosition();
@@ -173,9 +196,9 @@ namespace EngineOpenGL
 		GLfloat magnitude = (distX * distX + distY * distY);
 		GLfloat radius = circle->GetModel()->GetBounds().GetRadius();
 		bool isCircleIntersection = magnitude < radius;
-		bool bboxX = rectMin.x < circleMax.x && circleMax.x > rectMax.x;
-		bool bboxY = rectMin.y < circleMax.y && circleMax.y > rectMax.y;
-		bool bboxZ = rectMin.z < circleMax.z && circleMax.z > rectMax.z;
+		bool bboxX = rectMin.x < circleMax.x && rectMax.x > circleMin.x;
+		bool bboxY = rectMin.y < circleMax.y && rectMax.y > circleMin.y;
+		bool bboxZ = rectMin.z < circleMax.z && rectMax.z > circleMin.z;
 		bool isBBoxColliding = bboxX && bboxY && bboxZ;
 		return isCircleIntersection && isBBoxColliding;
 	}
@@ -187,15 +210,9 @@ namespace EngineOpenGL
 		glm::vec4 rect2Min = obj2->Transform.GetMatrix() * glm::vec4(obj2->GetModel()->GetBounds().GetMinimum(), 1.0f);
 		glm::vec4 rect2Max = obj2->Transform.GetMatrix() * glm::vec4(obj2->GetModel()->GetBounds().GetMaximum(), 1.0f);
 
-		ModelBounds newBBox1 = ModelBounds(glm::vec3(rect1Min), glm::vec3(rect1Max));
-		ModelBounds newBBox2 = ModelBounds(glm::vec3(rect2Min), glm::vec3(rect2Max));
-
-		bool bboxX = newBBox1.GetMinimum().x < newBBox2.GetMaximum().x && newBBox1.GetMaximum().x > newBBox2.GetMinimum().x;
-		bool bboxY = newBBox1.GetMinimum().y < newBBox2.GetMaximum().y && newBBox1.GetMaximum().y > newBBox2.GetMinimum().y;
-		bool bboxZ = newBBox1.GetMinimum().z < newBBox2.GetMaximum().z && newBBox1.GetMaximum().z > newBBox2.GetMinimum().z;
-		bool isBBoxColliding = bboxX && bboxY && bboxZ;
-
-		
-		return isBBoxColliding;
+		bool bboxX = rect1Min.x <= rect2Max.x && rect1Max.x >= rect2Min.x;
+		bool bboxY = rect1Min.y <= rect2Max.y && rect1Max.y >= rect2Min.y;
+		bool bboxZ = rect1Min.z <= rect2Max.z && rect1Max.z >= rect2Min.z;
+		return bboxX && bboxY && bboxZ;
 	}
 }

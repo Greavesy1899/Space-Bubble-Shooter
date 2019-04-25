@@ -77,8 +77,8 @@ namespace EngineOpenGL
 			printf("Unknown type!");
 			break;
 		}
-		//std::cout << "import success:" << std::endl;
-		//std::cout << text.c_str() << std::endl;
+		std::cout << "import success:" << std::endl;
+		std::cout << text.c_str() << std::endl;
 
 		glShaderSource(shaderBuff, 1, &ptr, NULL);
 		glCompileShader(shaderBuff);
@@ -87,7 +87,7 @@ namespace EngineOpenGL
 		GLchar infoLog[512];
 
 		glGetShaderiv(shaderBuff, GL_COMPILE_STATUS, &success);
-		//std::cout << "Shader compile: " << shaderBuff << " " << success << std::endl;
+		std::cout << "Shader compile: " << shaderBuff << " " << success << std::endl;
 
 		if (!success)
 		{
@@ -98,27 +98,48 @@ namespace EngineOpenGL
 		return true;
 	}
 
+	void DebugGetUniformLocFail(std::string& uniformName)
+	{
+		//printf("Failed to get %s\n", uniformName.c_str());
+	}
+
 	void ShaderProgram::SetUniformInt(std::string uniformName, GLint val)
 	{
 		int loc = glGetUniformLocation(this->shaderProgramID, uniformName.c_str());
+
+		if (loc == -1)
+			DebugGetUniformLocFail(uniformName);
+
 		glUniform1i(loc, val);
 	}
 
 	void ShaderProgram::SetUniformFloat(std::string uniformName, GLfloat val)
 	{
 		int loc = glGetUniformLocation(this->shaderProgramID, uniformName.c_str());
+
+		if (loc == -1)
+			DebugGetUniformLocFail(uniformName);
+
 		glUniform1f(loc, val);
 	}
 
 	void ShaderProgram::SetUniformFloat(std::string uniformName, GLfloat val1, GLfloat val2, GLfloat val3)
 	{
 		int loc = glGetUniformLocation(this->shaderProgramID, uniformName.c_str());
+
+		if (loc == -1)
+			DebugGetUniformLocFail(uniformName);
+
 		glUniform3f(loc, val1, val2, val3);
 	}
 
 	void ShaderProgram::SetUniformMatrix(std::string uniformName, glm::mat4 val)
 	{
 		int loc = glGetUniformLocation(this->shaderProgramID, uniformName.c_str());
+
+		if (loc == -1)
+			DebugGetUniformLocFail(uniformName);
+
 		glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(val));
 	}
 

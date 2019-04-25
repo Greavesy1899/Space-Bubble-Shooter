@@ -6,11 +6,7 @@ in vec3 vs_nor;
 in vec3 vs_uv;
 in vec4 vs_pos;
 
-uniform int renderType;
 uniform samplerCube aTex;
-uniform vec3 shapeColour;
-uniform float colorModifier;
-uniform vec3 lightPos;
 
 void main()
 {	

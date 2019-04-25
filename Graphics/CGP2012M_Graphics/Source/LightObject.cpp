@@ -1,41 +1,49 @@
 #include "LightObject.h"
 
-LightObject::LightObject()
+namespace EngineOpenGL
 {
-	this->position = glm::vec3(0.0f);
-	this->intensity = 0.0f;
-}
+	LightObject::LightObject()
+	{
+		this->directLight = DirectLight();
+		this->directLight.direction = glm::vec3(-0.5f, -0.1f, -1.0f);
+		this->directLight.colour = glm::vec3(0.33f, 0.33f, 0.33f);
+		this->directLight.intensity = 0.5f;
 
-LightObject::~LightObject()
-{
-}
+		PointLight templatel = PointLight();
+		templatel.diffuse = glm::vec3(1.0f, 0.0f, 0.0f);
+		templatel.ambient = glm::vec3(0.0f, 0.0f, 0.0f);
+		templatel.constant = 1.0f;
+		templatel.linear = 0.22f;
+		templatel.quadratic = 0.20f;
+		templatel.position = glm::vec3(99.0f);
 
-void LightObject::SetPosition(glm::vec3& pos)
-{
-	this->position = pos;
-}
+		this->pointLight[0] = templatel;
+		this->pointLight[1] = templatel;
+		this->pointLight[2] = templatel;
+		this->pointLight[3] = templatel;
+	}
 
-void LightObject::SetColour(glm::vec3& col)
-{
-	this->colour = col;
-}
+	LightObject::~LightObject()
+	{
+	}
 
-void LightObject::SetIntensity(GLfloat val)
-{
-	this->intensity = val;
-}
+	void LightObject::SetDirectLight(DirectLight& light)
+	{
+		this->directLight = light;
+	}
 
-glm::vec3 LightObject::GetPosition() const
-{
-	return this->position;
-}
+	void LightObject::SetPointLight(GLint& idx, PointLight& light)
+	{
+		this->pointLight[idx] = light;
+	}
 
-glm::vec3 LightObject::GetColour() const
-{
-	return this->colour;
-}
+	LightObject::DirectLight LightObject::GetDirectLight()
+	{
+		return this->directLight;
+	}
 
-GLfloat LightObject::GetIntensity() const
-{
-	return this->intensity;
+	LightObject::PointLight LightObject::GetPointLight(GLint& idx)
+	{
+		return this->pointLight[idx];
+	}
 }

@@ -5,6 +5,8 @@
 #include <string>
 #include <sstream>
 
+namespace fs = std::experimental::filesystem;
+
 OBJLoader::OBJLoader()
 {
 }
@@ -12,6 +14,52 @@ OBJLoader::OBJLoader()
 
 OBJLoader::~OBJLoader()
 {
+}
+
+void OBJLoader::ParseMTLLine(std::string line)
+{
+	this->ParseMTL(line.substr(7));
+}
+
+void OBJLoader::ParseMTL(std::string& path)
+{
+	fs::path loc = fs::path(parentFolder / fs::path(path));
+	if (!fs::exists(loc))
+	{
+		std::cout << "Failed to locate models MTL file: " << loc << std::endl;
+		return;
+	}
+
+	std::ifstream inFile(loc);
+	std::pair<std::string, std::string> material;
+
+	while (inFile.good())
+	{
+		std::string line;
+		std::getline(inFile, line);
+
+		if (line.empty())
+			continue;
+		else if (line[0] == '#')
+			continue;
+		else if (line[0] == '\t')
+			material.second = ParseIndentLine(line);
+		else if (line.substr(0, 6) == "newmtl")
+		{
+			if (!material.first.empty())
+				this->materials.push_back(material);
+
+			material.first = line.substr(7);
+		}
+	}
+
+	this->materials.push_back(material);
+}
+
+std::string OBJLoader::ParseIndentLine(std::string line)
+{
+	if (line.find("map_Kd"))
+		return line.substr(8);
 }
 
 void OBJLoader::ParseVertexLine(std::string line)
@@ -95,7 +143,8 @@ void OBJLoader::ParseFaceLine(std::string line)
 
 bool OBJLoader::ParseOBJ(const char * file)
 {
-	if (!std::experimental::filesystem::exists(file))
+	this->parentFolder = fs::path(file).parent_path().string();
+	if (!fs::exists(file))
 	{
 		std::cout << "Failed to locate model file: " << file << std::endl;
 		return false;
@@ -116,6 +165,8 @@ bool OBJLoader::ParseOBJ(const char * file)
 			ParseVertexLine(line);
 		else if (line[0] == 'f')
 			ParseFaceLine(line);
+		else if (line.substr(0, 6) == "mtllib")
+			ParseMTLLine(line);
 	}
 	return true;
 }

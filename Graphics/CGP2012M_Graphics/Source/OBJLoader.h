@@ -8,6 +8,11 @@
 class OBJLoader
 {
 
+	std::string parentFolder;
+
+	void ParseMTLLine(std::string line);
+	void ParseMTL(std::string& path);
+	std::string ParseIndentLine(std::string line);
 	void ParseVertexLine(std::string line);
 	void ParseFaceLine(std::string line);
 
@@ -19,6 +24,7 @@ public:
 	std::vector<glm::vec3> normals;
 	std::vector<glm::vec2> texCoords;
 	std::vector<GLushort> indices;
+	std::vector<std::pair<std::string, std::string>> materials;
 
 	bool ParseOBJ(const char* file);
 	

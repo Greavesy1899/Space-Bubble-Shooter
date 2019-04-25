@@ -57,6 +57,7 @@ namespace EngineOpenGL
 		bool SetModelToCube(GLfloat widthFactor, GLfloat heightFactor, GLfloat depthFactor);
 		bool SetModelToObj(OBJLoader loader);
 		void UpdateModelBounds(glm::vec3 scale = glm::vec3(1.0f));
+		void UpdateModelBounds(glm::mat4 matrix);
 		void SetShader(ShaderProgram* sp);
 
 		GLuint GetShaderID() const;

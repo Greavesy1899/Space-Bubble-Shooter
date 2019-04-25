@@ -4,21 +4,39 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-class LightObject
+namespace EngineOpenGL
 {
-	glm::vec3 position;
-	glm::vec3 colour;
-	GLfloat intensity;
+	class LightObject
+	{
+		struct DirectLight
+		{
+			glm::vec3 direction;
+			glm::vec3 colour;
+			GLfloat intensity;
+		};
 
-public:
-	LightObject();
-	~LightObject();
+		struct PointLight
+		{
+			glm::vec3 position;
+			glm::vec3 ambient;
+			glm::vec3 diffuse;
+			GLfloat constant;
+			GLfloat linear;
+			GLfloat quadratic;
+		};
 
-	void SetPosition(glm::vec3& pos);
-	void SetColour(glm::vec3& col);
-	void SetIntensity(GLfloat val);
-	glm::vec3 GetPosition() const;
-	glm::vec3 GetColour() const;
-	GLfloat GetIntensity() const;
-};
+		DirectLight directLight;
+		
+	public:
+		LightObject();
+		~LightObject();
+
+		PointLight pointLight[4];
+
+		void SetDirectLight(DirectLight& light);
+		void SetPointLight(GLint& idx, PointLight& light);
+		DirectLight GetDirectLight();
+		PointLight GetPointLight(GLint& idx);
+	};
+}
 #endif

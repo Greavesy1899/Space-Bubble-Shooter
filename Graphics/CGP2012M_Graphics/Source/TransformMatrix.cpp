@@ -63,6 +63,24 @@ glm::mat4 TransformMatrix::GetMatrix() const
 	return this->matrix;
 }
 
+glm::vec3 TransformMatrix::GetRight() const
+{
+	glm::vec3 result = glm::vec3(this->matrix[0][0], this->matrix[0][1], this->matrix[0][2]);
+	return result;
+}
+
+glm::vec3 TransformMatrix::GetUp() const
+{
+	glm::vec3 result = glm::vec3(this->matrix[1][0], this->matrix[1][1], this->matrix[1][2]);
+	return result;
+}
+
+glm::vec3 TransformMatrix::GetBackward() const
+{
+	glm::vec3 result = glm::vec3(this->matrix[2][0], this->matrix[2][1], this->matrix[2][2]);
+	return result;
+}
+
 void TransformMatrix::Translate(glm::vec3 pos)
 {
 	this->matrix = glm::translate(this->matrix, pos);

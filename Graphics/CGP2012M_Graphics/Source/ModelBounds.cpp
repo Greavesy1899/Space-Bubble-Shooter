@@ -22,8 +22,8 @@ namespace EngineOpenGL
 		);
 
 		this->radius = glm::distance(this->centre, this->maximum);
-
 	}
+	
 	glm::vec3 ModelBounds::GetMinimum() const
 	{
 		return this->minimum;

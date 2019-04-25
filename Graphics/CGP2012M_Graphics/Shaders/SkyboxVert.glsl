@@ -11,7 +11,6 @@ out vec3 vs_uv;
 
 uniform mat4 ViewMatrix;
 uniform mat4 ProjectionMatrix;
-uniform mat4 WorldMatrix;
 
 void main()
 {

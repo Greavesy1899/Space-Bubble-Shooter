@@ -34,16 +34,16 @@ namespace EngineOpenGL
 	{	
 		if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_A))
 		{
-			this->Transform.Rotate(TransformMatrix::GetForward(), glm::radians(5.0f));
+			this->Transform.Rotate(TransformMatrix::GetStaticForward(), glm::radians(5.0f));
 		}
 		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_D))
 		{
-			this->Transform.Rotate(TransformMatrix::GetForward(), glm::radians(-5.0f));
+			this->Transform.Rotate(TransformMatrix::GetStaticForward(), glm::radians(-5.0f));
 		}
 		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_W))
 		{
 			glm::vec3 euler = this->Transform.GetEuler();
-			glm::vec3 pos = euler * 0.1f * TransformMatrix::GetUp();
+			glm::vec3 pos = euler * 0.1f * TransformMatrix::GetStaticUp();
 			this->Transform.Translate(glm::vec3((float)sin(pos.x)*0.1f, (float)cos(pos.x)*0.1f, 0.0f));
 		}
 	}

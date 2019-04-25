@@ -11,18 +11,22 @@ public:
 	TransformMatrix();
 	~TransformMatrix();
 
-	static glm::vec3 GetForward() { return glm::vec3(0, 0, 1.0f); }
-	static glm::vec3 GetZero() { return glm::vec3(0.0f, 0.0f, 0); }
-	static glm::vec3 GetOne() { return glm::vec3(1.0f, 1.0f, 0); }
-	static glm::vec3 GetUp() { return glm::vec3(0.0f, 1.0f, 0); }
-	static glm::vec3 GetDown() { return glm::vec3(1.0f, -1.0f, 0); }
-	static glm::vec3 GetLeft() { return glm::vec3(-1.0f, 0.0f, 0); }
-	static glm::vec3 GetRight() { return glm::vec3(1.0f, 0.0f, 0); }
+	static glm::vec3 GetStaticForward() { return glm::vec3(0, 0, 1.0f); }
+	static glm::vec3 GetStaticZero() { return glm::vec3(0.0f, 0.0f, 0); }
+	static glm::vec3 GetStaticOne() { return glm::vec3(1.0f, 1.0f, 0); }
+	static glm::vec3 GetStaticUp() { return glm::vec3(0.0f, 1.0f, 0); }
+	static glm::vec3 GetStaticDown() { return glm::vec3(1.0f, -1.0f, 0); }
+	static glm::vec3 GetStaticLeft() { return glm::vec3(-1.0f, 0.0f, 0); }
+	static glm::vec3 GetStaticRight() { return glm::vec3(1.0f, 0.0f, 0); }
 
 	glm::vec3 GetPosition() const;
 	glm::vec3 GetScale() const;
 	glm::vec3 GetEuler() const;
 	glm::mat4 GetMatrix() const;
+
+	glm::vec3 GetRight() const;
+	glm::vec3 GetUp() const;
+	glm::vec3 GetBackward() const;
 
 	void Translate(glm::vec3 pos);
 	void Rotate(glm::vec3 rotate, float angle = 0.0f);
