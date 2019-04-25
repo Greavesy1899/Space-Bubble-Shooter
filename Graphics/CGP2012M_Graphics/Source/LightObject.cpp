@@ -21,6 +21,9 @@ namespace EngineOpenGL
 		this->pointLight[1] = templatel;
 		this->pointLight[2] = templatel;
 		this->pointLight[3] = templatel;
+		this->pointLight[3].diffuse = glm::vec3(0.66f, 0.66f, 0.66);
+		this->pointLight[3].linear = 0.09f;
+		this->pointLight[3].quadratic = 0.032f;
 	}
 
 	LightObject::~LightObject()

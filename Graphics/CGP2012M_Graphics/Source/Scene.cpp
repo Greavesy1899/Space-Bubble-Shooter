@@ -122,10 +122,19 @@ namespace EngineOpenGL
 				this->objects[0]->SetRenderType(RenderTypes::TEXTURE);
 		}
 		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_T)) {
+			for (int i = 0; i < 3; i++) {
+				this->light.pointLight[i].diffuse = glm::vec3(1.0f, 0.0f, 0.0f);
+			}
 		}
-		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_G)) {
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_Y)) {
+			for (int i = 0; i < 3; i++) {
+				this->light.pointLight[i].diffuse = glm::vec3(0.0f, 1.0f, 0.0f);
+			}
 		}
-		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_F)) {
+		else if (Singleton::getInstance()->GetIM()->CheckForKey(SDL_SCANCODE_U)) {
+			for (int i = 0; i < 3; i++) {
+				this->light.pointLight[i].diffuse = glm::vec3(0.0f, 0.0f, 1.0f);
+			}
 		}
 
 		for (GameObject* obj : this->objects)
@@ -194,6 +203,7 @@ namespace EngineOpenGL
 			else if (obj->GetObjectType() == ObjectTypes::SHIP)
 			{
 				auto* ship = dynamic_cast<ShipObject*>(obj);
+				this->light.pointLight[3].position = ship->Transform.GetPosition();
 
 				for (auto object : this->objects)
 				{

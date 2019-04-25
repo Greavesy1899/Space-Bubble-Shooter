@@ -28,7 +28,7 @@ uniform vec3 shapeColour;
 uniform float colorModifier;
 uniform vec3 viewPos;
 
-#define MAX_NUMBER_LIGHTS 3
+#define MAX_NUMBER_LIGHTS 4
 uniform PointLight pLights[MAX_NUMBER_LIGHTS];
 uniform DirectLight dLight;
 

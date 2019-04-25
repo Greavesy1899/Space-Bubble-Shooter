@@ -116,7 +116,7 @@ namespace EngineOpenGL
 			this->model->GetShader()->SetUniformFloat("dLight.direction", direction.x, direction.y, direction.z);
 			this->model->GetShader()->SetUniformFloat("dLight.colour", colour.r, colour.g, colour.b);
 
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				std::string start = "pLights[" + std::to_string(i) + "].";
 				this->model->GetShader()->SetUniformFloat(start +"position", light.GetPointLight(i).position.x, light.GetPointLight(i).position.y, light.GetPointLight(i).position.z);
