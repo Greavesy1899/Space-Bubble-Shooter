@@ -6,5 +6,5 @@ There were two parts to the assignment; the first part to develop a 2D engine us
 This project wasn't as bug-free as the Snake game, and requires much more work for it to be feature-complete.
 
 ## Features
-OBJ Importer
-Lighting shaders
+- OBJ Importer
+- Lighting shaders
